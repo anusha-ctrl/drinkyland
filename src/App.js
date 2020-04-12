@@ -64,21 +64,7 @@ class App extends Component {
         </Nav>
       </Navbar>
 
-      <Jumbotron>
-        <h1>Player Status</h1>
-        <p>
-          Name:
-        </p>
-        <p>
-          Color:
-        </p>
-      </Jumbotron>
-
       <div className="App">
-        // <header className="App-header">
-        //   <h1 className="App-logo">DrinkyLand</h1>
-        //   <p>{this.state.players}</p>
-        // </header>
         <StatusBar location="yo mama's house" name="Bob" color="purple" />
         <div class="board">
           {this.tiles}
