@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Tile from './Tile';
+import StatusBar from './StatusBar';
 import './App.css';
 import firebase from './firebase.js';
+import { Button, Row, Navbar, Nav, Jumbotron } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const actions = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
 
@@ -66,15 +69,24 @@ class App extends Component {
 
   render() {
     return (
+      <div>
+      <Navbar bg="dark" variant="dark">
+        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Nav className="mr-auto">
+          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="#features">Features</Nav.Link>
+          <Nav.Link href="#pricing">Pricing</Nav.Link>
+        </Nav>
+      </Navbar>
+
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-logo">DrinkyLand</h1>
-          <p>{this.state.players}</p>
-        </header>
+        <StatusBar location="yo mama's house" name="Bob" color="purple" />
         <div class="board">
           {this.tiles}
         </div>
       </div>
+    </div>
+      // </>
     );
   }
 }
