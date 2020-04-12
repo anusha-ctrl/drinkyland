@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Tile from './Tile';
 import './App.css';
 //import {css, scss, js, bootstrap} from './lib'
 import * from jquery
@@ -7,10 +7,21 @@ import * as css from './css/grayscale.css'
 import * as js from './js/grayscale.js'
 import firebase from './firebase.js'; // <--- add this line
 
+
 class App extends Component {
+  tiles = [];
+
   constructor() {
     super();
-    this.state = {playerVal: 'local value here so far'}
+
+    this.tiles = [];
+    for (let i = 0; i < 50; i++){
+      this.tiles.push(<Tile/>);
+    }
+
+    this.state = {
+      playerVal: "trying to connect to firebase.."
+    }
   }
 
   componentDidMount() {
