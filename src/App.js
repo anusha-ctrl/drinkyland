@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Tile from './Tile';
 import './App.css';
 import firebase from './firebase.js';
-import { Button, Row, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
+import {Button, Row, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
 
 
 class App extends Component {
