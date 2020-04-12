@@ -1,13 +1,17 @@
 .tile {
   position:relative;
-  width:10vw;
-  height:10vw;
   float:left;
-  text-align:center;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  outline: 5px black;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 2px solid lime;
 }
 
 .action {
-  background: teal;
+  background-color: teal;
   color:white;
 }
 
