@@ -10,8 +10,27 @@ class App extends Component {
     super();
 
     this.tiles = [];
-    for (let i = 0; i < 50; i++){
-      this.tiles.push(<Tile/>);
+    // Row 1
+    for (let i = 0; i < 10; i++){
+      this.tiles.push(<Tile action='drink' type='action'/>);
+    }
+    // Row 2
+    for (let i = 0; i < 9; i++){
+      this.tiles.push(<Tile type='empty'/>);
+    }
+    this.tiles.push(<Tile action='drink' type='action'/>);
+    // Row 3
+    for (let i = 0; i < 10; i++){
+      this.tiles.push(<Tile action='drink' type='action'/>);
+    }
+    // Row 4
+    this.tiles.push(<Tile action='drink' type='action'/>);
+    for (let i = 0; i < 9; i++){
+      this.tiles.push(<Tile type='empty'/>);
+    }
+    // Row 5
+    for (let i = 0; i < 10; i++){
+      this.tiles.push(<Tile action='drink' type='action'/>);
     }
 
     this.state = {

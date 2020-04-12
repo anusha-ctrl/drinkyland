@@ -4,8 +4,8 @@ import './tile.css';
 class Tile extends Component {
   render(){
     return (
-      <div class="tile" style={{background: getRandomColor()}}>
-        <p>Drink</p>
+      <div class={"tile " + this.props.type}>
+        <p>{this.props.action}</p>
       </div>
     )
   }
