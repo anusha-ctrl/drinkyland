@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Tile from './Tile';
 import './App.css';
 import firebase from './firebase.js';
-import { Button, Row, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
+import { Button, Row, Navbar, Nav, Jumbotron } from 'react-bootstrap';
 
 
 class App extends Component {
@@ -62,6 +62,16 @@ class App extends Component {
           <Nav.Link href="#pricing">Pricing</Nav.Link>
         </Nav>
       </Navbar>
+
+      <Jumbotron>
+        <h1>Player Status</h1>
+        <p>
+          Name: 
+        </p>
+        <p>
+          Color:
+        </p>
+      </Jumbotron>
 
       <div className="App">
         <header className="App-header">
