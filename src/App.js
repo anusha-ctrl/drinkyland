@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Tile from './Tile';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Button, Row, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
 import firebase from './firebase.js';
 
 
@@ -51,15 +53,27 @@ class App extends Component {
 
   render() {
     return (
+      <>
+      <Navbar bg="dark" variant="dark">
+        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Nav className="mr-auto">
+          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="#features">Features</Nav.Link>
+          <Nav.Link href="#pricing">Pricing</Nav.Link>
+        </Nav>
+      </Navbar>
+
       <div className="App">
         <header className="App-header">
           <h1 className="App-logo">DrinkyLand</h1>
           <p>{this.state.players}</p>
         </header>
+
         <div class="board">
           {this.tiles}
         </div>
       </div>
+      </>
     );
   }
 }
