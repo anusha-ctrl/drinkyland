@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Tile from './Tile';
 import './App.css';
-import firebase from './firebase.js'; // <--- add this line
+import firebase from './firebase.js';
 
 class App extends Component {
+  tiles = [];
+
   constructor() {
     super();
-    this.state = {playerVal: 'local value here so far'}
+
+    this.tiles = [];
+    for (let i = 0; i < 50; i++){
+      this.tiles.push(<Tile/>);
+    }
+
+    this.state = {
+      playerVal: "trying to connect to firebase.."
+    }
   }
 
   componentDidMount() {
@@ -23,9 +33,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-logo">DrinkyLand</h1>
+          <h1>DrinkyLand</h1>
           <p>{this.state.players}</p>
         </header>
+        <div class="board">
+          {this.tiles}
+        </div>
       </div>
     );
   }
