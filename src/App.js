@@ -3,13 +3,8 @@ import Tile from './Tile';
 import StatusBar from './StatusBar';
 import './App.css';
 import firebase from './firebase.js';
-<<<<<<< HEAD
-import { Button, Row, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-=======
 import { Button, Row, Navbar, Nav, Jumbotron } from 'react-bootstrap';
->>>>>>> 506eb32c6fcc7e9a978d052d7fd142795e64c0cf
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class App extends Component {
