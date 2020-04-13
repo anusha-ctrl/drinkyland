@@ -21,4 +21,6 @@
 
 .tile-players {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }

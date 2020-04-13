@@ -65,6 +65,7 @@ class App extends Component {
       // Every other odd row is on the left, the rest are on the right
       else {
         if (i%4 == 3){
+          var actionIndex = prior;
           tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]}/>);
           for (var j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols}/>);
@@ -73,6 +74,7 @@ class App extends Component {
           for (var j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols}/>);
           }
+          var actionIndex = prior;
           tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]}/>);
         }
       }
@@ -99,8 +101,6 @@ class App extends Component {
     const ref = firebase.database().ref('players/'+curr);
     ref.set(playerInfo);
 
-
-    console.log(this.state.roll);
     // const newLoc = currPlayer.location;
     // const color = currPlayer.color;
     // const name = currPlayer.name;
@@ -111,13 +111,17 @@ class App extends Component {
   resetGame() {
     const ref = firebase.database().ref('players');
     ref.set({
-       0: {pos: 0, color: 'blue', name: 'Nami'},
-       1: {pos: 0, color: 'red', name: 'Chillara'},
-       2: {pos: 0, color: 'green', name: 'Pavi'},
-       3: {pos: 0, color: 'lime', name: 'Maya'},
-       4: {pos: 0, color: 'mauve', name: 'Mahima'},
-       5: {pos: 0, color: 'burgandy', name: 'Devdo'}
+       0: {pos: 0, color: 'red', name: 'Nami'},
+       1: {pos: 0, color: 'orange', name: 'Chillara'},
+       2: {pos: 0, color: 'yellow', name: 'Pavi'},
+       3: {pos: 0, color: 'aquamarine', name: 'Maya'},
+       4: {pos: 0, color: 'blue', name: 'Mahima'},
+       5: {pos: 0, color: 'purple', name: 'Devdo'}
      });
+     this.setState({
+       curr_player: 0,
+       roll: -1,
+     })
   }
 
   componentDidMount() {
@@ -151,7 +155,7 @@ class App extends Component {
               Click me!
             </button>
             <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
-            <Navbar.Text className="ml-10 mr-10"><strong>Current Player:</strong> { this.state.curr_player } </Navbar.Text>
+            <Navbar.Text className="ml-10 mr-10"><strong>Current Player:</strong> { (this.state.players[this.state.curr_player]??{})['name'] } </Navbar.Text>
             <button className="mr-10" onClick={() => this.resetGame()}>
               Reset Game
             </button>
