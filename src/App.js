@@ -1,7 +1,5 @@
 import React, { Component, useCallback} from 'react';
 import Tile from './Tile';
-import Signin from './Signin';
-import Main  from './Main';
 import './App.css';
 import firebase from './firebase.js';
 import { Button, Row, Navbar, Nav, Jumbotron } from 'react-bootstrap';
@@ -100,7 +98,6 @@ class App extends Component {
   render() {
     return (
       <div>
-      <Main />
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="#home">Navbar</Navbar.Brand>
         <Nav className="mr-auto">
