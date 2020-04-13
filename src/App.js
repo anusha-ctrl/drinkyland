@@ -1,10 +1,7 @@
 import React, { Component, useCallback} from 'react';
 import Tile from './Tile';
-<<<<<<< HEAD
 import StatusBar from './StatusBar';
 import Signin from './Signin';
-=======
->>>>>>> 206a9674f6de56fe63d1320c1e1da0ac3f219f2e
 import './App.css';
 import firebase from './firebase.js';
 import { Button, Row, Navbar, Nav, Jumbotron } from 'react-bootstrap';
