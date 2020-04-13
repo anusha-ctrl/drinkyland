@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, useCallback} from 'react';
 import Tile from './Tile';
 import StatusBar from './StatusBar';
 import './App.css';
@@ -10,7 +10,6 @@ const actions = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','1
 
 class App extends Component {
   tiles = [];
-
   constructor() {
     super();
 
@@ -54,8 +53,33 @@ class App extends Component {
 
     this.state = {
       playerVal: "trying to connect to firebase..",
-      tiles: initial_tiles
+      tiles: initial_tiles,
+      players : [],
+      num_players: 5,
+      curr_player: 0,
+      available_colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+      all_colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+      roll: -1,
     }
+  }
+
+  rollDice() {
+    // const index = this.state.curr_player;
+    // const currPlayer = this.state.players[index];
+    const roll = Math.floor(Math.random() * 6) + 1;
+    const curr = this.state.curr_player;
+    const next = (curr + 1) % this.state.num_players;
+    this.setState({
+      roll: roll,
+      curr_player: next
+    });
+
+    console.log(this.state.roll);
+    // const newLoc = currPlayer.location;
+    // const color = currPlayer.color;
+    // const name = currPlayer.name;
+    // this.state.players[index] = {name : name, location : newLoc, color : color};
+    return roll;
   }
 
   componentDidMount() {
@@ -80,8 +104,12 @@ class App extends Component {
         </Nav>
       </Navbar>
 
+      <button onClick={() => this.rollDice()}>
+        Click me!
+      </button>
+
       <div className="App">
-        <StatusBar location="yo mama's house" name="Bob" color="purple" />
+        <StatusBar roll={this.state.roll} curr_player={this.state.curr_player} />
         <div class="board">
           {this.state.tiles}
         </div>

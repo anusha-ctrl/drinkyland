@@ -11,7 +11,7 @@ import React, {Component} from "react";
   // personal ID
   // name
 //FLOW:
-  // User "logs in". Enters their name. Code instantiates a Player.
+  // User "logs in". Enters their name. Code (The Game) instantiates a Player.
   // The Game (calling Firebase) will assign the player one of the remaining
   // colors. <Player name=name color=color loc=loc/>
   // Moves: On players turn, users will call The Game's function to roll dice.
@@ -37,6 +37,13 @@ export default class Player extends Component {
 }
 
 function getLocation() {
-  //Returns the square/location that player is on
   return this.state.location;
+}
+
+function getName() {
+  return this.state.name;
+}
+
+function getColor() {
+  return this.state.color;
 }
