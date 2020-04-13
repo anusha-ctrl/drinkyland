@@ -1,27 +1,39 @@
 import React, {Component} from "react";
-import {Form, FormControl } from 'react-bootstrap';
+import {Form, FormControl, Button } from 'react-bootstrap';
+import firebase from './firebase.js';
 
-class NameForm extends Component {
+export default class Signin extends Component{
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.name = React.createRef();
+    this.RoomID = ''
+    this.NumPlayer = ''
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.name.current.value);
+    const gameInfo = firebase.database().ref('gameInfo');
+    console.log(event.target.formRoomID.value);
+    gameInfo.push({
+       roomID: event.target.formRoomID.value,
+       numPlayer: event.target.formNumPlayer.value
+     });
     event.preventDefault();
   }
 
   render() {
     return (
-      <Form>
-        <Form.Group controlId="formName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control type="text" placeholder="Enter email" />
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Group controlId="formRoomID">
+          <Form.Label>Room ID</Form.Label>
+          <Form.Control type="text" placeholder="Enter room id" />
         </Form.Group>
 
-        <Button variant="primary" type="submit" onclick="handleSubmit">
+        <Form.Group controlId="formNumPlayer">
+          <Form.Label>Number of Players</Form.Label>
+          <Form.Control type="text" placeholder="Enter number of players" />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" >
           Submit
         </Button>
       </Form>
