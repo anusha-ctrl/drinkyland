@@ -12,6 +12,7 @@ export default class Signin extends Component{
   }
 
   handleSubmit(event) {
+    console.log("Entered handleSubmit");
     const gameInfo = firebase.database().ref('gameInfo');
     console.log(event.target.formRoomID.value);
     gameInfo.push({
@@ -24,7 +25,7 @@ export default class Signin extends Component{
   render() {
     return (
       <div>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={() => this.handleSubmit()}>
           <Form.Group controlId="formRoomID">
             <Form.Label>Room ID</Form.Label>
             <Form.Control type="text" placeholder="Enter room id" />

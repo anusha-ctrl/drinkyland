@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import './tile.css';
 
 class Tile extends Component {
-  constructor(props){
-    super(props);
-    // this.state = {
-    //   players: []
-    // };
-  }
+  // constructor(props){
+  //   super(props);
+  //   // this.state = {
+  //   //   players: []
+  //   // };
+  // }
 
   render(){
     return (
-      <div class={"tile " + this.props.type} style={{width: 100/this.props.cols+'vw', height: 100/this.props.cols+'vw'}}>
+      <div className={"tile " + this.props.type} style={{width: 100/this.props.cols+'vw', height: 100/this.props.cols+'vw'}}>
         <p>{this.props.action}</p>
-        <div class="tile-players">
+        <div className="tile-players">
           {this.props.players}
         </div>
       </div>

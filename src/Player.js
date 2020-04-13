@@ -33,7 +33,7 @@ export default class Player extends Component {
   render() {
     return (
       // <img src="public/red_piece.png" height="70px" width="100px"/>
-      <div class="player" style={{background: this.props.color}}>
+      <div className="player" style={{background: this.props.color}}>
         <p>{this.props.name[0]}</p>
       </div>
     );
