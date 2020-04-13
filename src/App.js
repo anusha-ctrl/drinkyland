@@ -84,8 +84,6 @@ class App extends Component {
       }
     }
 
-    console.log(playerMap);
-
     return tiles;
   }
 

@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Form, Button } from 'react-bootstrap';
 import firebase from './firebase.js';
-import { NavLink } from 'react-router-dom';
 
 export default class Signin extends Component{
   constructor(props) {
@@ -19,13 +18,14 @@ export default class Signin extends Component{
        roomID: event.target.formRoomID.value,
        numPlayer: event.target.formNumPlayer.value
      });
+    this.props.history.push("/game");
     event.preventDefault();
   }
 
   render() {
     return (
       <div>
-        <Form onSubmit={() => this.handleSubmit()}>
+        <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="formRoomID">
             <Form.Label>Room ID</Form.Label>
             <Form.Control type="text" placeholder="Enter room id" />
@@ -35,11 +35,9 @@ export default class Signin extends Component{
             <Form.Label>Number of Players</Form.Label>
             <Form.Control type="text" placeholder="Enter number of players" />
           </Form.Group>
-          <NavLink to="/game">
-            <Button variant="primary" type="submit" >
-              Submit
-            </Button>
-          </NavLink>
+          <Button variant="primary" type="submit" >
+            Submit
+          </Button>
         </Form>
       </div>
     );
