@@ -18,3 +18,7 @@
 .empty {
 
 }
+
+.tile-players {
+  display: flex;
+}

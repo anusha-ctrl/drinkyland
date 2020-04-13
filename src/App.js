@@ -1,5 +1,6 @@
 import React, { Component, useCallback} from 'react';
 import Tile from './Tile';
+import Player from './Player';
 import Signin from './Signin';
 import './App.css';
 import firebase from './firebase.js';
@@ -30,6 +31,19 @@ class App extends Component {
 
     var tiles = [];
 
+    // Put players into a map from tile to players
+    var playerMap = {};
+    for (var i=0; i<players.length; i++){
+      var playerID = i;
+      var player = players[i];
+      var pos = player['pos'];
+      let comp = <Player location={player['pos']} name={player['name']} color={player['color']}/>;
+
+      var tileList = (playerMap[pos] ?? []);
+      tileList.push(comp);
+      playerMap[pos] = tileList;
+    }
+
     // Generate each row
     for (var i = 0; i < actions.length*2/cols; i++){
       // The number of actions we've already shown in the past
@@ -43,7 +57,7 @@ class App extends Component {
           if (i%4 == 2){
             actionIndex = prior + cols - j - 1;
           }
-          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols}/>);
+          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]}/>);
         }
       }
 
@@ -51,7 +65,7 @@ class App extends Component {
       // Every other odd row is on the left, the rest are on the right
       else {
         if (i%4 == 3){
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]}/>);
           for (var j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols}/>);
           }
@@ -59,10 +73,12 @@ class App extends Component {
           for (var j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols}/>);
           }
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]}/>);
         }
       }
     }
+
+    console.log(playerMap);
 
     return tiles;
   }
@@ -78,6 +94,12 @@ class App extends Component {
       curr_player: next
     });
 
+    var playerInfo = this.state.players[curr];
+    playerInfo['pos'] = playerInfo['pos'] + roll;
+    const ref = firebase.database().ref('players/'+curr);
+    ref.set(playerInfo);
+
+
     console.log(this.state.roll);
     // const newLoc = currPlayer.location;
     // const color = currPlayer.color;
@@ -86,12 +108,26 @@ class App extends Component {
     return roll;
   }
 
+  resetGame() {
+    const ref = firebase.database().ref('players');
+    ref.set({
+       0: {pos: 0, color: 'blue', name: 'Nami'},
+       1: {pos: 0, color: 'red', name: 'Chillara'},
+       2: {pos: 0, color: 'green', name: 'Pavi'},
+       3: {pos: 0, color: 'lime', name: 'Maya'},
+       4: {pos: 0, color: 'mauve', name: 'Mahima'},
+       5: {pos: 0, color: 'burgandy', name: 'Devdo'}
+     });
+  }
+
   componentDidMount() {
     const playersRef = firebase.database().ref('players');
     playersRef.on('value', (snapshot) => {
-      let playerVal = snapshot.val();
+      let playersVal = snapshot.val();
+
       this.setState({
-        players: playerVal
+        players: playersVal,
+        tiles: this.genTiles(playersVal)
       });
     })
   }
@@ -108,9 +144,6 @@ class App extends Component {
         </Nav>
       </Navbar>
 
-
-
-
       <div className="App">
         <Navbar bg="light">
           <Nav className="mr-auto">
@@ -119,6 +152,9 @@ class App extends Component {
             </button>
             <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
             <Navbar.Text className="ml-10 mr-10"><strong>Current Player:</strong> { this.state.curr_player } </Navbar.Text>
+            <button className="mr-10" onClick={() => this.resetGame()}>
+              Reset Game
+            </button>
           </Nav>
         </Navbar>
 
