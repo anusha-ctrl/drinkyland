@@ -12,11 +12,26 @@ class App extends Component {
   tiles = [];
   constructor() {
     super();
+    var initial_tiles = this.genTiles([]);
 
+    this.state = {
+      playerVal: "trying to connect to firebase..",
+      tiles: initial_tiles,
+      players : [],
+      num_players: 5,
+      curr_player: 0,
+      available_colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+      all_colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+      roll: -1,
+    }
+  }
+
+  genTiles(players){
     var cols = 10;
     var cur_action = '';
 
-    var initial_tiles = [];
+    var tiles = [];
+
     // Generate each row
     for (var i = 0; i < actions.length*2/cols; i++){
       // The number of actions we've already shown in the past
@@ -30,7 +45,7 @@ class App extends Component {
           if (i%4 == 2){
             actionIndex = prior + cols - j - 1;
           }
-          initial_tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols}/>);
+          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols}/>);
         }
       }
 
@@ -38,29 +53,20 @@ class App extends Component {
       // Every other odd row is on the left, the rest are on the right
       else {
         if (i%4 == 3){
-          initial_tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
           for (var j=0; j < cols-1; j++){
-            initial_tiles.push(<Tile type='empty' cols={cols}/>);
+            tiles.push(<Tile type='empty' cols={cols}/>);
           }
         } else {
           for (var j=0; j < cols-1; j++){
-            initial_tiles.push(<Tile type='empty' cols={cols}/>);
+            tiles.push(<Tile type='empty' cols={cols}/>);
           }
-          initial_tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
         }
       }
     }
 
-    this.state = {
-      playerVal: "trying to connect to firebase..",
-      tiles: initial_tiles,
-      players : [],
-      num_players: 5,
-      curr_player: 0,
-      available_colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
-      all_colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
-      roll: -1,
-    }
+    return tiles;
   }
 
   rollDice() {
