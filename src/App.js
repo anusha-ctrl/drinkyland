@@ -17,7 +17,7 @@ class App extends Component {
     var cols = 10;
     var cur_action = '';
 
-    this.tiles = [];
+    var initial_tiles = [];
     // Generate each row
     for (var i = 0; i < actions.length*2/cols; i++){
       // The number of actions we've already shown in the past
@@ -31,7 +31,7 @@ class App extends Component {
           if (i%4 == 2){
             actionIndex = prior + cols - j - 1;
           }
-          this.tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols}/>);
+          initial_tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols}/>);
         }
       }
 
@@ -39,21 +39,22 @@ class App extends Component {
       // Every other odd row is on the left, the rest are on the right
       else {
         if (i%4 == 3){
-          this.tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
+          initial_tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
           for (var j=0; j < cols-1; j++){
-            this.tiles.push(<Tile type='empty' cols={cols}/>);
+            initial_tiles.push(<Tile type='empty' cols={cols}/>);
           }
         } else {
           for (var j=0; j < cols-1; j++){
-            this.tiles.push(<Tile type='empty' cols={cols}/>);
+            initial_tiles.push(<Tile type='empty' cols={cols}/>);
           }
-          this.tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
+          initial_tiles.push(<Tile action={actions[prior]} type='action' cols={cols}/>);
         }
       }
     }
 
     this.state = {
-      playerVal: "trying to connect to firebase.."
+      playerVal: "trying to connect to firebase..",
+      tiles: initial_tiles
     }
   }
 
@@ -82,7 +83,7 @@ class App extends Component {
       <div className="App">
         <StatusBar location="yo mama's house" name="Bob" color="purple" />
         <div class="board">
-          {this.tiles}
+          {this.state.tiles}
         </div>
       </div>
     </div>
