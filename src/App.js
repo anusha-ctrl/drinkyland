@@ -113,8 +113,8 @@ class App extends Component {
     ref.set({
        0: {pos: 0, color: 'red', name: 'Nami'},
        1: {pos: 0, color: 'orange', name: 'Chillara'},
-       2: {pos: 0, color: 'yellow', name: 'Pavi'},
-       3: {pos: 0, color: 'aquamarine', name: 'Maya'},
+       2: {pos: 0, color: 'crimson', name: 'Pavi'},
+       3: {pos: 0, color: 'blueviolet', name: 'Maya'},
        4: {pos: 0, color: 'blue', name: 'Mahima'},
        5: {pos: 0, color: 'purple', name: 'Devdo'}
      });

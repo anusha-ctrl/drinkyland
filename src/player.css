@@ -6,4 +6,10 @@
   justify-content: center;
   font-size:10px;
   font-weight:800;
+
+  border: 1px solid white;
+}
+
+.player p {
+  margin:auto;
 }
