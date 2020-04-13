@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import './player.css';
 
 // Player pieces are images
 // Player needs an ID. Default is 0. Set ID later.
@@ -31,19 +32,24 @@ export default class Player extends Component {
 
   render() {
     return (
-      <img src="public/red_piece.png" height="70px" width="100px"/>
+      // <img src="public/red_piece.png" height="70px" width="100px"/>
+      <div class="player" style={{background: this.props.color}}></div>
     );
   }
-}
 
-function getLocation() {
-  return this.state.location;
-}
+  getLocation() {
+    return this.state.location;
+  }
 
-function getName() {
-  return this.state.name;
-}
+  getName() {
+    return this.state.name;
+  }
 
-function getColor() {
-  return this.state.color;
+  getID() {
+    return this.state.name;
+  }
+
+  getColor() {
+    return this.state.color;
+  }
 }
