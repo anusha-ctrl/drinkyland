@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Tile from './Tile';
+import StatusBar from './StatusBar';
+import Signin from './Signin';
 import './App.css';
 import firebase from './firebase.js';
-import {Button, Row, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
+import { Button, Row, Navbar, Nav, Jumbotron } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class App extends Component {
@@ -52,8 +55,7 @@ class App extends Component {
 
   render() {
     return (
-
-      <>
+      <div>
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="#home">Navbar</Navbar.Brand>
         <Nav className="mr-auto">
@@ -64,15 +66,12 @@ class App extends Component {
       </Navbar>
 
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-logo">DrinkyLand</h1>
-          <p>{this.state.players}</p>
-        </header>
+        <StatusBar location="yo mama's house" name="Bob" color="purple" />
         <div class="board">
           {this.tiles}
         </div>
       </div>
-      </>
+    </div>
     );
   }
 }
