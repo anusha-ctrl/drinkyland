@@ -10,7 +10,6 @@ const actions = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','1
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
 class App extends Component {
-  tiles = [];
   constructor() {
     super();
     var initial_tiles = this.genTiles([]);
