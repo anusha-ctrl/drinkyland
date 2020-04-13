@@ -1,7 +1,6 @@
 import React, { Component, useCallback} from 'react';
 import Tile from './Tile';
 import Player from './Player';
-import Signin from './Signin';
 import './App.css';
 import firebase from './firebase.js';
 import { Button, Row, Navbar, Nav, Jumbotron } from 'react-bootstrap';

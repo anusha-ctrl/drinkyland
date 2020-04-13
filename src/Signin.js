@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import {Form, FormControl, Button, Nav } from 'react-bootstrap';
+import {Form, Button } from 'react-bootstrap';
 import firebase from './firebase.js';
-import  Main from './Main';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default class Signin extends Component{
   constructor(props) {
@@ -25,7 +24,6 @@ export default class Signin extends Component{
   render() {
     return (
       <div>
-        <Main />
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="formRoomID">
             <Form.Label>Room ID</Form.Label>
@@ -36,11 +34,11 @@ export default class Signin extends Component{
             <Form.Label>Number of Players</Form.Label>
             <Form.Control type="text" placeholder="Enter number of players" />
           </Form.Group>
-          <Link to="/">
+          <NavLink to="/game">
             <Button variant="primary" type="submit" >
               Submit
             </Button>
-          </Link>
+          </NavLink>
         </Form>
       </div>
     );

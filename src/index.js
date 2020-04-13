@@ -4,11 +4,16 @@ import './index.css';
 import App from './App';
 import Signin from './Signin';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 ReactDOM.render(
    <BrowserRouter>
-    <Signin />
+     <div>
+      <Switch>
+        <Route path="/" component={Signin} exact/>
+        <Route path="/game" component={App} exact/>
+      </Switch>
+     </div>
    </BrowserRouter>,
   document.getElementById('root')
 );
