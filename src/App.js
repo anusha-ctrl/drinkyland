@@ -6,6 +6,7 @@ import { Button, Row, Navbar, Nav, Jumbotron } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const actions = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
+const available_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
 class App extends Component {
   tiles = [];
@@ -54,10 +55,8 @@ class App extends Component {
       playerVal: "trying to connect to firebase..",
       tiles: initial_tiles,
       players : [],
-      num_players: 5,
       curr_player: 0,
-      available_colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
-      all_colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+      all_colors: available_colors,
       roll: -1,
     }
   }
@@ -67,7 +66,7 @@ class App extends Component {
     // const currPlayer = this.state.players[index];
     const roll = Math.floor(Math.random() * 6) + 1;
     const curr = this.state.curr_player;
-    const next = (curr + 1) % this.state.num_players;
+    const next = (curr + 1) % this.state.players.length;
     this.setState({
       roll: roll,
       curr_player: next
@@ -108,11 +107,13 @@ class App extends Component {
 
       <div className="App">
         <Navbar bg="light">
-          <button onClick={() => this.rollDice()}>
-            Click me!
-          </button>
-          <Navbar.Text>Roll: {this.state.roll} </Navbar.Text>
-          <Navbar.Text>Current Player: { this.state.curr_player } </Navbar.Text>
+          <Nav className="mr-auto">
+            <button className="mr-10" onClick={() => this.rollDice()}>
+              Click me!
+            </button>
+            <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
+            <Navbar.Text className="ml-10 mr-10"><strong>Current Player:</strong> { this.state.curr_player } </Navbar.Text>
+          </Nav>
         </Navbar>
 
         <div class="board">
