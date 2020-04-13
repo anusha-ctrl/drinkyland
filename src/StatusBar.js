@@ -8,20 +8,14 @@ import { Navbar } from 'react-bootstrap';
 export default class StatusBar extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      name : this.props.name,
-      color : this.props.color,
-      roll : -1,
-    };
   }
 
   render () {
     return (
       <div>
         <Navbar bg="light">
-          <Navbar.Text>Your Name: { this.state.name }</Navbar.Text>
-          <Navbar.Text>Your Color: { this.state.color }</Navbar.Text>
-          <Navbar.Text>Roll: { this.state.roll } </Navbar.Text>
+          <Navbar.Text>Roll: { this.props.roll } </Navbar.Text>
+          <Navbar.Text>Current Player: { this.props.curr_player } </Navbar.Text>
         </Navbar>
       </div>
     );
