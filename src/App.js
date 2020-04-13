@@ -104,12 +104,18 @@ class App extends Component {
         </Nav>
       </Navbar>
 
-      <button onClick={() => this.rollDice()}>
-        Click me!
-      </button>
+
+
 
       <div className="App">
-        <StatusBar roll={this.state.roll} curr_player={this.state.curr_player} />
+        <Navbar bg="light">
+          <button onClick={() => this.rollDice()}>
+            Click me!
+          </button>
+          <Navbar.Text>Roll: {this.state.roll} </Navbar.Text>
+          <Navbar.Text>Current Player: { this.state.curr_player } </Navbar.Text>
+        </Navbar>
+
         <div class="board">
           {this.state.tiles}
         </div>
