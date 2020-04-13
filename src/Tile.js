@@ -4,7 +4,7 @@ import './tile.css';
 class Tile extends Component {
   render(){
     return (
-      <div class={"tile " + this.props.type}>
+      <div class={"tile " + this.props.type} style={{width: 100/this.props.cols+'vw', height: 100/this.props.cols+'vw'}}>
         <p>{this.props.action}</p>
       </div>
     )
