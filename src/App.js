@@ -10,8 +10,9 @@ const actions = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','1
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     var initial_tiles = this.genTiles([]);
 
     this.state = {
@@ -100,7 +101,7 @@ class App extends Component {
 
     var playerInfo = this.state.players[curr];
     playerInfo['pos'] = playerInfo['pos'] + roll;
-    const ref = firebase.database().ref('players/'+curr);
+    const ref = firebase.database().ref(this.props.addr+'/players/'+curr);
     ref.set(playerInfo);
 
     // const newLoc = currPlayer.location;
@@ -111,7 +112,7 @@ class App extends Component {
   }
 
   resetGame() {
-    const ref = firebase.database().ref('players');
+    const ref = firebase.database().ref(this.props.addr+'/players');
     ref.set({
        0: {pos: 0, color: 'red', name: 'Nami'},
        1: {pos: 0, color: 'orange', name: 'Chillara'},
@@ -127,7 +128,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const playersRef = firebase.database().ref('players');
+    const playersRef = firebase.database().ref(this.props.addr+'/players');
     playersRef.on('value', (snapshot) => {
       let playersVal = snapshot.val();
 

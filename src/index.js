@@ -1,20 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import Signin from './Signin';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 ReactDOM.render(
-   <BrowserRouter>
-     <div>
-      <Switch>
-        <Route path="/" component={Signin} exact/>
-        <Route path="/game" component={App} exact/>
-      </Switch>
-     </div>
-   </BrowserRouter>,
+  <Signin />,
   document.getElementById('root')
 );
 
