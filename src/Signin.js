@@ -25,13 +25,17 @@ export default class Signin extends Component{
       roomID = this.generateRoomID().toString();
       currGame.update({
         [roomID]: {players: {
-          0: {pos: 0, color: 'red', name: 'Nami'},
-          1: {pos: 0, color: 'orange', name: 'Chillara'},
-          2: {pos: 0, color: 'crimson', name: 'Pavi'},
-          3: {pos: 0, color: 'blueviolet', name: 'Maya'},
-          4: {pos: 0, color: 'blue', name: 'Mahima'},
-          5: {pos: 0, color: 'purple', name: 'Devdo'}
-        }},
+          0: {pos: 0, color: 'red', name: 'Nami', drink: 'margarita'},
+          1: {pos: 0, color: 'orange', name: 'Chillara', drink: 'wine'},
+          2: {pos: 0, color: 'crimson', name: 'Pavi', drink: 'martini'},
+          3: {pos: 0, color: 'blueviolet', name: 'Maya', drink: 'beer'},
+          4: {pos: 0, color: 'blue', name: 'Mahima', drink: 'champagne'},
+          5: {pos: 0, color: 'purple', name: 'Devdo', drink: 'whiskey'},
+          6: {pos: 0, color: 'teal', name: 'Arka', drink: 'lemonade'}
+        },
+        curr_player: 0,
+        roll: -1,
+      },
       });
     }
 
