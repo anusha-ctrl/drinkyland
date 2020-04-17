@@ -24,14 +24,10 @@ export default class Signin extends Component{
     if (roomID === null || roomID === '' || roomID === undefined) {
       roomID = this.generateRoomID().toString();
       currGame.update({
-        [roomID]: {players: {
-          0: {pos: 0, color: 'red', name: 'Nami'},
-          1: {pos: 0, color: 'orange', name: 'Chillara'},
-          2: {pos: 0, color: 'crimson', name: 'Pavi'},
-          3: {pos: 0, color: 'blueviolet', name: 'Maya'},
-          4: {pos: 0, color: 'blue', name: 'Mahima'},
-          5: {pos: 0, color: 'purple', name: 'Devdo'}
-        }},
+        [roomID]: {players: "",
+        curr_player: 0,
+        roll: -1,
+      },
       });
     }
 
