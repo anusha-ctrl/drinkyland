@@ -7,7 +7,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Bartender from './Bartender.js';
 
-const actions = ['Start','Drink 2','Drink 3','Drink 4','Drink 5','Drink 6','Drink 7','Drink 8','Drink 9','Drink 10'].concat(Array.from({length: 56}, (_, i) => (i+11).toString()));
+const actions = ['Start'].concat(Array.from({length: 65}, (_, i) => 'Drink '+ (i+2))).concat(['End']);
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(237,244,55)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
