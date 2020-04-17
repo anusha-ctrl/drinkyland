@@ -18,6 +18,8 @@ html{
   radial-gradient(circle at 100% 50%, $bg-color1 5%, $bg-color2 5%, $bg-color2 15%, $bg-color1 15%, $bg-color1 20%, $bg-color2 20%, $bg-color2 29%, $bg-color1 29%, $bg-color1 34%, $bg-color2 34%, $bg-color2 44%, $bg-color1 44%, $bg-color1 49%, transparent 49%, transparent),
   radial-gradient(circle at 0    50%, $bg-color1 5%, $bg-color2 5%, $bg-color2 15%, $bg-color1 15%, $bg-color1 20%, $bg-color2 20%, $bg-color2 29%, $bg-color1 29%, $bg-color1 34%, $bg-color2 34%, $bg-color2 44%, $bg-color1 44%, $bg-color1 49%, transparent 49%, transparent);
   background-size: 100px 50px;
+
+  touch-action: manipulation;
 }
 
 .App {
