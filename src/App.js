@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Tile from './Tile';
 import Player from './Player';
-import './App.css';
+import './App.scss';
 import firebase from './firebase.js';
 import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Bartender from './Bartender.js';
+import useWindowDimensions from './hooks/useWindowDimensions';
 
-const actions = ['Start','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
+const actions = ['Start','Drink 2','Drink 3','Drink 4','Drink 5','Drink 6','Drink 7','Drink 8','Drink 9','Drink 10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(237,244,55)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
@@ -149,27 +150,22 @@ class App extends Component {
     return (
       <div>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">DrinkyLand</Navbar.Brand>
+        <h1 className="logo">DrinkyLand</h1>
         <Nav className="mr-auto">
-          <Nav.Link href="/">Switch Games</Nav.Link>
+          <Nav.Link className="ml-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
         </Nav>
       </Navbar>
 
       <div className="App">
-        <Navbar bg="light">
-          <Nav className="mr-auto">
+        <Navbar className="inner-navbar">
             <button className="mr-10" onClick={() => this.rollDice()}>
               Click me!
             </button>
             <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
-            <Navbar.Text className="ml-10 mr-10 curr_player_label">
+            <Navbar.Text className="ml-10 mr-10">
               <div class="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
               <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
             </Navbar.Text>
-            <button className="mr-10" onClick={() => this.resetGame()}>
-              Reset Game
-            </button>
-          </Nav>
         </Navbar>
 
         <div className="board">

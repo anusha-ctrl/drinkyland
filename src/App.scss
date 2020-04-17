@@ -1,0 +1,114 @@
+//fonts
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+$bg-color1: #111;
+$bg-color2: #181818;
+
+$nav-bg-color1: #fff;
+$nav-bg-color2: #fff;
+
+html{
+  background: white !important;
+
+  background-color:$bg-color2;
+  background-image:
+  radial-gradient(circle at 100% 150%, $bg-color2 24%, $bg-color1 24%, $bg-color1 28%, $bg-color2 28%, $bg-color2 36%, $bg-color1 36%, $bg-color1 40%, transparent 40%, transparent),
+  radial-gradient(circle at 0    150%, $bg-color2 24%, $bg-color1 24%, $bg-color1 28%, $bg-color2 28%, $bg-color2 36%, $bg-color1 36%, $bg-color1 40%, transparent 40%, transparent),
+  radial-gradient(circle at 50%  100%, $bg-color1 10%, $bg-color2 10%, $bg-color2 23%, $bg-color1 23%, $bg-color1 30%, $bg-color2 30%, $bg-color2 43%, $bg-color1 43%, $bg-color1 50%, $bg-color2 50%, $bg-color2 63%, $bg-color1 63%, $bg-color1 71%, transparent 71%, transparent),
+  radial-gradient(circle at 100% 50%, $bg-color1 5%, $bg-color2 5%, $bg-color2 15%, $bg-color1 15%, $bg-color1 20%, $bg-color2 20%, $bg-color2 29%, $bg-color1 29%, $bg-color1 34%, $bg-color2 34%, $bg-color2 44%, $bg-color1 44%, $bg-color1 49%, transparent 49%, transparent),
+  radial-gradient(circle at 0    50%, $bg-color1 5%, $bg-color2 5%, $bg-color2 15%, $bg-color1 15%, $bg-color1 20%, $bg-color2 20%, $bg-color2 29%, $bg-color1 29%, $bg-color1 34%, $bg-color2 34%, $bg-color2 44%, $bg-color1 44%, $bg-color1 49%, transparent 49%, transparent);
+  background-size: 100px 50px;
+}
+
+.App {
+  text-align: center;
+}
+
+.logo {
+  --color1: #fff;
+  --color2: #f542a4;
+  font-family: 'Pacifico', cursive;
+  font-weight:500;
+  text-align: center;
+  font-size: 2.5em;
+  line-height:1.8em;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color1),
+    var(--color1) 30px,
+    var(--color2) 30px,
+    var(--color2) 60px
+  );
+  background-clip: text;
+  color: rgba(255,0,0,0.2);
+  -webkit-background-clip: text;
+  animation: 40s linear 0s infinite move;
+}
+
+@keyframes move {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: 1000px;
+  }
+}
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.board {
+  background-color: #282c34;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.curr_player_label {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width:200px;
+
+  p {
+    margin:0;
+  }
+}
+
+.inner-navbar {
+  background-color:$nav-bg-color2;
+  background-image:
+  radial-gradient(circle at 100% 150%, $nav-bg-color2 24%, $nav-bg-color1 24%, $nav-bg-color1 28%, $nav-bg-color2 28%, $nav-bg-color2 36%, $nav-bg-color1 36%, $nav-bg-color1 40%, transparent 40%, transparent),
+  radial-gradient(circle at 0    150%, $nav-bg-color2 24%, $nav-bg-color1 24%, $nav-bg-color1 28%, $nav-bg-color2 28%, $nav-bg-color2 36%, $nav-bg-color1 36%, $nav-bg-color1 40%, transparent 40%, transparent),
+  radial-gradient(circle at 50%  100%, $nav-bg-color1 10%, $nav-bg-color2 10%, $nav-bg-color2 23%, $nav-bg-color1 23%, $nav-bg-color1 30%, $nav-bg-color2 30%, $nav-bg-color2 43%, $nav-bg-color1 43%, $nav-bg-color1 50%, $nav-bg-color2 50%, $nav-bg-color2 63%, $nav-bg-color1 63%, $nav-bg-color1 71%, transparent 71%, transparent),
+  radial-gradient(circle at 100% 50%, $nav-bg-color1 5%, $nav-bg-color2 5%, $nav-bg-color2 15%, $nav-bg-color1 15%, $nav-bg-color1 20%, $nav-bg-color2 20%, $nav-bg-color2 29%, $nav-bg-color1 29%, $nav-bg-color1 34%, $nav-bg-color2 34%, $nav-bg-color2 44%, $nav-bg-color1 44%, $nav-bg-color1 49%, transparent 49%, transparent),
+  radial-gradient(circle at 0    50%, $nav-bg-color1 5%, $nav-bg-color2 5%, $nav-bg-color2 15%, $nav-bg-color1 15%, $nav-bg-color1 20%, $nav-bg-color2 20%, $nav-bg-color2 29%, $nav-bg-color1 29%, $nav-bg-color1 34%, $nav-bg-color2 34%, $nav-bg-color2 44%, $nav-bg-color1 44%, $nav-bg-color1 49%, transparent 49%, transparent);
+  background-size: 100px 50px;
+}
