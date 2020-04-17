@@ -25,6 +25,8 @@ class App extends Component {
       available_colors: all_colors,
       roll: -1,
     }
+
+    this.resetGame();
   }
 
   genTiles(players){
