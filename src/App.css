@@ -48,3 +48,10 @@
 .mr-10 {
   margin-right: 10px;
 }
+
+.curr_player_label {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width:200px;
+}

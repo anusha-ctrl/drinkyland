@@ -5,6 +5,7 @@ import './App.css';
 import firebase from './firebase.js';
 import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Bartender from './Bartender.js';
 
 const actions = ['Start','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(237,244,55)','rgb(76,183,53)','rgb(100,87,243)'];
@@ -39,7 +40,7 @@ class App extends Component {
     for (i=0; i<players.length; i++){
       var player = players[i];
       var pos = player['pos'];
-      let comp = <Player location={player['pos']} name={player['name']} color={player['color']} key={i}/>;
+      let comp = <Player location={player['pos']} name={player['name']} color={player['color']} drink={player['drink']} key={i}/>;
       var tileList = (playerMap[pos] ?? []);
       tileList.push(comp);
       playerMap[pos] = tileList;
@@ -98,15 +99,13 @@ class App extends Component {
     const roll = Math.floor(Math.random() * 6) + 1;
     const curr = this.state.curr_player;
     const next = (curr + 1) % this.state.players.length;
-    this.setState({
-      roll: roll,
-      curr_player: next
-    });
 
     var playerInfo = this.state.players[curr];
     playerInfo['pos'] = playerInfo['pos'] + roll;
     const ref = firebase.database().ref(this.props.addr+'/players/'+curr);
     ref.set(playerInfo);
+    firebase.database().ref(this.props.addr+'/curr_player').set(next);
+    firebase.database().ref(this.props.addr+'/roll').set(roll);
 
     // const newLoc = currPlayer.location;
     // const color = currPlayer.color;
@@ -116,34 +115,37 @@ class App extends Component {
   }
 
   resetGame() {
-    const ref = firebase.database().ref(this.props.addr+'/players');
+    const ref = firebase.database().ref(this.props.addr);
     ref.set({
-       0: {pos: 0, color: 'red', name: 'Nami'},
-       1: {pos: 0, color: 'orange', name: 'Chillara'},
-       2: {pos: 0, color: 'crimson', name: 'Pavi'},
-       3: {pos: 0, color: 'blueviolet', name: 'Maya'},
-       4: {pos: 0, color: 'blue', name: 'Mahima'},
-       5: {pos: 0, color: 'purple', name: 'Devdo'}
-     });
-     this.setState({
+      players: {
+         0: {pos: 0, color: 'red', name: 'Nami', drink: 'margarita'},
+         1: {pos: 0, color: 'orange', name: 'Chillara', drink: 'wine'},
+         2: {pos: 0, color: 'crimson', name: 'Pavi', drink: 'martini'},
+         3: {pos: 0, color: 'blueviolet', name: 'Maya', drink: 'beer'},
+         4: {pos: 0, color: 'blue', name: 'Mahima', drink: 'champagne'},
+         5: {pos: 0, color: 'purple', name: 'Devdo', drink: 'whiskey'},
+         6: {pos: 0, color: 'teal', name: 'Arka', drink: 'lemonade'}
+       },
        curr_player: 0,
        roll: -1,
-     })
+     });
   }
 
   componentDidMount() {
-    const playersRef = firebase.database().ref(this.props.addr+'/players');
-    playersRef.on('value', (snapshot) => {
-      let playersVal = snapshot.val();
+    const gameRef = firebase.database().ref(this.props.addr);
+    gameRef.on('value', (snapshot) => {
+      let gameState = snapshot.val();
+      gameState['players'] = gameState['players'] ?? {};
 
-      this.setState({
-        players: playersVal ?? [],
-        tiles: this.genTiles(playersVal ?? [])
-      });
-    })
+      let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['players'])});
+
+      this.setState(merged);
+    });
   }
 
   render() {
+    let player = this.state.players[this.state.curr_player] ?? {};
+
     return (
       <div>
       <Navbar bg="dark" variant="dark">
@@ -160,7 +162,10 @@ class App extends Component {
               Click me!
             </button>
             <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
-            <Navbar.Text className="ml-10 mr-10"><strong>Current Player:</strong> { (this.state.players[this.state.curr_player]??{})['name'] } </Navbar.Text>
+            <Navbar.Text className="ml-10 mr-10 curr_player_label">
+              <div class="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
+              <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
+            </Navbar.Text>
             <button className="mr-10" onClick={() => this.resetGame()}>
               Reset Game
             </button>

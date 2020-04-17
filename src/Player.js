@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import './player.css';
+import Bartender from './Bartender.js';
 
 // Player pieces are images
 // Player needs an ID. Default is 0. Set ID later.
@@ -21,20 +22,21 @@ import './player.css';
 //TODO: state = {game location, name, color}
 
 export default class Player extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
         location : this.props.location,
         name : this.props.name,
-        color : this.props.color,
+        color : this.props.color
       };
   }
 
   render() {
+
     return (
-      // <img src="public/red_piece.png" height="70px" width="100px"/>
-      <div className="player" style={{background: this.props.color}}>
-        <p>{this.props.name[0]}</p>
+      <div className="player">
+        <img src={Bartender.pour(this.props.drink)} alt={this.props.drink} className="invert"/>
       </div>
     );
   }
