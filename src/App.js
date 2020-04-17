@@ -28,8 +28,29 @@ class App extends Component {
     this.resetGame();
   }
 
-  genTiles(players){
-    var cols = 10;
+  handleResize = () => {
+    console.log(window.innerWidth);
+    console.log(this.state);
+    this.setState({
+      tiles: this.genTiles(this.state.players, window.innerWidth)
+    })
+  };
+
+  getCols(width){
+    if(width < 450){
+      return 3;
+    }
+    else if(width < 850){
+      return 5;
+    }
+    else if(width < 1400){
+      return 7;
+    }
+    return 10;
+  }
+
+  genTiles(players, width){
+    var cols = this.getCols(width);
     var tiles = [];
     var actionIndex = -1;
     var i = 0;
@@ -138,10 +159,16 @@ class App extends Component {
       let gameState = snapshot.val();
       gameState['players'] = gameState['players'] ?? {};
 
-      let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['players'])});
+      let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['players'], window.innerWidth)});
 
       this.setState(merged);
     });
+
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
   }
 
   render() {
