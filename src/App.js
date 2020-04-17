@@ -68,7 +68,7 @@ class App extends Component {
     }
 
     // Generate each row
-    for (i = 0; i < actions.length*2/cols; i++){
+    for (i = 0; i < actions.length/(cols+1)*2; i++){
       // The number of actions we've already shown in the past
       var prior = Math.ceil(i/2.0)*cols + Math.floor(i/2.0);
 
