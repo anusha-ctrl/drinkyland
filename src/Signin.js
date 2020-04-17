@@ -48,8 +48,8 @@ export default class Signin extends Component{
     }
 
     return (
-      <div class="signin-parent">
-        <div class="signin-container">
+      <div className="signin-parent">
+        <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
 
           <Form onSubmit={this.handleSubmit}>

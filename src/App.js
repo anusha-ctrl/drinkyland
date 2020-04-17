@@ -23,9 +23,8 @@ class App extends Component {
       curr_player: 0,
       available_colors: all_colors,
       roll: -1,
+      connected: false,
     }
-
-    this.resetGame();
   }
 
   handleResize = () => {
@@ -156,15 +155,24 @@ class App extends Component {
   componentDidMount() {
     const gameRef = firebase.database().ref(this.props.addr);
     gameRef.on('value', (snapshot) => {
-      let gameState = snapshot.val();
-      gameState['players'] = gameState['players'] ?? {};
+      if (!snapshot.exists()){
+        this.resetGame();
+      } else {
+        let gameState = snapshot.val();
+        gameState['players'] = gameState['players'] ?? [];
 
-      let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['players'], window.innerWidth)});
+        let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['players'], window.innerWidth)});
 
-      this.setState(merged);
+        this.setState(merged);
+      }
+
+      if (!this.state.connected){
+        this.setState({
+          connected:true
+        });
+      }
     });
-
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
@@ -175,32 +183,37 @@ class App extends Component {
     let player = this.state.players[this.state.curr_player] ?? {};
 
     return (
-      <div>
-      <Navbar bg="dark" variant="dark">
-        <h1 className="logo">DrinkyLand</h1>
-        <Nav className="mr-auto">
-          <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
-          <Nav.Link className="ml-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
-        </Nav>
-      </Navbar>
-
-      <div className="App">
-        <Navbar className="inner-navbar">
-            <button className="mr-10" onClick={() => this.rollDice()}>
-              Click me!
-            </button>
-            <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
-            <Navbar.Text className="ml-10 mr-10">
-              <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
-              <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
-            </Navbar.Text>
+      <>
+      {!this.state.connected && <div className = "connecting-overlay"><h1>Connecting...</h1></div>}
+      {this.state.connected &&
+        <div>
+        <Navbar bg="dark" variant="dark">
+          <a href="/" className="logo">DrinkyLand</a>
+          <Nav className="mr-auto">
+            <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
+            <Nav.Link className="ml-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
+          </Nav>
         </Navbar>
 
-        <div className="board">
-          {this.state.tiles}
+        <div className="App">
+          <Navbar className="inner-navbar">
+              <button className="mr-10" onClick={() => this.rollDice()}>
+                Click me!
+              </button>
+              <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
+              <Navbar.Text className="ml-10 mr-10">
+                <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
+                <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
+              </Navbar.Text>
+          </Navbar>
+
+          <div className="board">
+            {this.state.tiles}
+          </div>
         </div>
       </div>
-    </div>
+      }
+    </>
     );
   }
 }
