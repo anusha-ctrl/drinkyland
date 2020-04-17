@@ -1,0 +1,22 @@
+body {
+  background:none;
+}
+
+.signin-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signin-container {
+  width:80%;
+  margin-top: 10%;
+}
+
+.signin-container .logo {
+  font-size:6vw;
+}
+
+.signin-container form {
+  color:white
+}

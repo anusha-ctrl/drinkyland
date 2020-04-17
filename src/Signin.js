@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Form, Button } from 'react-bootstrap';
 import firebase from './firebase.js';
 import App from './App';
+import './Signin.scss';
 
 export default class Signin extends Component{
   constructor(props) {
@@ -47,16 +48,20 @@ export default class Signin extends Component{
     }
 
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="formRoomID">
-            <Form.Label>Room ID</Form.Label>
-            <Form.Control type="text" placeholder="Enter Game ID if you have one" />
-          </Form.Group>
-          <Button variant="primary" type="submit" >
-            Play Game!
-          </Button>
-        </Form>
+      <div class="signin-parent">
+        <div class="signin-container">
+          <h1 className="logo">DrinkyLand</h1>
+
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group controlId="formRoomID">
+              <Form.Label>Room ID</Form.Label>
+              <Form.Control type="text" placeholder="Enter Game ID to create or join" />
+            </Form.Group>
+            <Button variant="primary" type="submit" >
+              Play Game!
+            </Button>
+          </Form>
+        </div>
       </div>
     );
   }

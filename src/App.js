@@ -18,7 +18,6 @@ class App extends Component {
     var initial_tiles = this.genTiles([]);
 
     this.state = {
-      playerVal: "trying to connect to firebase..",
       tiles: initial_tiles,
       players : [],
       curr_player: 0,
