@@ -151,6 +151,7 @@ class App extends Component {
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="#home">DrinkyLand</Navbar.Brand>
         <Nav className="mr-auto">
+          <Navbar.Text href="/">Game Room ID: {this.props.roomID}</Navbar.Text>
           <Nav.Link href="/">Switch Games</Nav.Link>
         </Nav>
       </Navbar>
@@ -163,7 +164,7 @@ class App extends Component {
             </button>
             <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
             <Navbar.Text className="ml-10 mr-10 curr_player_label">
-              <div class="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
+              <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
               <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
             </Navbar.Text>
             <button className="mr-10" onClick={() => this.resetGame()}>
