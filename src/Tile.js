@@ -11,7 +11,7 @@ class Tile extends Component {
 
   render(){
     return (
-      <div className={"tile " + this.props.type} style={{width: 100/this.props.cols+'vw', height: 100/this.props.cols+'vw'}}>
+      <div className={"tile " + this.props.type} style={{width: 100/this.props.cols+'vw', height: 100/this.props.cols+'vw', background: this.props.color}}>
         <p>{this.props.action}</p>
         <div className="tile-players">
           {this.props.players}

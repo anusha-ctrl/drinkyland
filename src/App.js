@@ -6,7 +6,8 @@ import firebase from './firebase.js';
 import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const actions = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
+const actions = ['Start','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
+const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(237,244,55)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
 class App extends Component {
@@ -57,7 +58,8 @@ class App extends Component {
           if (i%4 === 2){
             actionIndex = prior + cols - j - 1;
           }
-          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex}/>);
+          var bgcolor = colorloop[actionIndex%colorloop.length];
+          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
         }
       }
@@ -67,7 +69,8 @@ class App extends Component {
       else {
         if (i%4 === 3){
           actionIndex = prior;
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex}/>);
+          var bgcolor = colorloop[actionIndex%colorloop.length];
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
           for (j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols} key={tileIndex}/>);
@@ -79,7 +82,8 @@ class App extends Component {
             tileIndex += 1;
           }
           actionIndex = prior;
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex}/>);
+          var bgcolor = colorloop[actionIndex%colorloop.length];
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
         }
       }
@@ -133,8 +137,8 @@ class App extends Component {
       let playersVal = snapshot.val();
 
       this.setState({
-        players: playersVal,
-        tiles: this.genTiles(playersVal)
+        players: playersVal ?? [],
+        tiles: this.genTiles(playersVal ?? [])
       });
     })
   }
@@ -143,11 +147,9 @@ class App extends Component {
     return (
       <div>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Navbar.Brand href="#home">DrinkyLand</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Nav.Link href="/">Switch Games</Nav.Link>
         </Nav>
       </Navbar>
 
