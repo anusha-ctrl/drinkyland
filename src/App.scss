@@ -40,7 +40,7 @@ html{
     var(--color2) 60px
   );
   background-clip: text;
-  color: rgba(255,0,0,0.2);
+  color: transparent;
   -webkit-background-clip: text;
   animation: 40s linear 0s infinite move;
 }
