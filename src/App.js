@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Bartender from './Bartender.js';
 
 const actions = ['Start'].concat(Array.from({length: 65}, (_, i) => 'Drink '+ (i+2))).concat(['End']);
-const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(237,244,55)','rgb(76,183,53)','rgb(100,87,243)'];
+const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(252, 198, 3)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
 class App extends Component {
