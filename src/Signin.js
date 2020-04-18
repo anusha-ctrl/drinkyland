@@ -70,20 +70,15 @@ export default class Signin extends Component{
         gameRef.set(initial_state);
       } else {
         var players = snapshot.val()['players'];
-        if (this.playerExists(name, players)) {
-          this.setState({
-            badUserName: true
-          });
-          return;
+        if (!this.playerExists(name, players)) {
+          var playerLen = players.length;
+          let playerObj = {}
+          playerObj[playerLen] = {pos: 0, color: 'nah', name: name, drink: drink}
+          gameRef.child('players').update(playerObj);
         }
-        var playerLen = players.length;
-        let playerObj = {}
-        playerObj[playerLen] = {pos: 0, color: 'nah', name: name, drink: drink}
-        gameRef.child('players').update(playerObj);
       }
       this.setState({
         roomID : roomID,
-        badUserName: false,
       });
     });
 
@@ -111,7 +106,6 @@ export default class Signin extends Component{
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control required type="text" placeholder="Enter your name"/>
-              <Form.Text className="text-danger">{this.invalidNameMessage()}</Form.Text>
             </Form.Group>
             <Form.Group controlId="drink">
               <Form.Label>Pick your drink of choice (and make it unique!)</Form.Label>
