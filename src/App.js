@@ -119,10 +119,17 @@ class App extends Component {
     const curr = this.state.curr_player;
     const next = (curr + 1) % this.state.players.length;
 
+    for (const id in this.state.players) {
+      this.state.players[id]['just_moved'] = false;
+    }
     var playerInfo = this.state.players[curr];
     playerInfo['pos'] = Math.min(playerInfo['pos'] + roll, this.state.actions.length-1);
-    const ref = firebase.database().ref(this.props.addr+'/players/'+curr);
-    ref.set(playerInfo);
+    playerInfo['just_moved'] = true;
+    this.state.players[curr] = playerInfo;
+
+    const ref = firebase.database().ref(this.props.addr+'/players');
+    ref.set(this.state.players);
+
     firebase.database().ref(this.props.addr+'/curr_player').set(next);
     firebase.database().ref(this.props.addr+'/roll').set(roll);
 
