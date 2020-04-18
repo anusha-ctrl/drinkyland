@@ -10,6 +10,23 @@
   padding: 10px;
 }
 
+.tile.active .description-card{
+  display:block;
+}
+
+.description-card{
+  display:none;
+  z-index:1;
+  position: fixed;
+  margin: auto;
+  width: 75%;
+  height: 75%;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  opacity: 0.9
+}
+
 .action {
   color:white;
   // border: 0.6vw solid rgba(255,255,255,0.1); // Light Borders

@@ -59,7 +59,7 @@ class App extends Component {
     for (i=0; i<players.length; i++){
       var player = players[i];
       var pos = player['pos'];
-      let comp = <Player location={player['pos']} name={player['name']} color={player['color']} drink={player['drink']} key={i}/>;
+      let comp = <Player location={player['pos']} name={player['name']} color={player['color']} drink={player['drink']} just_moved={player['just_moved']} is_next={player['is_next']} key={i}/>;
       var tileList = (playerMap[pos] ?? []);
       tileList.push(comp);
       playerMap[pos] = tileList;
@@ -79,7 +79,7 @@ class App extends Component {
             actionIndex = prior + cols - j - 1;
           }
           var bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
+          tiles.push(<Tile action={actions[actionIndex].title} description={actions[actionIndex].description}  type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
         }
       }
@@ -90,7 +90,7 @@ class App extends Component {
         if (i%4 === 3){
           actionIndex = prior;
           var bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
+          tiles.push(<Tile action={actions[prior].title} description={actions[prior].description} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
           for (j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols} key={tileIndex}/>);
@@ -103,7 +103,7 @@ class App extends Component {
           }
           actionIndex = prior;
           var bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
+          tiles.push(<Tile action={actions[prior].title} description={actions[prior].description} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
         }
       }
