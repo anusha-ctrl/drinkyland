@@ -7,7 +7,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Bartender from './Bartender.js';
 
-const default_actions = ['Start'].concat(Array.from({length: 65}, (_, i) => 'Drink '+ (i+2))).concat(['End']);
+const default_actions = ['Start', '<5\'10"', 'Truth or Drink', 'Spelling Bee', 'CHUG', 'Drink ur Roll', 'Guess a Song', 'Don\'t Laugh', 'Everyone Drink', 'Nose Goes', 'Guess a Num', '2 Truths or 1 Lie', 'Never Have I Ever', 'Mate', 'Drink ur Roll Forever', 'Drink Water', 'Question Master','Pick Somebody','10 Pushups', 'Categories', 'Rhymes', 'Birthday', 'Sober Drinks', '21', 'Musical Heads Up', 'HotSeat', 'Celebrity Impression', 'Pictionary', 'Ghost', 'Heaven', 'Hey Cutie', 'End'];
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(252, 198, 3)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
@@ -122,7 +122,7 @@ class App extends Component {
     const next = (curr + 1) % this.state.players.length;
 
     var playerInfo = this.state.players[curr];
-    playerInfo['pos'] = playerInfo['pos'] + roll;
+    playerInfo['pos'] = Math.min(playerInfo['pos'] + roll, this.state.actions.length-1);
     const ref = firebase.database().ref(this.props.addr+'/players/'+curr);
     ref.set(playerInfo);
     firebase.database().ref(this.props.addr+'/curr_player').set(next);
