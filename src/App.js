@@ -26,8 +26,8 @@ class App extends Component {
   }
 
   handleResize = () => {
-    console.log(window.innerWidth);
-    console.log(this.state);
+    // console.log(window.innerWidth);
+    // console.log(this.state);
     this.setState({
       tiles: this.genTiles(this.state.actions, this.state.players, window.innerWidth)
     })
@@ -48,6 +48,7 @@ class App extends Component {
 
   genTiles(actions, players, width){
     var cols = this.getCols(width);
+    var bgcolor = 'rgb(0, 128, 128)';
     var tiles = [];
     var actionIndex = -1;
     var i = 0;
@@ -78,7 +79,7 @@ class App extends Component {
           if (i%4 === 2){
             actionIndex = prior + cols - j - 1;
           }
-          var bgcolor = colorloop[actionIndex%colorloop.length];
+          bgcolor = colorloop[actionIndex%colorloop.length];
           tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
         }
@@ -89,7 +90,7 @@ class App extends Component {
       else {
         if (i%4 === 3){
           actionIndex = prior;
-          var bgcolor = colorloop[actionIndex%colorloop.length];
+          bgcolor = colorloop[actionIndex%colorloop.length];
           tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
           for (j=0; j < cols-1; j++){
@@ -102,7 +103,7 @@ class App extends Component {
             tileIndex += 1;
           }
           actionIndex = prior;
-          var bgcolor = colorloop[actionIndex%colorloop.length];
+          bgcolor = colorloop[actionIndex%colorloop.length];
           tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
           tileIndex += 1;
         }
@@ -118,17 +119,21 @@ class App extends Component {
     const roll = Math.floor(Math.random() * 6) + 1;
     const curr = this.state.curr_player;
     const next = (curr + 1) % this.state.players.length;
+    var players = this.state.players;
 
-    for (const id in this.state.players) {
-      this.state.players[id]['just_moved'] = false;
-      this.state.players[id]['is_next'] = false;
+    for (const id in players) {
+      players[id]['just_moved'] = false;
+      players[id]['is_next'] = false;
     }
-    var playerInfo = this.state.players[curr];
+    var playerInfo = players[curr];
     playerInfo['pos'] = Math.min(playerInfo['pos'] + roll, this.state.actions.length-1);
     playerInfo['just_moved'] = true;
-    this.state.players[curr] = playerInfo;
+    players[curr] = playerInfo;
 
-    this.state.players[next]['is_next'] = true;
+    players[next]['is_next'] = true;
+    this.setState({
+        players: players
+    });
 
     const ref = firebase.database().ref(this.props.addr+'/players');
     ref.set(this.state.players);
@@ -145,10 +150,15 @@ class App extends Component {
 
   resetGame() {
     const ref = firebase.database().ref(this.props.addr);
+    var players = this.state.players;
 
-    for (const key in this.state.players){
-      this.state.players[key]['pos'] = 0;
+    for (const key in players){
+      players[key]['pos'] = 0;
     }
+
+    this.setState({
+      players: players
+    });
 
     ref.set({
       actions: this.state.actions,
@@ -167,9 +177,6 @@ class App extends Component {
       let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['actions'], gameState['players'], window.innerWidth), connected:true});
 
       this.setState(merged);
-
-      console.log("gameState is");
-      console.log(merged);
     });
 
     const actionsRef = firebase.database().ref(this.props.addr+"/actions");
