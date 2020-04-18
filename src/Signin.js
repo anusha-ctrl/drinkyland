@@ -4,7 +4,9 @@ import firebase from './firebase.js';
 import App from './App';
 import './Signin.scss';
 
+const default_actions = ['Start'].concat(Array.from({length: 65}, (_, i) => 'Drink '+ (i+2))).concat(['End']);
 const initial_state = {
+  actions: default_actions,
   players: {
      0: {pos: 0, color: 'red', name: 'Nami', drink: 'margarita'},
      1: {pos: 0, color: 'orange', name: 'Chillara', drink: 'wine'},
@@ -47,10 +49,9 @@ export default class Signin extends Component{
         // duplicated from App.js, fix pls
         gameRef.set(initial_state);
       }
-    });
-
-    this.setState({
-      roomID : roomID
+      this.setState({
+        roomID : roomID
+      });
     });
 
     event.preventDefault();

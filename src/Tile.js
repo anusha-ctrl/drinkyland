@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import './tile.scss';
 
 export default class Tile extends Component {
-  // constructor(props){
-  //   super(props);
-  //   // this.state = {
-  //   //   players: []
-  //   // };
-  // }
-
   render(){
     let missingAction = this.props.type == 'action' && !this.props.action;
 
@@ -21,19 +14,4 @@ export default class Tile extends Component {
       </div>
     )
   }
-
-  // addPlayer = (newPlayer) => {
-  //   var curPlayers = this.state.players;
-  //   var newPlayers = curPlayers.push(newPlayer);
-  //   this.setState({
-  //     players: newPlayers
-  //   });
-  // }
-  //
-  // removePlayer = (playerID) => {
-  //   var newPlayerList = this.state.players.filter(player => player.getID() !== playerID);
-  //   this.setState({
-  //     players: newPlayerList
-  //   });
-  // }
 }
