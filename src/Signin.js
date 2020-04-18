@@ -26,12 +26,27 @@ export default class Signin extends Component{
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      roomID: ""
+      roomID: "",
+      badUserName: false,
     };
   }
 
   generateRoomID() {
     return Math.floor(Math.random() * (10000));
+  }
+
+  playerExists(name, players) {
+    for (var i = 0; i < players.length; i++) {
+      if (name === players[i]['name']) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  invalidNameMessage() {
+    const message = 'This game already has a user with this name. Please enter a new name.';
+    return this.state.badUserName ? message : '';
   }
 
   handleSubmit(event) {
@@ -54,13 +69,21 @@ export default class Signin extends Component{
         };
         gameRef.set(initial_state);
       } else {
-        var playerLen = snapshot.val()['players'].length;
+        var players = snapshot.val()['players'];
+        if (this.playerExists(name, players)) {
+          this.setState({
+            badUserName: true
+          });
+          return;
+        }
+        var playerLen = players.length;
         let playerObj = {}
         playerObj[playerLen] = {pos: 0, color: 'nah', name: name, drink: drink}
         gameRef.child('players').update(playerObj);
       }
       this.setState({
-        roomID : roomID
+        roomID : roomID,
+        badUserName: false,
       });
     });
 
@@ -88,6 +111,7 @@ export default class Signin extends Component{
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control required type="text" placeholder="Enter your name"/>
+              <Form.Text className="text-danger">{this.invalidNameMessage()}</Form.Text>
             </Form.Group>
             <Form.Group controlId="drink">
               <Form.Label>Pick your drink of choice (and make it unique!)</Form.Label>
