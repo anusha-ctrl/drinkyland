@@ -36,6 +36,8 @@ export default class Signin extends Component{
 
   handleSubmit(event) {
     var roomID = event.target.formRoomID.value;
+    var name = event.target.name.value;
+    var drink = event.target.drink.value;
 
     // Generate a room id for them if they didn't provide one
     if (roomID === null || roomID === '' || roomID === undefined) {
@@ -47,7 +49,15 @@ export default class Signin extends Component{
     gameRef.once('value', (snapshot) => {
       if (!snapshot.exists()){
         // duplicated from App.js, fix pls
+        initial_state['players'] = {
+          0: {pos: 0, color: 'nah', name: name, drink: drink}
+        };
         gameRef.set(initial_state);
+      } else {
+        var playerLen = snapshot.val()['players'].length;
+        let playerObj = {}
+        playerObj[playerLen] = {pos: 0, color: 'nah', name: name, drink: drink}
+        gameRef.child('players').update(playerObj);
       }
       this.setState({
         roomID : roomID
@@ -75,6 +85,24 @@ export default class Signin extends Component{
               <Form.Label>Room ID</Form.Label>
               <Form.Control type="text" placeholder="Enter Game ID to create or join" />
             </Form.Group>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control required type="text" placeholder="Enter your name"/>
+            </Form.Group>
+            <Form.Group controlId="drink">
+              <Form.Label>Pick your drink of choice (and make it unique!)</Form.Label>
+              <Form.Control required as="select">
+                <option>beer</option>
+                <option>champagne</option>
+                <option>lemonade</option>
+                <option>margarita</option>
+                <option>martini</option>
+                <option>tequila</option>
+                <option>whiskey</option>
+                <option>wine</option>
+              </Form.Control>
+            </Form.Group>
+
             <Button variant="primary" type="submit" >
               Play Game!
             </Button>

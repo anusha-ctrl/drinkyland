@@ -7,7 +7,6 @@ import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Bartender from './Bartender.js';
 
-const default_actions = ['Start', '<5\'10"', 'Truth or Drink', 'Spelling Bee', 'CHUG', 'Drink ur Roll', 'Guess a Song', 'Don\'t Laugh', 'Everyone Drink', 'Nose Goes', 'Guess a Num', '2 Truths or 1 Lie', 'Never Have I Ever', 'Mate', 'Drink ur Roll Forever', 'Drink Water', 'Question Master','Pick Somebody','10 Pushups', 'Categories', 'Rhymes', 'Birthday', 'Sober Drinks', '21', 'Musical Heads Up', 'HotSeat', 'Celebrity Impression', 'Pictionary', 'Ghost', 'Heaven', 'Hey Cutie', 'End'];
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(252, 198, 3)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
@@ -16,7 +15,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      actions: default_actions,
+      actions: [],
       tiles: [],
       players : [],
       curr_player: 0,
@@ -30,7 +29,7 @@ class App extends Component {
     console.log(window.innerWidth);
     console.log(this.state);
     this.setState({
-      tiles: this.genTiles(this.state.players, window.innerWidth)
+      tiles: this.genTiles(this.state.actions, this.state.players, window.innerWidth)
     })
   };
 
@@ -47,8 +46,7 @@ class App extends Component {
     return 10;
   }
 
-  genTiles(players, width){
-    var actions = this.state.actions;
+  genTiles(actions, players, width){
     var cols = this.getCols(width);
     var tiles = [];
     var actionIndex = -1;
@@ -138,19 +136,15 @@ class App extends Component {
   resetGame() {
     const ref = firebase.database().ref(this.props.addr);
 
+    for (const key in this.state.players){
+      this.state.players[key]['pos'] = 0;
+    }
+
     ref.set({
-      actions: default_actions,
-      players: {
-         0: {pos: 0, color: 'red', name: 'Nami', drink: 'margarita'},
-         1: {pos: 0, color: 'orange', name: 'Chillara', drink: 'wine'},
-         2: {pos: 0, color: 'crimson', name: 'Pavi', drink: 'martini'},
-         3: {pos: 0, color: 'blueviolet', name: 'Maya', drink: 'beer'},
-         4: {pos: 0, color: 'blue', name: 'Mahima', drink: 'champagne'},
-         5: {pos: 0, color: 'purple', name: 'Devdo', drink: 'whiskey'},
-         6: {pos: 0, color: 'teal', name: 'Arka', drink: 'lemonade'}
-       },
-       curr_player: 0,
-       roll: -1,
+      actions: this.state.actions,
+      players: this.state.players,
+      curr_player: 0,
+      roll: -1,
      });
   }
 
@@ -160,15 +154,12 @@ class App extends Component {
       let gameState = snapshot.val();
       gameState['players'] = gameState['players'] ?? [];
 
-      let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['players'], window.innerWidth)});
+      let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['actions'], gameState['players'], window.innerWidth), connected:true});
 
       this.setState(merged);
 
-      if (!this.state.connected){
-        this.setState({
-          connected:true
-        });
-      }
+      console.log("gameState is");
+      console.log(merged);
     });
 
     const actionsRef = firebase.database().ref(this.props.addr+"/actions");
