@@ -4,7 +4,7 @@ import firebase from './firebase.js';
 import App from './App';
 import './Signin.scss';
 
-const default_actions = ['Start', '<5\'10"', 'Truth or Drink', 'Spelling Bee', 'CHUG', 'Drink ur Roll', 'Guess a Song', 'Don\'t Laugh', 'Everyone Drink', 'Nose Goes', 'Guess a Num', '2 Truths or 1 Lie', 'Never Have I Ever', 'Mate', 'Drink ur Roll Forever', 'Drink Water', 'Question Master','Pick Somebody','10 Pushups', 'Categories', 'Rhymes', 'Birthday', 'Sober Drinks', '21', 'Musical Heads Up', 'HotSeat', 'Celebrity Impression', 'Pictionary', 'Ghost', 'Heaven', 'Hey Cutie', 'End'];
+const default_actions = ['Start', '<5\'10"', 'Truth or Drink', 'Spelling Bee', 'CHUG', 'Drink ur Roll', 'Guess a Song', 'Everyone Drink', 'Nose Goes', 'Guess a Num', '2 Truths and a Lie', 'Never Have I Ever', 'Mate', 'Drink ur Roll Forever', 'Everyone Drinks', 'Question Master','Pick Somebody','10 Pushups', 'Categories', 'Rhymes', 'Birthday', 'Sober Drinks', '21', 'Musical Heads Up', 'HotSeat', 'Don\'t Laugh', 'Celebrity Impression', 'Pictionary', 'Ghost', 'Heaven', 'Hey Cutie', 'End'];
 const initial_state = {
   actions: default_actions,
   players: {
