@@ -148,6 +148,8 @@ class App extends Component {
 
     for (const key in this.state.players){
       this.state.players[key]['pos'] = 0;
+      this.state.players[key]['just_moved'] = false;
+      this.state.players[key]['is_next'] = false;
     }
 
     ref.set({
