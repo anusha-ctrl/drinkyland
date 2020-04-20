@@ -12,7 +12,12 @@ ReactDOM.render(
   <Router>
     <Switch>
       <Route exact path="/" component={Signin} />
-      <Route path="/room/:roomID" component={Game} />
+      <Route path="/room/:roomID" render={(props) =>
+        <Game
+          roomID={props.match.params.roomID}
+          playerID={props.match.params.idea}
+          addr={'games/'+props.match.params.roomID}
+        />} />
     </Switch>
   </Router>,
   document.getElementById('root')

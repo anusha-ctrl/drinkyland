@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import Tile from '../Components/Tile';
 import Player from '../Components/Player';
@@ -12,11 +14,25 @@ import '../css/Game.scss';
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(252, 198, 3)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
-class Game extends Component {
-  constructor( {match}) {
-    super({roomID: match.params.roomID, playerID: match.params.id});
+type Props = {
+  roomID: string,
+  playerID: number,
+  addr: string
+}
 
-    console.log()
+type State = {
+  actions: Array<string>,
+  tiles: Array<Tile>,
+  players: Array<any>,
+  curr_player: number,
+  available_colors: Array<string>,
+  roll: number,
+  connected: boolean
+}
+
+class Game extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
 
     this.state = {
       actions: [],
@@ -30,14 +46,12 @@ class Game extends Component {
   }
 
   handleResize = () => {
-    // console.log(window.innerWidth);
-    // console.log(this.state);
     this.setState({
       tiles: this.genTiles(this.state.actions, this.state.players, window.innerWidth)
     })
   };
 
-  getCols(width){
+  getCols(width: number){
     if(width < 450){
       return 3;
     }
@@ -50,7 +64,9 @@ class Game extends Component {
     return 10;
   }
 
-  genTiles(actions, players, width){
+  genTiles(actions: Array<string>, players: Array<any>, width: number){
+    console.log(this.state);
+
     var cols = this.getCols(width);
     var bgcolor = 'rgb(0, 128, 128)';
     var tiles = [];
@@ -123,9 +139,9 @@ class Game extends Component {
     const roll = Math.floor(Math.random() * 6) + 1;
     const curr = this.state.curr_player;
     const next = (curr + 1) % this.state.players.length;
-    var players = this.state.players;
+    var players : Array<any> = this.state.players;
 
-    for (const id in players) {
+    for (var id = 0; id < players.length; id++) {
       players[id]['just_moved'] = false;
       players[id]['is_next'] = false;
     }
@@ -156,8 +172,8 @@ class Game extends Component {
     const ref = firebase.database().ref(this.props.addr);
     var players = this.state.players;
 
-    for (const key in players){
-      players[key]['pos'] = 0;
+    for (var id = 0; id < players.length; id++) {
+      players[id]['pos'] = 0;
     }
 
     this.setState({
@@ -173,6 +189,7 @@ class Game extends Component {
   }
 
   componentDidMount() {
+    console.log("Trap 2: ", this.props);
     const gameRef = firebase.database().ref(this.props.addr);
     gameRef.on('value', (snapshot) => {
       let gameState = snapshot.val();

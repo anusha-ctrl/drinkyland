@@ -1,0 +1,13 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/flow/stub/css-modules.js'
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow/stub/css-modules.js'
+
+[strict]
