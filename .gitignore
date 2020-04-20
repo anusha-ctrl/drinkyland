@@ -114,3 +114,6 @@ dist
 .yarn/build-state.yml
 .pnp.*
 
+
+# Mac OS X indexing files
+.DS_Store
