@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Tile from './Tile';
 import Player from './Player';
-import './App.scss';
+import './Game.scss';
 import firebase from './firebase.js';
 import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,9 +10,11 @@ import Bartender from './Bartender.js';
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(252, 198, 3)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+class Game extends Component {
+  constructor( {match}) {
+    super({roomID: match.params.roomID, playerID: match.params.id});
+
+    console.log()
 
     this.state = {
       actions: [],
@@ -232,4 +234,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Game;

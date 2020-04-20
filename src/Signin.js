@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Form, Button } from 'react-bootstrap';
 import firebase from './firebase.js';
-import App from './App';
 import './Signin.scss';
 
 const default_actions = ['Start', '<5\'10"', 'Truth or Drink', 'Spelling Bee', 'CHUG', 'Drink ur Roll', 'Guess a Song', 'Everyone Drink', 'Nose Goes', 'Guess a Num', '2 Truths and a Lie', 'Never Have I Ever', 'Mate', 'Drink ur Roll Forever', 'Everyone Drinks', 'Question Master','Pick Somebody','10 Pushups', 'Categories', 'Rhymes', 'Birthday', 'Sober Drinks', '21', 'Musical Heads Up', 'HotSeat', 'Don\'t Laugh', 'Celebrity Impression', 'Pictionary', 'Ghost', 'Heaven', 'Hey Cutie', 'End'];
@@ -26,7 +25,6 @@ export default class Signin extends Component{
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      roomID: "",
       badUserName: false,
     };
   }
@@ -62,37 +60,34 @@ export default class Signin extends Component{
     // If this room doesn't exist yet, initialize it
     const gameRef = firebase.database().ref("games/"+roomID);
     gameRef.once('value', (snapshot) => {
+      var playerID = 0;
       if (!snapshot.exists()){
-        // duplicated from App.js, fix pls
         initial_state['players'] = {
           0: {pos: 0, color: 'nah', name: name, drink: drink}
         };
         gameRef.set(initial_state);
       } else {
-        var players = snapshot.val()['players'];
-        if (!this.playerExists(name, players)) {
+        // Add the player if they don't already exist
+        const players = snapshot.val()['players'];
+        const playerIndex = players.findIndex((p) => p.name == name);
+        if (playerIndex == -1) {
           var playerLen = players.length;
           let playerObj = {}
           playerObj[playerLen] = {pos: 0, color: 'nah', name: name, drink: drink}
           gameRef.child('players').update(playerObj);
+          playerID = playerLen;
+        } else {
+          playerID = playerIndex
         }
       }
-      this.setState({
-        roomID : roomID,
-      });
+      // Now the game should exist and the player should be added. Gogogo.
+      this.props.history.push('room/'+roomID+'/?id='+playerID);
     });
 
     event.preventDefault();
   }
 
   render() {
-    if (this.state.roomID !== ""){
-      const addr = "games/"+this.state.roomID+"/";
-      return (
-        <App roomID={this.state.roomID} addr={addr}/>
-      );
-    }
-
     return (
       <div className="signin-parent">
         <div className="signin-container">

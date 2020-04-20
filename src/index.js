@@ -1,11 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Signin from './Signin';
 import * as serviceWorker from './serviceWorker';
 
+// Pages
+import Signin from './Signin';
+import Game from './Game';
+
 ReactDOM.render(
-  <Signin />,
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Signin} />
+      <Route path="/room/:roomID" component={Game} />
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 
