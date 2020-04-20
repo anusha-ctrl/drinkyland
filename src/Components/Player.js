@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import './player.css';
-import Bartender from './Bartender.js';
+import '../css/player.css';
+import Bartender from '../Helpers/Bartender.js';
 
 // Player pieces are images
 // Player needs an ID. Default is 0. Set ID later.

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Tile from './Tile';
-import Player from './Player';
-import './Game.scss';
-import firebase from './firebase.js';
+import Tile from '../Components/Tile';
+import Player from '../Components/Player';
+import firebase from '../Helpers/firebase.js';
 import { Navbar, Nav } from 'react-bootstrap';
+
+import Bartender from '../Helpers/Bartender.js';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Bartender from './Bartender.js';
+import '../css/Game.scss';
 
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(252, 198, 3)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];

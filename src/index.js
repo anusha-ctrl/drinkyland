@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './css/index.css';
 import * as serviceWorker from './serviceWorker';
 
 // Pages
-import Signin from './Signin';
-import Game from './Game';
+import Signin from './Pages/Signin';
+import Game from './Pages/Game';
 
 ReactDOM.render(
   <Router>

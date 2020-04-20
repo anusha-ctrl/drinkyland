@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Form, Button } from 'react-bootstrap';
-import firebase from './firebase.js';
-import './Signin.scss';
+import firebase from '../Helpers/firebase.js';
+import '../css/Signin.scss';
 
 const default_actions = ['Start', '<5\'10"', 'Truth or Drink', 'Spelling Bee', 'CHUG', 'Drink ur Roll', 'Guess a Song', 'Everyone Drink', 'Nose Goes', 'Guess a Num', '2 Truths and a Lie', 'Never Have I Ever', 'Mate', 'Drink ur Roll Forever', 'Everyone Drinks', 'Question Master','Pick Somebody','10 Pushups', 'Categories', 'Rhymes', 'Birthday', 'Sober Drinks', '21', 'Musical Heads Up', 'HotSeat', 'Don\'t Laugh', 'Celebrity Impression', 'Pictionary', 'Ghost', 'Heaven', 'Hey Cutie', 'End'];
 const initial_state = {
@@ -23,28 +23,10 @@ export default class Signin extends Component{
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.state = {
-      badUserName: false,
-    };
   }
 
   generateRoomID() {
     return Math.floor(Math.random() * (10000));
-  }
-
-  playerExists(name, players) {
-    for (var i = 0; i < players.length; i++) {
-      if (name === players[i]['name']) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  invalidNameMessage() {
-    const message = 'This game already has a user with this name. Please enter a new name.';
-    return this.state.badUserName ? message : '';
   }
 
   handleSubmit(event) {

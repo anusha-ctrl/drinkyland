@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './tile.scss';
+import '../css/tile.scss';
 
 export default class Tile extends Component {
   render(){
