@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import * as serviceWorker from './serviceWorker';
+// Helpers
+import SyncDB from './Helpers/SyncDB';
 
 // Pages
 import Signin from './Pages/Signin';
@@ -16,7 +18,7 @@ ReactDOM.render(
         <Game
           roomID={props.match.params.roomID}
           playerID={props.match.params.idea}
-          addr={'games/'+props.match.params.roomID}
+          syncDB = {new SyncDB('games/'+props.match.params.roomID)}
         />} />
     </Switch>
   </Router>,

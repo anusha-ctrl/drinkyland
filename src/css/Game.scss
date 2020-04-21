@@ -20,6 +20,15 @@ html{
   background-size: 100px 50px;
 
   touch-action: manipulation;
+
+  // Hide the scrollbar
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
 }
 
 .App {

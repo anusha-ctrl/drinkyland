@@ -1,13 +1,17 @@
 // @flow
-
 import React, { Component } from 'react';
 import Tile from '../Components/Tile';
 import Player from '../Components/Player';
-import firebase from '../Helpers/firebase.js';
 import { Navbar, Nav } from 'react-bootstrap';
 
+// Helpers
 import Bartender from '../Helpers/Bartender.js';
+import SyncDB from '../Helpers/SyncDB.js';
 
+// Types
+import type {remoteState} from '../Helpers/SyncDB.js';
+
+// CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Game.scss';
 
@@ -17,37 +21,34 @@ const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 type Props = {
   roomID: string,
   playerID: number,
-  addr: string
+  addr: string,
+  syncDB: SyncDB,
 }
 
 type State = {
-  actions: Array<string>,
-  tiles: Array<Tile>,
-  players: Array<any>,
-  curr_player: number,
+  ...remoteState,
   available_colors: Array<string>,
-  roll: number,
-  connected: boolean
+  connected: boolean,
+  window_width: number,
 }
 
 class Game extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
+    this.props.syncDB.syncState(this);
+
     this.state = {
-      actions: [],
-      tiles: [],
-      players : [],
-      curr_player: 0,
+      ...SyncDB.defaultState,
       available_colors: all_colors,
-      roll: -1,
-      connected: false,
+      connected: true, //TODO: Revert to false
+      window_width: window.innerWidth,
     }
   }
 
   handleResize = () => {
     this.setState({
-      tiles: this.genTiles(this.state.actions, this.state.players, window.innerWidth)
+      window_width: window.innerWidth
     })
   };
 
@@ -134,17 +135,19 @@ class Game extends Component<Props, State> {
   }
 
   rollDice() {
-    // const index = this.state.curr_player;
-    // const currPlayer = this.state.players[index];
+    // tbh Drinkyland gameplay is just a random number generator
     const roll = Math.floor(Math.random() * 6) + 1;
     const curr = this.state.curr_player;
     const next = (curr + 1) % this.state.players.length;
     var players : Array<any> = this.state.players;
 
+    // Clear player move data from all players
     for (var id = 0; id < players.length; id++) {
       players[id]['just_moved'] = false;
       players[id]['is_next'] = false;
     }
+
+    // Move the player and maintain the player tracking data
     var playerInfo = players[curr];
     playerInfo['pos'] = Math.min(playerInfo['pos'] + roll, this.state.actions.length-1);
     playerInfo['just_moved'] = true;
@@ -155,58 +158,15 @@ class Game extends Component<Props, State> {
         players: players
     });
 
-    const ref = firebase.database().ref(this.props.addr+'/players');
-    ref.set(this.state.players);
-
-    firebase.database().ref(this.props.addr+'/curr_player').set(next);
-    firebase.database().ref(this.props.addr+'/roll').set(roll);
-
-    // const newLoc = currPlayer.location;
-    // const color = currPlayer.color;
-    // const name = currPlayer.name;
-    // this.state.players[index] = {name : name, location : newLoc, color : color};
-    return roll;
+    // Broadcast the new state
+    this.props.syncDB.setRoll(roll, next, players);
   }
 
   resetGame() {
-    const ref = firebase.database().ref(this.props.addr);
-    var players = this.state.players;
-
-    for (var id = 0; id < players.length; id++) {
-      players[id]['pos'] = 0;
-    }
-
-    this.setState({
-      players: players
-    });
-
-    ref.set({
-      actions: this.state.actions,
-      players: this.state.players,
-      curr_player: 0,
-      roll: -1,
-     });
+    this.props.syncDB.resetGame();
   }
 
   componentDidMount() {
-    console.log("Trap 2: ", this.props);
-    const gameRef = firebase.database().ref(this.props.addr);
-    gameRef.on('value', (snapshot) => {
-      let gameState = snapshot.val();
-      gameState['players'] = gameState['players'] ?? [];
-
-      let merged = Object.assign({}, gameState, {tiles: this.genTiles(gameState['actions'], gameState['players'], window.innerWidth), connected:true});
-
-      this.setState(merged);
-    });
-
-    const actionsRef = firebase.database().ref(this.props.addr+"/actions");
-    actionsRef.on('value', (snapshot) => {
-      this.setState({
-        actions: snapshot.val()
-      });
-    });
-
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -216,6 +176,7 @@ class Game extends Component<Props, State> {
 
   render() {
     let player = this.state.players[this.state.curr_player] ?? {};
+    let tiles = this.genTiles(this.state.actions, this.state.players, this.state.window_width);
 
     return (
       <>
@@ -243,7 +204,7 @@ class Game extends Component<Props, State> {
           </Navbar>
 
           <div className="board">
-            {this.state.tiles}
+            {tiles}
           </div>
         </div>
       </div>
