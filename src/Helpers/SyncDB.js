@@ -2,7 +2,10 @@
 import { Component } from 'react';
 import firebase from './firebase.js';
 
-export type action = string;
+export type action = {
+  title: string,
+  description: string,
+};
 
 export type player = {
   color: string,
@@ -13,6 +16,7 @@ export type player = {
 
 export type move = {
   player: number,
+  roll: number,
   prevPos: number,
   newPos: number
 }
@@ -21,7 +25,6 @@ export type syncState = {
   actions: Array<action>,
   players: Array<player>,
   curr_player: number,
-  roll: number,
   connected: boolean,
   lastMove: ?move,
 }
@@ -31,7 +34,6 @@ export default class SyncDB {
     actions: [],
     players : [],
     curr_player: 0,
-    roll: -1,
     connected: false,
     lastMove: null,
   }
@@ -62,6 +64,7 @@ export default class SyncDB {
     // Log the move so we can animate it
     const lastMove = {
       player: playerID,
+      roll: roll,
       prevPos: prevPos,
       newPos: newPos,
     }

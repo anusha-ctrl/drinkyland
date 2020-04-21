@@ -1,26 +1,27 @@
 // @flow
-// JS
 import React, { Component } from 'react';
+import Player from './Player.js';
+import Challenges from '../Helpers/Challenges.js'
 // Styling
 import '../css/tile.scss';
 // Types
 import type { Element } from 'react';
-import type { move } from '../Helpers/SyncDB';
-import Player from './Player.js';
+import type { move, action, syncState } from '../Helpers/SyncDB';
 
 type Props = {
   type: string,
   cols: number,
   players?: Array<Element<typeof Player>>,
   color?: string,
-  action?: string,
+  action?: action,
   actionIndex?: number,
-  lastMove?: ?move,
+  syncState?: syncState,
 }
 
 export default class Tile extends Component<Props> {
   render(){
-    let { type, action, lastMove, actionIndex } = this.props;
+    let { type, action, syncState, actionIndex } = this.props;
+    let lastMove = syncState?.lastMove;
     let missingAction = (type === 'action' && !action);
     let isActive = (type === 'action' && lastMove?.newPos === actionIndex);
 
@@ -32,7 +33,8 @@ export default class Tile extends Component<Props> {
           height: 100/this.props.cols+'vw',
           background: missingAction ? 'transparent' : this.props.color
         }}>
-        <p>{this.props.action}</p>
+        <p>{this.props.action?.title}</p>
+        {/* <p>{this.props.action?.description && Challenges.format(this.props.action?.description, syncState)}</p> */}
         <div className="tile-players">
           {this.props.players}
         </div>

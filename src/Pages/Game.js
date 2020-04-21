@@ -7,6 +7,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 // Helpers
 import Bartender from '../Helpers/Bartender.js';
 import SyncDB from '../Helpers/SyncDB.js';
+import Challenges from '../Helpers/Challenges.js'
 
 // Types
 import type {syncState} from '../Helpers/SyncDB.js';
@@ -107,7 +108,7 @@ class Game extends Component<Props, State> {
             actionIndex = prior + cols - j - 1;
           }
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} lastMove={lastMove}/>);
+          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} syncState={this.state}/>);
           tileIndex += 1;
         }
       }
@@ -118,7 +119,7 @@ class Game extends Component<Props, State> {
         if (i%4 === 3){
           actionIndex = prior;
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} lastMove={lastMove}/>);
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} syncState={this.state}/>);
           tileIndex += 1;
           for (j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols} key={tileIndex}/>);
@@ -131,7 +132,7 @@ class Game extends Component<Props, State> {
           }
           actionIndex = prior;
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} lastMove={lastMove}/>);
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} syncState={this.state}/>);
           tileIndex += 1;
         }
       }
@@ -172,11 +173,17 @@ class Game extends Component<Props, State> {
               <button className="mr-10" onClick={() => this.rollDice()}>
                 {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
               </button>
-              <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
+              <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
               <Navbar.Text className="ml-10 mr-10">
                 <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
                 <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
               </Navbar.Text>
+              { this.state.lastMove &&
+                <Navbar.Text>
+                  <strong>Challenge: </strong>
+                  { Challenges.format(this.state.actions[this.state.lastMove.newPos].description, this.state) }
+                </Navbar.Text>
+              }
           </Navbar>
 
           <div className="board">
