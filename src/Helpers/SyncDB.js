@@ -13,8 +13,8 @@ export type player = {
 
 export type move = {
   player: number,
-  prev_pos: number,
-  new_pos: number
+  prevPos: number,
+  newPos: number
 }
 
 export type syncState = {
