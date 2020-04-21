@@ -9,7 +9,7 @@ import Bartender from '../Helpers/Bartender.js';
 import SyncDB from '../Helpers/SyncDB.js';
 
 // Types
-import type {remoteState} from '../Helpers/SyncDB.js';
+import type {syncState} from '../Helpers/SyncDB.js';
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,30 +26,40 @@ type Props = {
 }
 
 type State = {
-  ...remoteState,
+  ...syncState,
   available_colors: Array<string>,
   connected: boolean,
-  window_width: number,
+  cols: number,
 }
 
 class Game extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
+    // Use the state from the remoteDB and keep it in sync on this component
     this.props.syncDB.syncState(this);
 
     this.state = {
       ...SyncDB.defaultState,
       available_colors: all_colors,
       connected: true, //TODO: Revert to false
-      window_width: window.innerWidth,
+      cols: this.getCols(window.innerWidth),
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  // Update the number of columns as the window size changes
   handleResize = () => {
     this.setState({
-      window_width: window.innerWidth
-    })
+      cols: this.getCols(window.innerWidth)
+    });
   };
 
   getCols(width: number){
@@ -65,10 +75,7 @@ class Game extends Component<Props, State> {
     return 10;
   }
 
-  genTiles(actions: Array<string>, players: Array<any>, width: number){
-    console.log(this.state);
-
-    var cols = this.getCols(width);
+  genTiles(actions: Array<string>, players: Array<any>, cols: number){
     var bgcolor = 'rgb(0, 128, 128)';
     var tiles = [];
     var actionIndex = -1;
@@ -166,17 +173,9 @@ class Game extends Component<Props, State> {
     this.props.syncDB.resetGame();
   }
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize)
-  }
-
   render() {
     let player = this.state.players[this.state.curr_player] ?? {};
-    let tiles = this.genTiles(this.state.actions, this.state.players, this.state.window_width);
+    let tiles = this.genTiles(this.state.actions, this.state.players, this.state.cols);
 
     return (
       <>

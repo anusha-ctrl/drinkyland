@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import firebase from './firebase.js';
 
-export type remoteState = {
+export type syncState = {
   actions: Array<string>,
   players: Array<any>,
   curr_player: number,
-  roll: number
+  roll: number,
+  connected: boolean,
 }
 
 export default class SyncDB {
@@ -14,10 +15,11 @@ export default class SyncDB {
     actions: [],
     players : [],
     curr_player: 0,
-    roll: -1
+    roll: -1,
+    connected: false,
   }
   rootRef: any;
-  currentState: remoteState;
+  currentState: syncState;
 
   constructor(address: string) {
     this.rootRef = firebase.database().ref(address);
@@ -35,14 +37,12 @@ export default class SyncDB {
 
   // Broadcast the result of a roll from this client
   setRoll(roll: number, next: number, players: Array<any>){
-    this.currentState = {
+    this.rootRef.set({
       ...this.currentState,
       roll: roll,
       curr_player: next,
       players: players,
-    }
-
-    this.rootRef.set(this.currentState);
+    });
   }
 
   // Reset all players and the player order
