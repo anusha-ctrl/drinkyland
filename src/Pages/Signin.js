@@ -63,8 +63,9 @@ export default class Signin extends Component<any>{
           playerID = playerIndex
         }
       }
+      this.props.cookies.set(roomID, playerID, { path: '/'});
       // Now the game should exist and the player should be added. Gogogo.
-      this.props.history.push('room/'+roomID+'/?id='+playerID);
+      this.props.history.push('room/'+roomID);
     });
 
     event.preventDefault();

@@ -33,13 +33,15 @@ type State = {
 }
 
 class Game extends Component<Props, State> {
+  playerID: number;
+
   constructor(props: Props) {
     super(props);
 
     this.state = {
       ...SyncDB.defaultState,
       available_colors: all_colors,
-      connected: true, //TODO: Revert to false
+      connected: true, //TODO: Revert to false once SyncDB updates it
       cols: this.getCols(window.innerWidth),
     }
   }
@@ -176,6 +178,9 @@ class Game extends Component<Props, State> {
     let player = this.state.players[this.state.curr_player] ?? {};
     let tiles = this.genTiles(this.state.actions, this.state.players, this.state.cols);
 
+    console.log("a: ", this.props.playerID, ", b: ", this.state.curr_player);
+    console.log("a: ", typeof(this.props.playerID), ", b: ", typeof(this.state.curr_player));
+
     return (
       <>
       {!this.state.connected && <div className = "connecting-overlay"><h1>Connecting...</h1></div>}
@@ -192,7 +197,7 @@ class Game extends Component<Props, State> {
         <div className="App">
           <Navbar className="inner-navbar">
               <button className="mr-10" onClick={() => this.rollDice()}>
-                Click me!
+                {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
               </button>
               <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.roll} </Navbar.Text>
               <Navbar.Text className="ml-10 mr-10">

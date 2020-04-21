@@ -1,27 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import * as serviceWorker from './serviceWorker';
-// Helpers
-import SyncDB from './Helpers/SyncDB';
 
-// Pages
-import Signin from './Pages/Signin';
-import Game from './Pages/Game';
+import App from './App';
 
 ReactDOM.render(
-  <Router>
-    <Switch>
-      <Route exact path="/" component={Signin} />
-      <Route path="/room/:roomID" render={(props) =>
-        <Game
-          roomID={props.match.params.roomID}
-          playerID={props.match.params.idea}
-          syncDB = {new SyncDB('games/'+props.match.params.roomID)}
-        />} />
-    </Switch>
-  </Router>,
+  <CookiesProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </CookiesProvider>,
   document.getElementById('root')
 );
 
