@@ -178,9 +178,6 @@ class Game extends Component<Props, State> {
     let player = this.state.players[this.state.curr_player] ?? {};
     let tiles = this.genTiles(this.state.actions, this.state.players, this.state.cols);
 
-    console.log("a: ", this.props.playerID, ", b: ", this.state.curr_player);
-    console.log("a: ", typeof(this.props.playerID), ", b: ", typeof(this.state.curr_player));
-
     return (
       <>
       {!this.state.connected && <div className = "connecting-overlay"><h1>Connecting...</h1></div>}
