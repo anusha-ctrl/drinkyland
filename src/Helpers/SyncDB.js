@@ -2,6 +2,8 @@
 import { Component } from 'react';
 import firebase from './firebase.js';
 
+export type action = string;
+
 export type player = {
   color: string,
   drink: string,
@@ -10,7 +12,7 @@ export type player = {
 }
 
 export type syncState = {
-  actions: Array<string>,
+  actions: Array<action>,
   players: Array<player>,
   curr_player: number,
   roll: number,
