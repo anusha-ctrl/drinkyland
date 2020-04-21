@@ -2,9 +2,16 @@
 import React, { Component } from 'react';
 import firebase from './firebase.js';
 
+export type player = {
+  color: string,
+  drink: string,
+  name: string,
+  pos: number
+}
+
 export type syncState = {
   actions: Array<string>,
-  players: Array<any>,
+  players: Array<player>,
   curr_player: number,
   roll: number,
   connected: boolean,
@@ -36,7 +43,7 @@ export default class SyncDB {
   }
 
   // Broadcast the result of a roll from this client
-  setRoll(roll: number, next: number, players: Array<any>){
+  setRoll(roll: number, next: number, players: Array<player>){
     this.rootRef.set({
       ...this.currentState,
       roll: roll,
