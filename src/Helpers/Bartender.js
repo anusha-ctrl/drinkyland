@@ -1,3 +1,4 @@
+// @flow
 import beer from '../img/beer.svg';
 import champagne from '../img/champagne.svg';
 import margarita from '../img/margarita.svg';
@@ -19,7 +20,7 @@ const drinkMap = {
 };
 
 export default class Bartender {
-  static pour(drink) {
+  static pour(drink: string) {
     return drinkMap[drink];
   }
 }

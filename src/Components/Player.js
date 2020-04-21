@@ -1,10 +1,9 @@
+// @flow
 import React, {Component} from "react";
 import '../css/player.css';
 import Bartender from '../Helpers/Bartender.js';
 
-// Player pieces are images
 // Player needs an ID. Default is 0. Set ID later.
-
 
 //TODO: Get list of available colors
 //TODO: Global counter for player IDs
@@ -21,39 +20,19 @@ import Bartender from '../Helpers/Bartender.js';
 //TODO: props = {name (given by user), color (given by game)}
 //TODO: state = {game location, name, color}
 
-export default class Player extends Component {
+type Props = {
+  name: string,
+  color: string,
+  location: number,
+  drink: string
+}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        location : this.props.location,
-        name : this.props.name,
-        color : this.props.color
-      };
-  }
-
+export default class Player extends Component<Props> {
   render() {
-
     return (
       <div className="player">
         <img src={Bartender.pour(this.props.drink)} alt={this.props.drink} className="invert"/>
       </div>
     );
-  }
-
-  getLocation() {
-    return this.state.location;
-  }
-
-  getName() {
-    return this.state.name;
-  }
-
-  getID() {
-    return this.state.name;
-  }
-
-  getColor() {
-    return this.state.color;
   }
 }

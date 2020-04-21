@@ -36,9 +36,6 @@ class Game extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    // Use the state from the remoteDB and keep it in sync on this component
-    this.props.syncDB.syncState(this);
-
     this.state = {
       ...SyncDB.defaultState,
       available_colors: all_colors,
@@ -48,6 +45,8 @@ class Game extends Component<Props, State> {
   }
 
   componentDidMount() {
+    // Use the state from the remoteDB and keep it in sync on this component
+    this.props.syncDB.syncState(this);
     window.addEventListener('resize', this.handleResize);
   }
 

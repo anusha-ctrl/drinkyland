@@ -1,7 +1,21 @@
+// @flow
+// JS
 import React, { Component } from 'react';
+// Styling
 import '../css/tile.scss';
+// Types
+import type { Element } from 'react';
+import Player from './Player.js';
 
-export default class Tile extends Component {
+type Props = {
+  type: string,
+  cols: number,
+  players?: Array<Element<typeof Player>>,
+  color?: string,
+  action?: string,
+}
+
+export default class Tile extends Component<Props> {
   render(){
     let missingAction = this.props.type === 'action' && !this.props.action;
 
