@@ -27,3 +27,12 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.active {
+  background: white !important;
+  color: black !important;
+
+  .tile-players {
+    filter: brightness(0%);
+  }
+}

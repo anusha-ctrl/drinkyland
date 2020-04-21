@@ -21,7 +21,6 @@ const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 type Props = {
   roomID: string,
   playerID: number,
-  addr: string,
   syncDB: SyncDB,
 }
 
@@ -76,13 +75,12 @@ class Game extends Component<Props, State> {
     return 10;
   }
 
-  genTiles(actions: Array<string>, players: Array<any>, cols: number){
-    var bgcolor = 'rgb(0, 128, 128)';
+  genTiles(){
+    const {actions, players, cols, lastMove} = this.state;
+    var bgcolor = '';
+    var [actionIndex, i, j, tileIndex] = [0, 0, 0, 0];
+
     var tiles = [];
-    var actionIndex = -1;
-    var i = 0;
-    var j = 0;
-    var tileIndex = 0;
 
     // Put players into a map from tile to players
     var playerMap = {};
@@ -109,7 +107,7 @@ class Game extends Component<Props, State> {
             actionIndex = prior + cols - j - 1;
           }
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
+          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} lastMove={lastMove}/>);
           tileIndex += 1;
         }
       }
@@ -120,7 +118,7 @@ class Game extends Component<Props, State> {
         if (i%4 === 3){
           actionIndex = prior;
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} lastMove={lastMove}/>);
           tileIndex += 1;
           for (j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols} key={tileIndex}/>);
@@ -133,7 +131,7 @@ class Game extends Component<Props, State> {
           }
           actionIndex = prior;
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor}/>);
+          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} lastMove={lastMove}/>);
           tileIndex += 1;
         }
       }
@@ -143,31 +141,9 @@ class Game extends Component<Props, State> {
   }
 
   rollDice() {
-    // tbh Drinkyland gameplay is just a random number generator
+    // Drinkyland gameplay is a random number generator + alcohol
     const roll = Math.floor(Math.random() * 6) + 1;
-    const curr = this.state.curr_player;
-    const next = (curr + 1) % this.state.players.length;
-    var players : Array<any> = this.state.players;
-
-    // Clear player move data from all players
-    for (var id = 0; id < players.length; id++) {
-      players[id]['just_moved'] = false;
-      players[id]['is_next'] = false;
-    }
-
-    // Move the player and maintain the player tracking data
-    var playerInfo = players[curr];
-    playerInfo['pos'] = Math.min(playerInfo['pos'] + roll, this.state.actions.length-1);
-    playerInfo['just_moved'] = true;
-    players[curr] = playerInfo;
-
-    players[next]['is_next'] = true;
-    this.setState({
-        players: players
-    });
-
-    // Broadcast the new state
-    this.props.syncDB.setRoll(roll, next, players);
+    this.props.syncDB.makeMove(roll, this.state.curr_player);
   }
 
   resetGame() {
@@ -176,7 +152,7 @@ class Game extends Component<Props, State> {
 
   render() {
     let player = this.state.players[this.state.curr_player] ?? {};
-    let tiles = this.genTiles(this.state.actions, this.state.players, this.state.cols);
+    let tiles = this.genTiles();
 
     return (
       <>

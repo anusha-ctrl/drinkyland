@@ -11,12 +11,19 @@ export type player = {
   pos: number
 }
 
+export type move = {
+  player: number,
+  prev_pos: number,
+  new_pos: number
+}
+
 export type syncState = {
   actions: Array<action>,
   players: Array<player>,
   curr_player: number,
   roll: number,
   connected: boolean,
+  lastMove: ?move,
 }
 
 export default class SyncDB {
@@ -26,6 +33,7 @@ export default class SyncDB {
     curr_player: 0,
     roll: -1,
     connected: false,
+    lastMove: null,
   }
   rootRef: any;
   currentState: syncState;
@@ -44,13 +52,30 @@ export default class SyncDB {
     }.bind(this))
   }
 
-  // Broadcast the result of a roll from this client
-  setRoll(roll: number, next: number, players: Array<player>){
+  // Update the gamestate from moving a player x spaces
+  makeMove(roll: number, playerID: number){
+    var { players, actions } = this.currentState;
+    var prevPos = players[playerID].pos;
+    const next = (playerID + 1) % players.length;
+    const newPos = Math.min(prevPos + roll, actions.length-1)
+
+    // Log the move so we can animate it
+    const lastMove = {
+      player: playerID,
+      prevPos: prevPos,
+      newPos: newPos,
+    }
+
+    // Move the player
+    players[playerID].pos = newPos;
+
+    // Make the move in Firebase
     this.rootRef.set({
       ...this.currentState,
       roll: roll,
       curr_player: next,
       players: players,
+      lastMove: lastMove
     });
   }
 
@@ -65,6 +90,7 @@ export default class SyncDB {
       players: players,
       curr_player: 0,
       roll: -1,
+      lastMove: null,
      });
   }
 }

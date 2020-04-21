@@ -41,7 +41,6 @@ export default class Signin extends Component<any>{
     // If this room doesn't exist yet, initialize it
     const gameRef = firebase.database().ref("games/"+roomID);
     gameRef.once('value', (snapshot) => {
-      var playerID = 0;
       if (!snapshot.exists()){
         gameRef.set({
           ...initial_state,
@@ -52,18 +51,16 @@ export default class Signin extends Component<any>{
       } else {
         // Add the player if they don't already exist
         const players = snapshot.val()['players'];
-        const playerIndex = players.findIndex((p) => p.name == name);
+        var playerIndex = players.findIndex((p) => p.name === name);
         if (playerIndex === -1) {
           var playerLen = players.length;
           let playerObj = {}
           playerObj[playerLen] = {pos: 0, color: 'nah', name: name, drink: drink}
           gameRef.child('players').update(playerObj);
-          playerID = playerLen;
-        } else {
-          playerID = playerIndex
+          playerIndex = playerLen;
         }
       }
-      this.props.cookies.set(roomID, playerID, { path: '/'});
+      this.props.cookies.set(roomID, playerIndex, { path: '/'});
       // Now the game should exist and the player should be added. Gogogo.
       this.props.history.push('room/'+roomID);
     });
