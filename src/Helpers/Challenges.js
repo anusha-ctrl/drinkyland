@@ -1,4 +1,5 @@
 //@flow
+import seedrandom from 'seedrandom';
 // Types
 import type { syncState, action } from '../Helpers/SyncDB.js';
 
@@ -10,7 +11,7 @@ export default class Challenges {
   // %d is the value of the last roll.
   static starter_challenges = [
     [ 'Start', '' ],
-    [ '< 5\'10\"', 'If you\'re shorter than 5\'10", then drink.' ],
+    [ '< 5\'10"', 'If you\'re shorter than 5\'10", then drink.' ],
     [ 'Truth or Drink', '%p comes up with a question. Either answer it truthfully or drink.' ],
     [ 'Spelling Bee', '%p, %p, and %p come up with words. Spell them each correctly or drink.' ],
     [ 'Chug', 'Take that drink and bottom it out.' ],
@@ -58,13 +59,39 @@ export default class Challenges {
     // Replace all the rolls
     raw = raw.replace(/%d/g, String(state.lastMove?.roll))
 
-    // Randomly assign players to %p identifiers
-    const newOrder = state.players.sort(() => Math.random() - 0.5);
+    // Randomly assign players who didn't just roll to %p identifiers
+    var newOrder = state.players.slice();
+    if (state.lastMove !== null){
+      //$FlowFixMe Flow doesn't recognize that lastMove must be nonnull here
+      newOrder.splice(state.lastMove.player, 1);
+    }
+    Challenges.shuffle(newOrder, state);
     var i = 0;
     while (raw.includes('%p')){
       raw = raw.replace('%p', String(newOrder[i%newOrder.length].name));
       i++;
     }
     return raw;
+  }
+
+  // Shuffles the array in-place using Fisher-Yates.
+  // Is this overkill? Probably.
+  static shuffle(array: Array<any>, state: syncState){
+    // TODO: Make the seed just roomID and turn number
+    const seed =
+      String(state.lastMove?.turnNumber) +
+      String(state.lastMove?.player) +
+      String(state.lastMove?.prevPos) +
+      String(state.lastMove?.newPos);
+    // Make a predictable pseudorandom number generator.
+    // It's pseudorandom so all clients get the same order.
+    let rand = new seedrandom(seed);
+
+    for(let i = 0; i < array.length; i++){
+      const j = Math.floor(rand() * i)
+      const temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
   }
 }

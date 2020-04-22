@@ -18,7 +18,8 @@ export type move = {
   player: number,
   roll: number,
   prevPos: number,
-  newPos: number
+  newPos: number,
+  turnNumber: number,
 }
 
 export type syncState = {
@@ -49,24 +50,30 @@ export default class SyncDB {
   // the Firebase db
   syncState(component: Component<any,any>) {
     this.rootRef.on('value', function(snapshot) {
-      this.currentState = snapshot.val();
-      component.setState(snapshot.val());
+      const val = {
+        ...snapshot.val(),
+        connected: true,
+        lastMove: snapshot.val().lastMove ?? undefined // Updates lastMove if it's missing from Firebase
+      };
+      this.currentState = val;
+      component.setState(val);
     }.bind(this))
   }
 
   // Update the gamestate from moving a player x spaces
   makeMove(roll: number, playerID: number){
-    var { players, actions } = this.currentState;
+    var { players, actions, lastMove } = this.currentState;
     var prevPos = players[playerID].pos;
     const next = (playerID + 1) % players.length;
     const newPos = Math.min(prevPos + roll, actions.length-1)
 
     // Log the move so we can animate it
-    const lastMove = {
+    const thisMove = {
       player: playerID,
       roll: roll,
       prevPos: prevPos,
       newPos: newPos,
+      turnNumber: (lastMove?.turnNumber ?? 0) + 1
     }
 
     // Move the player
@@ -78,7 +85,7 @@ export default class SyncDB {
       roll: roll,
       curr_player: next,
       players: players,
-      lastMove: lastMove
+      lastMove: thisMove
     });
   }
 
@@ -92,7 +99,6 @@ export default class SyncDB {
     this.rootRef.update({
       players: players,
       curr_player: 0,
-      roll: -1,
       lastMove: null,
      });
   }

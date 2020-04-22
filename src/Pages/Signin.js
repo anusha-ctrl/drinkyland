@@ -10,8 +10,7 @@ import '../css/Signin.scss';
 const initial_state = {
   actions: Challenges.getDefaults(),
   players: {},
-   curr_player: 0,
-   roll: -1,
+  curr_player: 0,
  }
 
 export default class Signin extends Component<any>{

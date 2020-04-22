@@ -41,7 +41,7 @@ class Game extends Component<Props, State> {
     this.state = {
       ...SyncDB.defaultState,
       available_colors: all_colors,
-      connected: true, //TODO: Revert to false once SyncDB updates it
+      connected: false,
       cols: this.getCols(window.innerWidth),
     }
   }
