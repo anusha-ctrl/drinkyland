@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Tile from '../Components/Tile';
 import Player from '../Components/Player';
 import { Navbar, Nav } from 'react-bootstrap';
-import { HotKeys } from "react-hotkeys";
 
 // Helpers
 import Bartender from '../Helpers/Bartender.js';
@@ -191,23 +190,14 @@ class Game extends Component<Props, State> {
     let tiles = this.genTiles();
 
     let description = null;
+    // TODO: Turn this seed into a random string that's stored in lastTurn
     let seed = this.props.roomID + String(this.state.lastMove?.turnNumber);
     if(this.state.lastMove?.dismissed === false){
-      // TODO: Move these somewhere less buried
-      const keyMap = {
-        dismissDescription: "return",
-      };
-
-      const handlers = {
-        dismissDescription: this.dismissDescription.bind(this)
-      };
-
       let { lastMove, players, actions } = this.state;
       //$FlowFixMe Flow doesn't realize lastMove must be nonnull
       let { newPos, turnNumber, player } = lastMove;
       let color = colorloop[newPos % colorloop.length];
       let challenge = actions[newPos];
-      // TODO: Turn this seed into a random string that's stored in lastTurn
       description =
         <div className='blackout description-container'>
           <div
