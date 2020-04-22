@@ -61,7 +61,7 @@ export default class Challenges {
 
     // Randomly assign players who didn't just roll to %p identifiers
     var newOrder = state.players.slice();
-    if (state.lastMove !== null){
+    if (state.lastMove !== null && newOrder.length > 1){
       //$FlowFixMe Flow doesn't recognize that lastMove must be nonnull here
       newOrder.splice(state.lastMove.player, 1);
     }
