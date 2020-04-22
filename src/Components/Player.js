@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from "react";
-import '../css/player.css';
+import '../css/player.scss';
 import Bartender from '../Helpers/Bartender.js';
 
 // Player needs an ID. Default is 0. Set ID later.
@@ -24,14 +24,18 @@ type Props = {
   name: string,
   color: string,
   location: number,
-  drink: string
+  drink: string,
+  active: boolean,
 }
 
 export default class Player extends Component<Props> {
+
   render() {
+    let { active, drink } = this.props;
+
     return (
-      <div className="player">
-        <img src={Bartender.pour(this.props.drink)} alt={this.props.drink} className="invert"/>
+      <div className={"player" + (active ? ' floating' : '')}>
+        <img src={Bartender.pour(drink)} alt={drink} className="invert"/>
       </div>
     );
   }

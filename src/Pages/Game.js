@@ -77,7 +77,7 @@ class Game extends Component<Props, State> {
   }
 
   genTiles(){
-    const {actions, players, cols, lastMove} = this.state;
+    const {actions, players, cols, lastMove, curr_player} = this.state;
     var bgcolor = '';
     var [actionIndex, i, j, tileIndex] = [0, 0, 0, 0];
 
@@ -88,7 +88,14 @@ class Game extends Component<Props, State> {
     for (i=0; i<players.length; i++){
       var player = players[i];
       var pos = player['pos'];
-      let comp = <Player location={player['pos']} name={player['name']} color={player['color']} drink={player['drink']} key={i}/>;
+      let comp =
+        <Player
+          location={player['pos']}
+          name={player['name']}
+          color={player['color']}
+          drink={player['drink']}
+          active={i === curr_player}
+          key={i}/>;
       var tileList = (playerMap[pos] ?? []);
       tileList.push(comp);
       playerMap[pos] = tileList;

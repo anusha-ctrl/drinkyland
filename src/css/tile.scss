@@ -8,6 +8,15 @@
   justify-content: center;
   box-sizing: border-box;
   padding: 10px;
+
+  &.active {
+    background: white !important;
+    color: black !important;
+
+    .tile-players {
+      filter: brightness(0%);
+    }
+  }
 }
 
 .action {
@@ -26,15 +35,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-}
-
-.active {
-  background: white !important;
-  color: black !important;
-
-  .tile-players {
-    filter: brightness(0%);
-  }
 }
 
 .blackout {
