@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Tile from '../Components/Tile';
 import Player from '../Components/Player';
 import { Navbar, Nav } from 'react-bootstrap';
+import { HotKeys } from "react-hotkeys";
 
 // Helpers
 import Bartender from '../Helpers/Bartender.js';
@@ -108,7 +109,17 @@ class Game extends Component<Props, State> {
             actionIndex = prior + cols - j - 1;
           }
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[actionIndex]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} syncState={this.state}/>);
+          tiles.push(
+            <Tile
+              action={actions[actionIndex]}
+              type='action'
+              cols={cols}
+              players={playerMap[actionIndex]}
+              key={tileIndex}
+              color={bgcolor}
+              actionIndex={actionIndex}
+              syncState={this.state}
+              syncDB={this.props.syncDB}/>);
           tileIndex += 1;
         }
       }
@@ -119,7 +130,17 @@ class Game extends Component<Props, State> {
         if (i%4 === 3){
           actionIndex = prior;
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} syncState={this.state}/>);
+          tiles.push(
+            <Tile
+              action={actions[prior]}
+              type='action'
+              cols={cols}
+              players={playerMap[actionIndex]}
+              key={tileIndex}
+              color={bgcolor}
+              actionIndex={actionIndex}
+              syncState={this.state}
+              syncDB={this.props.syncDB}/>);
           tileIndex += 1;
           for (j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols} key={tileIndex}/>);
@@ -132,7 +153,17 @@ class Game extends Component<Props, State> {
           }
           actionIndex = prior;
           bgcolor = colorloop[actionIndex%colorloop.length];
-          tiles.push(<Tile action={actions[prior]} type='action' cols={cols} players={playerMap[actionIndex]} key={tileIndex} color={bgcolor} actionIndex={actionIndex} syncState={this.state}/>);
+          tiles.push(
+            <Tile
+              action={actions[prior]}
+              type='action'
+              cols={cols}
+              players={playerMap[actionIndex]}
+              key={tileIndex}
+              color={bgcolor}
+              actionIndex={actionIndex}
+              syncState={this.state}
+              syncDB={this.props.syncDB}/>);
           tileIndex += 1;
         }
       }
@@ -151,15 +182,56 @@ class Game extends Component<Props, State> {
     this.props.syncDB.resetGame();
   }
 
+  dismissDescription() {
+    this.props.syncDB.dismissDescription();
+  }
+
   render() {
     let player = this.state.players[this.state.curr_player] ?? {};
     let tiles = this.genTiles();
 
+    let description = null;
+    let seed = this.props.roomID + String(this.state.lastMove?.turnNumber);
+    if(this.state.lastMove?.dismissed === false){
+      // TODO: Move these somewhere less buried
+      const keyMap = {
+        dismissDescription: "return",
+      };
+
+      const handlers = {
+        dismissDescription: this.dismissDescription.bind(this)
+      };
+
+      let { lastMove, players, actions } = this.state;
+      //$FlowFixMe Flow doesn't realize lastMove must be nonnull
+      let { newPos, turnNumber, player } = lastMove;
+      let color = colorloop[newPos % colorloop.length];
+      let challenge = actions[newPos];
+      // TODO: Turn this seed into a random string that's stored in lastTurn
+      description =
+        <div className='blackout description-container'>
+          <div
+            className='description'
+            style={{background: color}}>
+            <h2>{players[player].name}</h2>
+            <h1>{challenge.title}</h1>
+            <p>{Challenges.format(challenge.description, this.state, seed)}</p>
+            <div
+              className='btn transition-all'
+              style={{color: color}}
+              onClick={this.dismissDescription.bind(this)}>
+              <div>Done</div>
+            </div>
+          </div>
+        </div>
+    }
+
+    if (!this.state.connected){
+      return <div className = "connecting-overlay"><h1>Connecting...</h1></div>;
+    }
+
     return (
       <>
-      {!this.state.connected && <div className = "connecting-overlay"><h1>Connecting...</h1></div>}
-      {this.state.connected &&
-        <div>
         <Navbar bg="dark" variant="dark">
           <a href="/" className="logo">DrinkyLand</a>
           <Nav className="mr-auto">
@@ -181,7 +253,7 @@ class Game extends Component<Props, State> {
               { this.state.lastMove &&
                 <Navbar.Text>
                   <strong>Challenge: </strong>
-                  { Challenges.format(this.state.actions[this.state.lastMove.newPos].description, this.state) }
+                  { Challenges.format(this.state.actions[this.state.lastMove.newPos].description, this.state, seed) }
                 </Navbar.Text>
               }
           </Navbar>
@@ -189,10 +261,10 @@ class Game extends Component<Props, State> {
           <div className="board">
             {tiles}
           </div>
+
+          {description}
         </div>
-      </div>
-      }
-    </>
+      </>
     );
   }
 }

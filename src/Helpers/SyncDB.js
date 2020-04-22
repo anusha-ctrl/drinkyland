@@ -20,6 +20,7 @@ export type move = {
   prevPos: number,
   newPos: number,
   turnNumber: number,
+  dismissed: boolean,
 }
 
 export type syncState = {
@@ -73,7 +74,8 @@ export default class SyncDB {
       roll: roll,
       prevPos: prevPos,
       newPos: newPos,
-      turnNumber: (lastMove?.turnNumber ?? 0) + 1
+      turnNumber: (lastMove?.turnNumber ?? 0) + 1,
+      dismissed: false
     }
 
     // Move the player
@@ -87,6 +89,13 @@ export default class SyncDB {
       players: players,
       lastMove: thisMove
     });
+  }
+
+  // Dismiss the currently open description
+  dismissDescription(){
+    this.rootRef.child('lastMove').update({
+      dismissed: true
+    })
   }
 
   // Reset all players and the player order

@@ -20,25 +20,26 @@ type Props = {
 
 export default class Tile extends Component<Props> {
   render(){
-    let { type, action, syncState, actionIndex } = this.props;
+    let { type, action, syncState, actionIndex, cols, color, players } = this.props;
     let lastMove = syncState?.lastMove;
     let missingAction = (type === 'action' && !action);
     let isActive = (type === 'action' && lastMove?.newPos === actionIndex);
 
     return (
-      <div
-        className={'tile ' + this.props.type + (isActive ? ' active' : '')}
-        style={{
-          width: 100/this.props.cols+'vw',
-          height: 100/this.props.cols+'vw',
-          background: missingAction ? 'transparent' : this.props.color
-        }}>
-        <p>{this.props.action?.title}</p>
-        {/* <p>{this.props.action?.description && Challenges.format(this.props.action?.description, syncState)}</p> */}
-        <div className="tile-players">
-          {this.props.players}
+      <>
+        <div
+          className={'tile ' + type + (isActive ? ' active' : '')}
+          style={{
+            width: 100/cols+'vw',
+            height: 100/cols+'vw',
+            background: missingAction ? 'transparent' : color
+          }}>
+          <p>{action?.title}</p>
+          <div className="tile-players">
+            {players}
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 }

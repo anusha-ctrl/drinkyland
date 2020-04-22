@@ -8,8 +8,7 @@ $nav-bg-color1: #fff;
 $nav-bg-color2: #fff;
 
 html{
-  // background: white !important; // Disables the fancy pattern
-
+  // background: white !important; // Disable the fancy pattern
   background-color:$bg-color2;
   background-image:
   radial-gradient(circle at 100% 150%, $bg-color2 24%, $bg-color1 24%, $bg-color1 28%, $bg-color2 28%, $bg-color2 36%, $bg-color1 36%, $bg-color1 40%, transparent 40%, transparent),
@@ -28,7 +27,13 @@ html{
   &::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
   }
+}
 
+.transition-all {
+  -webkit-transition: all 0.15s ease-out;
+  -moz-transition: all 0.15s ease-out;
+  -o-transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out;
 }
 
 .App {
