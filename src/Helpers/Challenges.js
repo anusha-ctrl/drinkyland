@@ -78,7 +78,7 @@ export default class Challenges {
 
   // Shuffles the array in-place using Fisher-Yates.
   // Is this overkill? Probably.
-  static shuffle(array: Array<any>, start? : number, end? : number, seed?: string){
+  static shuffle(array: Array<any>, start : number, end : number, seed?: string){
     seed = seed ?? String(Math.random());
     // Make a predictable pseudorandom number generator.
     // It's pseudorandom so all clients get the same order.
