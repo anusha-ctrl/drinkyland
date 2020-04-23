@@ -34,7 +34,7 @@ export default class Tile extends Component<Props> {
             height: 100/cols+'vw',
             background: missingAction ? 'transparent' : color
           }}>
-          <p>{action?.title}</p>
+          <h1>{action?.title}</h1>
           <div className="tile-players">
             {players}
           </div>

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Tile from '../Components/Tile';
 import Player from '../Components/Player';
+import PlayerList from '../Components/PlayerList';
 import { Navbar, Nav } from 'react-bootstrap';
 
 // Helpers
@@ -12,7 +13,7 @@ import Challenges from '../Helpers/Challenges.js'
 // Types
 import type {syncState} from '../Helpers/SyncDB.js';
 
-// CSS
+// Styling
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Game.scss';
 
@@ -223,6 +224,14 @@ class Game extends Component<Props, State> {
         </div>
     }
 
+    let startScreen = null;
+    if(!this.state.started){
+      startScreen =
+        <div className="blackout">
+          <PlayerList syncState={this.state} syncDB={this.props.syncDB}/>
+        </div>
+    }
+
     if (!this.state.connected){
       return <div className = "connecting-overlay"><h1>Connecting...</h1></div>;
     }
@@ -260,6 +269,7 @@ class Game extends Component<Props, State> {
           </div>
 
           {description}
+          {startScreen}
         </div>
       </>
     );

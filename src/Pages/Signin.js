@@ -11,6 +11,7 @@ const initial_state = {
   actions: Challenges.getDefaults(),
   players: {},
   curr_player: 0,
+  started: false,
  }
 
 export default class Signin extends Component<any>{

@@ -24,8 +24,9 @@
   // border: 0.6vw solid rgba(255,255,255,0.1); // Light Borders
   border: 0.6vw solid rgba(0,0,0,0.1); // Dark borders
 
-  font-family: 'Sriracha', cursive;
-  font-size: 1.3em;
+  h1 {
+    font-size: 1.3em;
+  }
 }
 
 .empty {
