@@ -7,6 +7,8 @@ import Challenges from '../Helpers/Challenges.js';
 // Styling
 import '../css/Signin.scss';
 
+type State = { game_button : string }
+
 const initial_state = {
   actions: Challenges.getDefaults(),
   players: {},
@@ -14,9 +16,41 @@ const initial_state = {
   started: false,
  }
 
-export default class Signin extends Component<any>{
+ const NEW = "Create Game!";
+ const START = "Start Game!";
+
+
+ export default class Signin extends Component<any, State>{
+  constructor(props : any) {
+      super(props);
+      this.state = {
+        game_button : START
+      };
+  }
+
   generateRoomID() {
     return Math.floor(Math.random() * (10000));
+  }
+
+  handleKeyUp(event : any) {
+    var roomID = event.currentTarget.formRoomID.value;
+    if (roomID === null || roomID === '' || roomID === undefined) {
+      return;
+    }
+
+    const gameRef = firebase.database().ref("games/"+roomID);
+    gameRef.once('value', (snapshot) => {
+      var playerIndex = 0;
+      if (!snapshot.exists()){
+        this.setState({
+          game_button: NEW
+        });
+      } else {
+        this.setState({
+          game_button: START
+        });
+      }
+    });
   }
 
   handleSubmit(event: any) {
@@ -66,7 +100,7 @@ export default class Signin extends Component<any>{
         <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
 
-          <Form onSubmit={this.handleSubmit.bind(this)}>
+          <Form onSubmit={this.handleSubmit.bind(this)} onKeyUp={this.handleKeyUp.bind(this)}>
             <Form.Group controlId="formRoomID">
               <Form.Label>Room ID</Form.Label>
               <Form.Control type="text" placeholder="Enter Game ID to create or join" />
@@ -90,7 +124,7 @@ export default class Signin extends Component<any>{
             </Form.Group>
 
             <Button variant="primary" type="submit" >
-              Play Game!
+              {this.state.game_button}
             </Button>
           </Form>
         </div>

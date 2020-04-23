@@ -46,6 +46,8 @@ export default class Challenges {
   ]
 
   static getDefaults() {
+    const end = Challenges.starter_challenges.length - 1;
+    Challenges.shuffle(Challenges.starter_challenges, 1, end);
     return Challenges.starter_challenges.map<action>((pair) => {
       return {title: pair[0], description: pair[1]}
     });
@@ -65,7 +67,7 @@ export default class Challenges {
       //$FlowFixMe Flow doesn't recognize that lastMove must be nonnull here
       newOrder.splice(state.lastMove.player, 1);
     }
-    Challenges.shuffle(newOrder, seed);
+    Challenges.default_shuffle(newOrder, seed);
     var i = 0;
     while (raw.includes('%p')){
       raw = raw.replace('%p', String(newOrder[i%newOrder.length].name));
@@ -76,17 +78,21 @@ export default class Challenges {
 
   // Shuffles the array in-place using Fisher-Yates.
   // Is this overkill? Probably.
-  static shuffle(array: Array<any>, seed?: string){
+  static shuffle(array: Array<any>, start : number, end : number, seed?: string){
     seed = seed ?? String(Math.random());
     // Make a predictable pseudorandom number generator.
     // It's pseudorandom so all clients get the same order.
     let rand = new seedrandom(seed);
 
-    for(let i = 0; i < array.length; i++){
-      const j = Math.floor(rand() * i)
+    for(let i = start; i < end; i++){
+      const j = Math.floor(rand() * i) + start;
       const temp = array[i]
       array[i] = array[j]
       array[j] = temp
     }
+  }
+
+  static default_shuffle(array : Array<any>, seed? : string) {
+    Challenges.shuffle(array, 0, array.length, seed);
   }
 }
