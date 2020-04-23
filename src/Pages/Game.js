@@ -15,6 +15,7 @@ import type {syncState} from '../Helpers/SyncDB.js';
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Game.scss';
+import "./custom.css";
 
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(252, 198, 3)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
@@ -229,38 +230,40 @@ class Game extends Component<Props, State> {
 
     return (
       <>
-        <Navbar bg="dark" variant="dark">
-          <a href="/" className="logo">DrinkyLand</a>
-          <Nav className="mr-auto">
-            <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
-            <Nav.Link className="ml-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
-          </Nav>
-        </Navbar>
-
-        <div className="App">
-          <Navbar className="inner-navbar" fixed="top">
-              <button className="mr-10" onClick={() => this.rollDice()}>
-                {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
-              </button>
-              <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
-              <Navbar.Text className="ml-10 mr-10">
-                <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
-                <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
-              </Navbar.Text>
-              { this.state.lastMove &&
-                <Navbar.Text>
-                  <strong>Challenge: </strong>
-                  { Challenges.format(this.state.actions[this.state.lastMove.newPos].description, this.state, seed) }
-                </Navbar.Text>
-              }
+      <div class="fixed-top" data-toggle="affix">
+          <Navbar bg="dark" variant="dark">
+            <a href="/" className="logo">DrinkyLand</a>
+            <Nav className="mr-auto">
+              <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
+              <Nav.Link className="ml-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
+            </Nav>
           </Navbar>
+
+          
+            <Navbar className="inner-navbar">
+                <button className="mr-10" onClick={() => this.rollDice()}>
+                  {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
+                </button>
+                <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
+                <Navbar.Text className="ml-10 mr-10">
+                  <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
+                  <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
+                </Navbar.Text>
+                { this.state.lastMove &&
+                  <Navbar.Text>
+                    <strong>Challenge: </strong>
+                    { Challenges.format(this.state.actions[this.state.lastMove.newPos].description, this.state, seed) }
+                  </Navbar.Text>
+                }
+            </Navbar>
+          </div>
 
           <div className="board">
             {tiles}
           </div>
 
           {description}
-        </div>
+
       </>
     );
   }
