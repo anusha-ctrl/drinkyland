@@ -229,7 +229,7 @@ class Game extends Component<Props, State> {
 
     return (
       <>
-        <Navbar bg="dark" variant="dark" sticky="top">
+        <Navbar bg="dark" variant="dark">
           <a href="/" className="logo">DrinkyLand</a>
           <Nav className="mr-auto">
             <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
@@ -238,7 +238,7 @@ class Game extends Component<Props, State> {
         </Navbar>
 
         <div className="App">
-          <Navbar className="inner-navbar">
+          <Navbar className="inner-navbar" fixed="top">
               <button className="mr-10" onClick={() => this.rollDice()}>
                 {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
               </button>
