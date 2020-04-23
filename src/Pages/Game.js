@@ -230,8 +230,8 @@ class Game extends Component<Props, State> {
 
     return (
       <>
-      <div class="fixed-top" data-toggle="affix">
-          <Navbar bg="dark" variant="dark">
+      <div className="App overflow-fix">
+          <Navbar class = "navbar-expand" bg="dark" variant="dark" >
             <a href="/" className="logo">DrinkyLand</a>
             <Nav className="mr-auto">
               <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
@@ -239,8 +239,8 @@ class Game extends Component<Props, State> {
             </Nav>
           </Navbar>
 
-          
-            <Navbar className="inner-navbar">
+
+            <Navbar className="inner-navbar second" >
                 <button className="mr-10" onClick={() => this.rollDice()}>
                   {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
                 </button>
@@ -256,14 +256,15 @@ class Game extends Component<Props, State> {
                   </Navbar.Text>
                 }
             </Navbar>
-          </div>
+
+
 
           <div className="board">
             {tiles}
           </div>
 
           {description}
-
+        </div>
       </>
     );
   }

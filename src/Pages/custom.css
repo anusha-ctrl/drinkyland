@@ -1,15 +1,13 @@
-.fixed-top #first {
-  -webkit-transition:padding 0.2s ease;
-  -moz-transition:padding 0.2s ease;
-  -o-transition:padding 0.2s ease;
-  transition:padding 0.2s ease;
+.second {
+    position:sticky;
+    top:0;
+    z-index:1;
 }
 
-.affix #first {
-  padding-top: 0.2em !important;
-  padding-bottom: 0.2em !important;
-  -webkit-transition:padding 0.2s linear;
-  -moz-transition:padding 0.2s linear;
-  -o-transition:padding 0.2s linear;
-  transition:padding 0.2s linear;
+.board{
+  display: table-row;
+}
+
+.overflow-fix {
+  display: table;
 }
