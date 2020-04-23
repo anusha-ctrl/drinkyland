@@ -229,7 +229,7 @@ class Game extends Component<Props, State> {
 
     return (
       <>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" sticky="top">
           <a href="/" className="logo">DrinkyLand</a>
           <Nav className="mr-auto">
             <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
