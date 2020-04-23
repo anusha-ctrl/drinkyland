@@ -51,7 +51,7 @@ export default class Challenges {
     });
   }
 
-  static format(raw: string, state: syncState, seed: string){
+  static format(raw: string, state: syncState, seed?: string){
     // Replace all instances of the current player
     //$FlowFixMe TODO: Fix this shenanigan error ignoring
     raw = raw.replace(/%c/g, String(state.players[state.lastMove.player].name));
@@ -76,7 +76,8 @@ export default class Challenges {
 
   // Shuffles the array in-place using Fisher-Yates.
   // Is this overkill? Probably.
-  static shuffle(array: Array<any>, seed: string){
+  static shuffle(array: Array<any>, seed?: string){
+    seed = seed ?? String(Math.random());
     // Make a predictable pseudorandom number generator.
     // It's pseudorandom so all clients get the same order.
     let rand = new seedrandom(seed);

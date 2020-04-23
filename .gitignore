@@ -117,3 +117,6 @@ dist
 
 # Mac OS X indexing files
 .DS_Store
+
+# Yarn Packages File
+yarn.lock
