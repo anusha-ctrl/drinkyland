@@ -29,7 +29,7 @@ export default class Challenges {
     [ 'Question Master', '%c is now Question Master! Whenever someone answers your question without a question, they drink.' ],
     [ 'Pick Somebody', 'Pick somebody to drink.' ],
     [ '10 Pushups', 'Drop and do 10.' ],
-    [ 'Categories', 'Pick a category, Go in alphabetical order and say things from that category. The first person to take > 5 seconds or get it wrong drinks.' ],
+    [ 'Categories', 'Pick a category. Go in alphabetical order and say things from that category. The first person to take > 5 seconds or get it wrong drinks.' ],
     [ 'KMK', 'The group picks 3 people. Pick your options to Kiss, Marry, and Kill.' ],
     [ 'Rhymes', 'Pick a word. Go in alphabetical order and say words that rhyme. The first person to take > 5 seconds or get it wrong drinks.' ],
     [ 'Birthday', 'Guess everyone\'s birthday. Drink for each one you get wrong.' ],

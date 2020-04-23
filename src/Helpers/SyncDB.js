@@ -28,6 +28,7 @@ export type syncState = {
   players: Array<player>,
   curr_player: number,
   connected: boolean,
+  started: boolean,
   lastMove: ?move,
 }
 
@@ -37,6 +38,7 @@ export default class SyncDB {
     players : [],
     curr_player: 0,
     connected: false,
+    started: false,
     lastMove: null,
   }
   rootRef: any;
@@ -58,11 +60,11 @@ export default class SyncDB {
       };
       this.currentState = val;
       component.setState(val);
-    }.bind(this))
+    }.bind(this));
   }
 
   // Update the gamestate from moving a player x spaces
-  makeMove(roll: number, playerID: number){
+  makeMove(roll: number, playerID: number) {
     var { players, actions, lastMove } = this.currentState;
     var prevPos = players[playerID].pos;
     const next = (playerID + 1) % players.length;
@@ -92,14 +94,21 @@ export default class SyncDB {
   }
 
   // Dismiss the currently open description
-  dismissDescription(){
+  dismissDescription() {
     this.rootRef.child('lastMove').update({
       dismissed: true
     })
   }
 
+  // Set this game as started
+  startGame() {
+    this.rootRef.update({
+      'started': true
+    });
+  }
+
   // Reset all players and the player order
-  resetGame(){
+  resetGame() {
     var players = this.currentState.players;
     for (var id = 0; id < players.length; id++) {
       players[id]['pos'] = 0;
