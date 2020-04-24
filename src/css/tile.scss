@@ -37,3 +37,19 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+@media only screen and (max-width: 450px) {
+  .action {
+    border-width: 1.75vw;
+  }
+}
+@media only screen and (min-width: 450px) and (max-width: 850px) {
+  .action {
+    border-width: 1vw;
+  }
+}
+@media only screen and (min-width: 850px) and (max-width: 1400px) {
+  .action {
+    border-width: 0.6vw;
+  }
+}
