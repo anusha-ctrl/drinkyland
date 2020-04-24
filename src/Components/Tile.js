@@ -25,6 +25,8 @@ export default class Tile extends Component<Props> {
     let missingAction = (type === 'action' && !action);
     let isActive = (type === 'action' && lastMove?.newPos === actionIndex);
 
+    type = missingAction ? 'empty' : type;
+
     return (
       <>
         <div
