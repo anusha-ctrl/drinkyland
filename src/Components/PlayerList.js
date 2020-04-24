@@ -30,14 +30,16 @@ export default class PlayerList extends Component<Props>{
         <h1 className="logo">DrinkyLand</h1>
         <hr/>
         <h2>Players</h2>
-        <ol>
-          {players.map((p) => {
-            return (<li><div className="player-row">
+        <div>
+          {players.map((p, i) => {
+            return (
+            <div className="player-row">
+              <p className="rank">{i+1}.</p>
               <img className="floating" src={Bartender.pour(p['drink'])} alt={p['drink']} height="20px" width="20px"/>
               <p>{p.name}</p>
-            </div></li>)
+            </div>)
           })}
-        </ol>
+        </div>
         <hr/>
         <p className="start-desc">Click to start the game.<br/>Players can still join after the game starts.</p>
         <div className="btn transition-all" onClick={this.startGame.bind(this)}>
