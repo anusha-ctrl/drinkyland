@@ -16,15 +16,15 @@ const initial_state = {
   started: false,
  }
 
- const NEW = "Create Game!";
- const START = "Start Game!";
+ const CREATE = "Create Game!";
+ const JOIN = "Join Game!";
 
 
  export default class Signin extends Component<any, State>{
   constructor(props : any) {
       super(props);
       this.state = {
-        game_button : START
+        game_button : CREATE
       };
   }
 
@@ -43,11 +43,11 @@ const initial_state = {
       var playerIndex = 0;
       if (!snapshot.exists()){
         this.setState({
-          game_button: NEW
+          game_button: CREATE
         });
       } else {
         this.setState({
-          game_button: START
+          game_button: JOIN
         });
       }
     });
