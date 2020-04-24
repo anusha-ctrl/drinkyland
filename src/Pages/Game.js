@@ -16,7 +16,6 @@ import type {syncState} from '../Helpers/SyncDB.js';
 // Styling
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Game.scss';
-import "./custom.css";
 
 const colorloop = ['rgb(148,14,173)','rgb(235,20,146)','rgb(237,148,44)','rgb(252, 198, 3)','rgb(76,183,53)','rgb(100,87,243)'];
 const all_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
@@ -240,7 +239,7 @@ class Game extends Component<Props, State> {
     return (
       <>
       <div className="App overflow-fix">
-          <Navbar class = "navbar-expand" bg="dark" variant="dark" >
+          <Navbar className = "outer-navbar" bg="dark" variant="dark" >
             <a href="/" className="logo">DrinkyLand</a>
             <Nav className="mr-auto">
               <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
