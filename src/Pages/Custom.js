@@ -6,7 +6,7 @@ import firebase from '../Helpers/firebase.js';
 import type { action } from '../Helpers/SyncDB.js';
 
 // Helpers
-import Challenges from '../Helpers/Challenges.js'
+import Challenges from '../Helpers/Challenges.js';
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,20 +15,35 @@ import '../css/Custom.scss';
 
 type State = { actions : Array<action> }
 
+type Props = {roomID : string,
+              playerIndex : number,
+              cookies : any,
+              history : any};
 
 const initial_state = {
-  actions: Challenges.getDefaults(),
   players: {},
   curr_player: 0,
   started: false,
 }
 
-class Custom extends Component<any, State> {
-  constructor() {
-      super();
+const init_actions = Challenges.getDefaults();
+
+class Custom extends Component<Props, State> {
+  constructor(props : Props) {
+      super(props);
       this.state = {
-        actions: initial_state.actions,
+        actions: this.getDbActions(),
       }
+  }
+
+  getDbActions() : Array<action> {
+    const gameRef = firebase.database().ref("games/"+this.props.roomID)
+                            .child("actions");
+    var actions = [];
+    gameRef.once('value', (snapshot) => {
+      actions = snapshot.val();
+    });
+    return actions;
   }
 
   handleOnChange(i : number, message : string) {
@@ -40,10 +55,10 @@ class Custom extends Component<any, State> {
   }
 
   createForm(){
-    const actions = initial_state.actions;
+    const actions = this.state.actions;
     const fi_elems = actions.map((item, i) => React.createElement(
       Form.Control,
-      {key : i, value : this.state.actions[i].title, type : "text"}
+      {key : i, value : item.title, type : "text"}
     ));
     const fg_elems = actions.map((item, i) => React.createElement(
       Form.Group,
@@ -61,7 +76,6 @@ class Custom extends Component<any, State> {
           {fg_elems}
         </div>
       </MDBContainer>
-
     );
   }
 
@@ -83,8 +97,8 @@ class Custom extends Component<any, State> {
     });
 
     // Redirects to the game!
-      this.props.cookies.set(this.props.roomID, this.props.playerIndex, { path: '/'});
-      this.props.history.push('/room/'+this.props.roomID);
+    this.props.cookies.set(this.props.roomID, this.props.playerIndex, { path: '/'});
+    this.props.history.push('/room/'+this.props.roomID);
   }
 
   render() {

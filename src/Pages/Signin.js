@@ -7,7 +7,7 @@ import Challenges from '../Helpers/Challenges.js';
 // Styling
 import '../css/Signin.scss';
 
-type State = { game_button : string }
+type State = { game_button : string, path : string }
 
 const initial_state = {
   actions: Challenges.getDefaults(),
@@ -24,7 +24,8 @@ const initial_state = {
   constructor(props : any) {
       super(props);
       this.state = {
-        game_button : CREATE
+        game_button : CREATE,
+        path: '/room/custom'
       };
   }
 
@@ -42,11 +43,13 @@ const initial_state = {
     gameRef.once('value', (snapshot) => {
       if (!snapshot.exists()){
         this.setState({
-          game_button: CREATE
+          game_button: CREATE,
+          path: '/room/'+roomID+'/custom'
         });
       } else {
         this.setState({
-          game_button: JOIN
+          game_button: JOIN,
+          path: '/room/'+roomID
         });
       }
     });
@@ -85,9 +88,10 @@ const initial_state = {
           playerIndex = playerLen;
         }
       }
+
       this.props.cookies.set(roomID, playerIndex, { path: '/'});
-      // Now the game should exist and the player should be added. Gogogo.
-      this.props.history.push('room/'+roomID+'/custom');
+      this.props.history.push(this.state.path);
+
     });
 
     event.preventDefault();
