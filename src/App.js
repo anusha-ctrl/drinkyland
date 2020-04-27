@@ -8,6 +8,7 @@ import SyncDB from './Helpers/SyncDB';
 
 // Pages
 import Signin from './Pages/Signin';
+import Custom from './Pages/Custom';
 import Game from './Pages/Game';
 
 class App extends Component<any> {
@@ -16,6 +17,12 @@ class App extends Component<any> {
       <Switch>
         <Route exact path="/" render={(props) =>
           <Signin {...props} cookies = {this.props.cookies}/> }/>
+        <Route path="/room/:roomID/custom" render={(props) =>
+          <Custom {...props}
+            roomID = {props.match.params.roomID}
+            playerIndex = {parseInt(this.props.cookies.get(props.match.params.roomID))}
+            cookies = {this.props.cookies}
+          /> }/>
         <Route path="/room/:roomID" render={(props) =>
           <Game
             roomID = {props.match.params.roomID}

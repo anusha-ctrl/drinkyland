@@ -40,7 +40,6 @@ const initial_state = {
 
     const gameRef = firebase.database().ref("games/"+roomID);
     gameRef.once('value', (snapshot) => {
-      var playerIndex = 0;
       if (!snapshot.exists()){
         this.setState({
           game_button: CREATE
@@ -88,7 +87,7 @@ const initial_state = {
       }
       this.props.cookies.set(roomID, playerIndex, { path: '/'});
       // Now the game should exist and the player should be added. Gogogo.
-      this.props.history.push('room/'+roomID);
+      this.props.history.push('room/'+roomID+'/custom');
     });
 
     event.preventDefault();
