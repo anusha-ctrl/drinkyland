@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Form, Button, Container, Navbar, Nav } from 'react-bootstrap';
 import { MDBContainer } from "mdbreact";
 import firebase from '../Helpers/firebase.js';
+import type { action } from '../Helpers/SyncDB.js';
 
 // Helpers
 import Challenges from '../Helpers/Challenges.js'
@@ -12,6 +13,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Signin.scss';
 import '../css/Custom.scss';
 
+type State = { actions : Array<action> }
+
 
 const initial_state = {
   actions: Challenges.getDefaults(),
@@ -20,16 +23,36 @@ const initial_state = {
   started: false,
 }
 
-class Custom extends Component<any> {
+class Custom extends Component<any, State> {
+  constructor() {
+      super();
+      this.state = {
+        actions: initial_state.actions,
+      }
+  }
+
+  handleOnChange(i : number, message : string) {
+    const actions = this.state.actions;
+    actions[i] = {title: message, description: ''};
+    this.setState({
+      actions: actions
+    });
+  }
+
   createForm(){
     const actions = initial_state.actions;
     const fi_elems = actions.map((item, i) => React.createElement(
       Form.Control,
-      {key : i, value : item.title, type : "text"}
+      {key : i, value : this.state.actions[i].title, type : "text"}
     ));
     const fg_elems = actions.map((item, i) => React.createElement(
       Form.Group,
-      {key : i, controlId : "FormGroup" + i.toString(), className : "customTilesFG"},
+      {
+        key : i,
+        controlId : "FormGroup" + i.toString(),
+        className : "customTilesFG",
+        onChange : (event) => this.handleOnChange(i, event.target.value),
+      },
       fi_elems[i]
     ));
     return (
@@ -47,16 +70,15 @@ class Custom extends Component<any> {
     const gameRef = firebase.database().ref("games/"+this.props.roomID);
     gameRef.once('value', (snapshot) => {
       if (!snapshot.exists()){
-        console.log("State 1");
         gameRef.set({
           ...initial_state,
+          actions: this.state.actions,
           players: {
             '0': {pos: 0, color: 'nah', name: "Bob", drink: "beer"}
           }
         });
       } else {
-        console.log("state 2");
-        gameRef.child('actions').update(initial_state.actions);
+        gameRef.child('actions').update(this.state.actions);
       }
     });
 
@@ -66,7 +88,6 @@ class Custom extends Component<any> {
   }
 
   render() {
-    const res = this.createForm();
     return (
       <div>
         <Navbar className = "outer-navbar" bg="dark" variant="dark" >
@@ -76,7 +97,7 @@ class Custom extends Component<any> {
           </Nav>
         </Navbar>
         <Container className="text-center">
-          {res}
+          {this.createForm()}
           <Form onSubmit={this.handleSubmit.bind(this)}>
             <Button variant="primary" type="submit" className="customButton">
               Confirm!
