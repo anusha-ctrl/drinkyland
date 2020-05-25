@@ -1,0 +1,96 @@
+yarn run v1.19.2
+$ flow
+Error ---------------------------------------------------------------------------------------- src/Pages/Signin.js:26:23
+
+Cannot assign object literal to `this.state` because string [1] is incompatible with `String` [2] in property
+`game_button`.
+
+   src/Pages/Signin.js:26:23
+   26|         game_button : START
+                             ^^^^^
+
+References:
+   src/Pages/Signin.js:19:16
+   19|  const START = "Start Game!";
+                      ^^^^^^^^^^^^^ [1]
+   src/Pages/Signin.js:10:30
+   10| type State = { game_button : String }
+                                    ^^^^^^ [2]
+
+
+Error ---------------------------------------------------------------------------------------- src/Pages/Signin.js:44:23
+
+Cannot call `this.setState` with object literal bound to `partialState` because string [1] is incompatible with
+`String` [2] in property `game_button`.
+
+   src/Pages/Signin.js:44:23
+                             v
+   44|         this.setState({
+   45|           game_button: NEW
+   46|         });
+               ^
+
+References:
+   src/Pages/Signin.js:18:14
+   18|  const NEW = "Create Game!";
+                    ^^^^^^^^^^^^^^ [1]
+   src/Pages/Signin.js:10:30
+   10| type State = { game_button : String }
+                                    ^^^^^^ [2]
+
+
+Error ---------------------------------------------------------------------------------------- src/Pages/Signin.js:48:23
+
+Cannot call `this.setState` with object literal bound to `partialState` because string [1] is incompatible with
+`String` [2] in property `game_button`.
+
+   src/Pages/Signin.js:48:23
+                             v
+   48|         this.setState({
+   49|           game_button: START
+   50|         });
+               ^
+
+References:
+   src/Pages/Signin.js:19:16
+   19|  const START = "Start Game!";
+                      ^^^^^^^^^^^^^ [1]
+   src/Pages/Signin.js:10:30
+   10| type State = { game_button : String }
+                                    ^^^^^^ [2]
+
+
+Error ---------------------------------------------------------------------------------------- src/Pages/Signin.js:88:18
+
+Cannot get `this.props.cookies` because property `cookies` is missing in object type [1].
+
+   src/Pages/Signin.js:88:18
+   88|       this.props.cookies.set(roomID, playerIndex, { path: '/'});
+                        ^^^^^^^
+
+References:
+   src/Pages/Signin.js:22:48
+   22|  export default class Signin extends Component<{}, State>{
+                                                      ^^ [1]
+
+
+Error ---------------------------------------------------------------------------------------- src/Pages/Signin.js:90:18
+
+Cannot get `this.props.history` because property `history` is missing in object type [1].
+
+   src/Pages/Signin.js:90:18
+   90|       this.props.history.push('room/'+roomID);
+                        ^^^^^^^
+
+References:
+   src/Pages/Signin.js:22:48
+   22|  export default class Signin extends Component<{}, State>{
+                                                      ^^ [1]
+
+
+
+Found 5 errors
+
+Only showing the most relevant union/intersection branches.
+To see all branches, re-run Flow with --show-all-branches
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

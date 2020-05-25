@@ -12,7 +12,8 @@ import Custom from './Pages/Custom';
 import Game from './Pages/Game';
 
 class App extends Component<any> {
-  render() {
+/*
+render() {
     return (
       <Switch>
         <Route exact path="/" render={(props) =>
@@ -32,6 +33,7 @@ class App extends Component<any> {
       </Switch>
     )
   }
+*/
 }
 
 export default withCookies(App);
