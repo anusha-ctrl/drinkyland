@@ -59,6 +59,14 @@ class Game extends Component<Props, State> {
     window.removeEventListener('resize', this.handleResize)
   }
 
+  componentDidUpdate(prevProps: Props, prevState: State, _: any){
+    if(prevState.lastMove !== this.state.lastMove){
+      this.setState({
+        dismissed: false
+      })
+    }
+  }
+
   // Update the number of columns as the window size changes
   handleResize = () => {
     this.setState({
@@ -193,7 +201,7 @@ class Game extends Component<Props, State> {
 
   dismissDescription() {
     this.setState({
-      'dismissed': true
+      dismissed: true
     })
   }
 
@@ -206,7 +214,11 @@ class Game extends Component<Props, State> {
     let seed = this.props.roomID + String(this.state.lastMove?.turnNumber);
 
     /* --- Description --- */
-    if(!!this.state.lastMove && !this.state.dismissed){
+    let shouldShowDescription =
+      !!this.state.lastMove &&
+      this.state.players[this.state.lastMove.player].pos === this.state.lastMove.newPos &&
+      !this.state.dismissed
+    if(shouldShowDescription){
       let { lastMove, players, actions } = this.state;
       let { newPos, turnNumber, player } = lastMove;
       let color = colorloop[newPos % colorloop.length];
@@ -269,8 +281,6 @@ class Game extends Component<Props, State> {
                   </Navbar.Text>
                 }
             </Navbar>
-
-
 
           <div className="board">
             {tiles}

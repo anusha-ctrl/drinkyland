@@ -31,6 +31,8 @@ export type syncState = {
   lastMove: ?move,
 }
 
+const playerStepDelay = 250;
+
 export default class SyncDB {
   static defaultState = {
     actions: [],
@@ -79,17 +81,27 @@ export default class SyncDB {
       turnNumber: (lastMove?.turnNumber ?? 0) + 1,
     }
 
-    // Move the player
-    players[playerID].pos = newPos;
-
     // Make the move in Firebase
     this.rootRef.set({
       ...this.currentState,
       roll: roll,
       curr_player: next,
-      players: players,
       lastMove: thisMove
     });
+
+    // Animate the player to get there
+    this.stepPlayerTo(playerID, newPos)
+  }
+
+  stepPlayerTo(playerID: number, targetPos: number){
+    const curPos = this.currentState.players[playerID].pos;
+    if (curPos < targetPos){
+      this.rootRef.child('players/'+playerID).update({
+        'pos': curPos+1
+      });
+
+      setTimeout(this.stepPlayerTo.bind(this, playerID, targetPos), playerStepDelay);
+    };
   }
 
   // Set this game as started
