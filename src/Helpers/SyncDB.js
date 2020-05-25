@@ -53,10 +53,11 @@ export default class SyncDB {
   // the Firebase db
   syncState(component: Component<any,any>) {
     this.rootRef.on('value', function(snapshot) {
+      const newData = snapshot.val();
       const val = {
-        ...snapshot.val(),
-        connected: true,
-        lastMove: snapshot.val().lastMove ?? undefined // Updates lastMove if it's missing from Firebase
+        ...newData,
+        connected: !!newData, // If we get a null val, the game doesn't have a firebase entry
+        lastMove: (newData ?? {}).lastMove ?? undefined // Updates lastMove if it's missing from Firebase
       };
       this.currentState = val;
       component.setState(val);
