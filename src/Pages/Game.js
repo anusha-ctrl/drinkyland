@@ -31,6 +31,7 @@ type State = {
   available_colors: Array<string>,
   connected: boolean,
   cols: number,
+  dismissed: boolean,
 }
 
 class Game extends Component<Props, State> {
@@ -43,6 +44,7 @@ class Game extends Component<Props, State> {
       ...SyncDB.defaultState,
       available_colors: all_colors,
       connected: false,
+      dismissed: false,
       cols: this.getCols(window.innerWidth),
     }
   }
@@ -190,7 +192,9 @@ class Game extends Component<Props, State> {
   }
 
   dismissDescription() {
-    this.props.syncDB.dismissDescription();
+    this.setState({
+      'dismissed': true
+    })
   }
 
   render() {
@@ -200,9 +204,10 @@ class Game extends Component<Props, State> {
     let description = null;
     // TODO: Turn this seed into a random string that's stored in lastTurn
     let seed = this.props.roomID + String(this.state.lastMove?.turnNumber);
-    if(this.state.lastMove?.dismissed === false){
+
+    /* --- Description --- */
+    if(!!this.state.lastMove && !this.state.dismissed){
       let { lastMove, players, actions } = this.state;
-      //$FlowFixMe Flow doesn't realize lastMove must be nonnull
       let { newPos, turnNumber, player } = lastMove;
       let color = colorloop[newPos % colorloop.length];
       let challenge = actions[newPos];
