@@ -1,9 +1,10 @@
 // @flow
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
+import { Navbar, Nav } from 'react-bootstrap';
 import Tile from '../Components/Tile';
 import Player from '../Components/Player';
 import PlayerList from '../Components/PlayerList';
-import { Navbar, Nav } from 'react-bootstrap';
 
 // Helpers
 import Bartender from '../Helpers/Bartender.js';
@@ -34,8 +35,12 @@ type State = {
   dismissed: boolean,
 }
 
+const scrollToElem = (elem) => window.scrollTo(0, elem.getBoundingClientRect().top);
+
 class Game extends Component<Props, State> {
   playerID: number;
+  playerRefs: any;
+  tileRefs: any;
 
   constructor(props: Props) {
     super(props);
@@ -47,6 +52,9 @@ class Game extends Component<Props, State> {
       dismissed: false,
       cols: this.getCols(window.innerWidth),
     }
+
+    this.playerRefs = [];
+    this.tileRefs = [];
   }
 
   componentDidMount() {
@@ -60,10 +68,18 @@ class Game extends Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props, prevState: State, _: any){
-    if(prevState.lastMove !== this.state.lastMove){
+    // Prep to show the new challenge description
+    if(prevState.lastMove?.turnNumber !== this.state.lastMove?.turnNumber){
       this.setState({
         dismissed: false
-      })
+      });
+
+      // Scroll to the new tile position
+      if(this.state.lastMove){
+        const ref = this.tileRefs[this.state.lastMove.newPos];
+        const node = findDOMNode(ref.current);
+        node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   }
 
@@ -94,6 +110,18 @@ class Game extends Component<Props, State> {
 
     var tiles = [];
 
+    // Initialize all the references we'll store
+    for(i=0; i<players.length; i++){
+      if(!this.playerRefs[i]){
+        this.playerRefs[i] = React.createRef();
+      }
+    }
+    for(i=0; i<actions.length; i++){
+      if(!this.tileRefs[i]){
+        this.tileRefs[i] = React.createRef();
+      }
+    }
+
     // Put players into a map from tile to players
     var playerMap = {};
     for (i=0; i<players.length; i++){
@@ -106,7 +134,8 @@ class Game extends Component<Props, State> {
           color={player['color']}
           drink={player['drink']}
           active={i === curr_player}
-          key={i}/>;
+          key={i}
+          ref={this.playerRefs[i]}/>;
       var tileList = (playerMap[pos] ?? []);
       tileList.push(comp);
       playerMap[pos] = tileList;
@@ -136,7 +165,8 @@ class Game extends Component<Props, State> {
               color={bgcolor}
               actionIndex={actionIndex}
               syncState={this.state}
-              syncDB={this.props.syncDB}/>);
+              syncDB={this.props.syncDB}
+              ref={this.tileRefs[actionIndex]}/>);
           tileIndex += 1;
         }
       }
@@ -157,7 +187,8 @@ class Game extends Component<Props, State> {
               color={bgcolor}
               actionIndex={actionIndex}
               syncState={this.state}
-              syncDB={this.props.syncDB}/>);
+              syncDB={this.props.syncDB}
+              ref={this.tileRefs[actionIndex]}/>);
           tileIndex += 1;
           for (j=0; j < cols-1; j++){
             tiles.push(<Tile type='empty' cols={cols} key={tileIndex}/>);
@@ -180,7 +211,8 @@ class Game extends Component<Props, State> {
               color={bgcolor}
               actionIndex={actionIndex}
               syncState={this.state}
-              syncDB={this.props.syncDB}/>);
+              syncDB={this.props.syncDB}
+              ref={this.tileRefs[actionIndex]}/>);
           tileIndex += 1;
         }
       }
@@ -220,6 +252,7 @@ class Game extends Component<Props, State> {
       !this.state.dismissed
     if(shouldShowDescription){
       let { lastMove, players, actions } = this.state;
+      //$FlowFixMe Flow doesn't recognize that lastMove must be nonnull here
       let { newPos, turnNumber, player } = lastMove;
       let color = colorloop[newPos % colorloop.length];
       let challenge = actions[newPos];
