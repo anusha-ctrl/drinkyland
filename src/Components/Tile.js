@@ -1,12 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import Player from './Player.js';
-import Challenges from '../Helpers/Challenges.js'
 // Styling
 import '../css/tile.scss';
 // Types
 import type { Element } from 'react';
-import type { move, action, syncState } from '../Helpers/SyncDB';
+import type { action, syncState } from '../Helpers/SyncDB';
 
 type Props = {
   type: string,

@@ -35,8 +35,6 @@ type State = {
   dismissed: boolean,
 }
 
-const scrollToElem = (elem) => window.scrollTo(0, elem.getBoundingClientRect().top);
-
 class Game extends Component<Props, State> {
   playerID: number;
   playerRefs: any;
@@ -104,7 +102,7 @@ class Game extends Component<Props, State> {
   }
 
   genTiles(){
-    const {actions, players, cols, lastMove, curr_player} = this.state;
+    const {actions, players, cols, curr_player} = this.state;
     var bgcolor = '';
     var [actionIndex, i, j, tileIndex] = [0, 0, 0, 0];
 
@@ -253,7 +251,7 @@ class Game extends Component<Props, State> {
     if(shouldShowDescription){
       let { lastMove, players, actions } = this.state;
       //$FlowFixMe Flow doesn't recognize that lastMove must be nonnull here
-      let { newPos, turnNumber, player } = lastMove;
+      let { newPos, player } = lastMove;
       let color = colorloop[newPos % colorloop.length];
       let challenge = actions[newPos];
       description =
