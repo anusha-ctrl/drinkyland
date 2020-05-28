@@ -129,6 +129,7 @@ const initial_state = {
             <Button variant="primary" type="submit" >
               {this.state.game_button}
             </Button>
+            <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our disclaimer before playing this game.</Form.Label>
           </Form>
         </div>
       </div>
