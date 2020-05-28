@@ -33,18 +33,23 @@ class Custom extends Component<Props, State> {
   constructor(props : Props) {
       super(props);
       this.state = {
-        actions: this.getDbActions(),
+        actions: [],
       }
   }
 
-  getDbActions() : Array<action> {
+  getDbActions() {
     const gameRef = firebase.database().ref("games/"+this.props.roomID)
                             .child("actions");
-    var actions = [];
     gameRef.once('value', (snapshot) => {
-      actions = snapshot.val();
+      var actions = snapshot.val();
+      this.setState({
+        actions: actions,
+      })
     });
-    return actions;
+  }
+
+  componentDidMount() {
+    this.getDbActions();
   }
 
   handleOnChange(i : number, e : any, message : string) {
@@ -108,24 +113,28 @@ class Custom extends Component<Props, State> {
   }
 
   render() {
-    return (
-      <div>
-        <Navbar className = "outer-navbar" bg="dark" variant="dark" >
-          <a href="/" className="logo">DrinkyLand</a>
-          <Nav className="mr-auto">
-            <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
-          </Nav>
-        </Navbar>
-        <Container className="text-center">
-          {this.createForm()}
-          <Form onSubmit={this.handleSubmit.bind(this)}>
-            <Button variant="primary" type="submit" className="customButton">
-              Confirm!
-            </Button>
-          </Form>
-        </Container>
-      </div>
-    );
+    if (this.state.actions.length) {
+      return (
+        <div>
+          <Navbar className = "outer-navbar" bg="dark" variant="dark" >
+            <a href="/" className="logo">DrinkyLand</a>
+            <Nav className="mr-auto">
+              <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
+            </Nav>
+          </Navbar>
+          <Container className="text-center">
+            {this.createForm()}
+            <Form onSubmit={this.handleSubmit.bind(this)}>
+              <Button variant="primary" type="submit" className="customButton">
+                Confirm!
+              </Button>
+            </Form>
+          </Container>
+        </div>
+      );
+    } else {
+      return <div className = "connecting-overlay"><h1>Connecting...</h1></div>;
+    }
   }
 }
 
