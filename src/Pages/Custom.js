@@ -5,9 +5,6 @@ import { MDBContainer } from "mdbreact";
 import firebase from '../Helpers/firebase.js';
 import type { action } from '../Helpers/SyncDB.js';
 
-// Helpers
-import Challenges from '../Helpers/Challenges.js';
-
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Signin.scss';
@@ -25,9 +22,6 @@ const initial_state = {
   curr_player: 0,
   started: false,
 }
-
-const init_actions = Challenges.getDefaults();
-
 
 class Custom extends Component<Props, State> {
   constructor(props : Props) {
