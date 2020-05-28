@@ -28,6 +28,7 @@ const initial_state = {
 
 const init_actions = Challenges.getDefaults();
 
+
 class Custom extends Component<Props, State> {
   constructor(props : Props) {
       super(props);
@@ -46,7 +47,8 @@ class Custom extends Component<Props, State> {
     return actions;
   }
 
-  handleOnChange(i : number, message : string) {
+  handleOnChange(i : number, e : any, message : string) {
+    e.preventDefault();
     const actions = this.state.actions;
     actions[i] = {title: message, description: ''};
     this.setState({
@@ -58,7 +60,11 @@ class Custom extends Component<Props, State> {
     const actions = this.state.actions;
     const fi_elems = actions.map((item, i) => React.createElement(
       Form.Control,
-      {key : i, value : item.title, type : "text"}
+      {
+        key : i, 
+        value : item.title, 
+        type : "text", 
+        onChange : (event) => this.handleOnChange(i, event, event.target.value)},
     ));
     const fg_elems = actions.map((item, i) => React.createElement(
       Form.Group,
@@ -66,7 +72,6 @@ class Custom extends Component<Props, State> {
         key : i,
         controlId : "FormGroup" + i.toString(),
         className : "customTilesFG",
-        onChange : (event) => this.handleOnChange(i, event.target.value),
       },
       fi_elems[i]
     ));
@@ -81,6 +86,7 @@ class Custom extends Component<Props, State> {
 
 
   handleSubmit(e : any) {
+    e.preventDefault();
     const gameRef = firebase.database().ref("games/"+this.props.roomID);
     gameRef.once('value', (snapshot) => {
       if (!snapshot.exists()){
@@ -92,7 +98,7 @@ class Custom extends Component<Props, State> {
           }
         });
       } else {
-        gameRef.child('actions').update(this.state.actions);
+        gameRef.child('actions').set(this.state.actions);
       }
     });
 
@@ -121,7 +127,6 @@ class Custom extends Component<Props, State> {
       </div>
     );
   }
-
 }
 
 export default Custom;
