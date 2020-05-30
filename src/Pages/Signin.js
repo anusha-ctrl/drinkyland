@@ -3,11 +3,13 @@ import React, {Component} from "react";
 import {Form, Button } from 'react-bootstrap';
 import firebase from '../Helpers/firebase.js';
 import Challenges from '../Helpers/Challenges.js';
+import Disclaimer from '../Helpers/Disclaimer.js';
+
 
 // Styling
 import '../css/Signin.scss';
 
-type State = { game_button : string, path : string }
+type State = { game_button : string, path : string, modalShow : boolean }
 
 const initial_state = {
   actions: Challenges.getDefaults(),
@@ -25,8 +27,21 @@ const initial_state = {
       super(props);
       this.state = {
         game_button : CREATE,
-        path: '/room/custom'
+        path: '/room/custom',
+        modalShow: false
       };
+  }
+
+  showModal() {
+    this.setState({
+      modalShow: true
+    });
+  };
+
+  hideModal() {
+    this.setState({
+      modalShow: false
+    });    
   }
 
   generateRoomID() {
@@ -129,9 +144,13 @@ const initial_state = {
             <Button variant="primary" type="submit" >
               {this.state.game_button}
             </Button>
-            <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our disclaimer before playing this game.</Form.Label>
+            <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
+                <span role="button" className="modal-link" tabindex="0" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
+            </Form.Label>
           </Form>
         </div>
+
+        <Disclaimer show={this.state.modalShow} onHide={() => this.hideModal()}/>
       </div>
     );
   }

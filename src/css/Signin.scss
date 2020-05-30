@@ -1,5 +1,6 @@
 body {
   background:none !important;
+  color: white
 }
 
 .signin-parent {
@@ -15,7 +16,7 @@ body {
 
 .signin-container .logo {
   font-size:6vw;
-}
+}g
 
 .signin-container form {
   color:white
@@ -24,4 +25,13 @@ body {
 .disclaimer-text {
 	margin-top: 10px;
 	font-size: 10pt;
+	font-color: white;
+}
+
+.modal-link {
+	color: #007bff;
+}
+
+.modal-link:hover {
+	text-decoration: underline;
 }
