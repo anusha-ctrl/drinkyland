@@ -140,13 +140,16 @@ const initial_state = {
                 <option>wine</option>
               </Form.Control>
             </Form.Group>
-
-            <Button variant="primary" type="submit" >
-              {this.state.game_button}
-            </Button>
-            <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
-                <span role="button" className="modal-link" tabindex="0" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
-            </Form.Label>
+            <div className="game-btn-container">
+              <Button className="game-btn" type="submit" >
+                {this.state.game_button}
+              </Button>
+              <Form.Group>
+                <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
+                  <span role="button" className="modal-link" tabindex="0" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
+                </Form.Label>
+              </Form.Group>
+            </div>
           </Form>
         </div>
 

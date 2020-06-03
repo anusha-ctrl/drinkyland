@@ -279,7 +279,7 @@ class Game extends Component<Props, State> {
             <h1>{challenge.title}</h1>
             <p>{Challenges.format(challenge.description, this.state, seed)}</p>
             <div
-              className='challenge-btn transition-all'
+              className='game-btn transition-all'
               style={{color: color}}
               onClick={this.dismissDescription.bind(this)}>
               <div>Done</div>

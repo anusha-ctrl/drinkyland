@@ -42,7 +42,7 @@ export default class PlayerList extends Component<Props>{
         </div>
         <hr/>
         <p className="start-desc">Click to start the game.<br/>Players can still join after the game starts.</p>
-        <div className="player-btn transition-all" onClick={this.startGame.bind(this)}>
+        <div className="game-btn transition-all" onClick={this.startGame.bind(this)}>
           <div>Start Game</div>
         </div>
       </div>

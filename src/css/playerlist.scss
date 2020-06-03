@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   z-index:-2;
+  color: #212529;
   max-width:40%;
 
   .player-row {
@@ -37,14 +38,17 @@
     padding:0 15px;
   }
 
-  .player-btn {
+  .game-btn {
     border: 2px solid #555;
-    color:white !important;
+    color: white!important;
 
     div {
       background: #555;
+      width:100%;
+      padding:3px 0;
     }
   }
+
   .logo {
     position:relative;
   }

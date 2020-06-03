@@ -1,6 +1,6 @@
 body {
   background:none !important;
-  color: white
+  color: white;
 }
 
 .signin-parent {
@@ -14,9 +14,18 @@ body {
   margin-top: 10%;
 }
 
+.game-btn-container {
+  margin-top: 30px;
+  text-align: -webkit-center;
+
+  .game-btn {
+    width: 50%;
+  }
+}
+
 .signin-container .logo {
   font-size:6vw;
-}g
+}
 
 .signin-container form {
   color:white
@@ -26,6 +35,7 @@ body {
 	margin-top: 10px;
 	font-size: 10pt;
 	font-color: white;
+  width: 50%;
 }
 
 .modal-link {
@@ -34,4 +44,18 @@ body {
 
 .modal-link:hover {
 	text-decoration: underline;
+}
+
+
+// -- Responsive Media Queries -- //
+
+@media only screen and (max-width: 1024px) {
+  .game-btn-container > .game-btn {
+    width: 100%;
+  }
+
+  .disclaimer-text {
+    width:100%;
+    font-size: 10pt;
+  }
 }
