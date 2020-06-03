@@ -279,7 +279,7 @@ class Game extends Component<Props, State> {
             <h1>{challenge.title}</h1>
             <p>{Challenges.format(challenge.description, this.state, seed)}</p>
             <div
-              className='btn transition-all'
+              className='challenge-btn transition-all'
               style={{color: color}}
               onClick={this.dismissDescription.bind(this)}>
               <div>Done</div>
@@ -307,16 +307,16 @@ class Game extends Component<Props, State> {
             <a href="/" className="logo">DrinkyLand</a>
             <Nav className="mr-auto">
               <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
-              <Nav.Link className="ml-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
-              <Button variant="warning" className="modal-btn" onClick={() => this.showModal()}>Disclaimer</Button>
+              <Nav.Link className="ml-10 mr-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
+              <Button variant="warning" className="modal-btn ml-10" onClick={() => this.showModal()}>Disclaimer</Button>
             </Nav>
           </Navbar>
 
 
             <Navbar className="inner-navbar second" >
-                <button className="mr-10" onClick={() => this.rollDice()}>
+                <Button variant="outline-dark" className="mr-10" onClick={() => this.rollDice()}>
                   {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
-                </button>
+                </Button>
                 <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
                 <Navbar.Text className="ml-10 mr-10">
                   <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
