@@ -303,33 +303,33 @@ class Game extends Component<Props, State> {
     return (
       <>
       <div className="App overflow-fix">
-          <Navbar className = "outer-navbar" bg="dark" variant="dark" >
-            <a href="/" className="logo">DrinkyLand</a>
-            <Nav className="mr-auto">
-              <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
-              <Button variant="light" className="outer-nav-btn" onClick={() => this.resetGame()}>Reset Game</Button>
-              <Button variant="warning" className="outer-nav-btn" onClick={() => this.showModal()}>Disclaimer</Button>
-            </Nav>
-          </Navbar>
-
-
-            <Navbar className="inner-navbar second" >
-                <Button variant="outline-dark" className="mr-10" onClick={() => this.rollDice()}>
-                  {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
-                </Button>
-                <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
-                <Navbar.Text className="ml-10 mr-10">
-                  <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
-                  <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
-                </Navbar.Text>
-                { this.state.lastMove &&
-                  <Navbar.Text>
-                    <strong>Challenge: </strong>
-                    { Challenges.format(this.state.actions[this.state.lastMove.newPos].description, this.state, seed) }
-                  </Navbar.Text>
-                }
+          <div className="status-bar">
+            <Navbar className="outer-navbar" bg="dark" variant="dark" >
+              <a href="/" className="logo">DrinkyLand</a>
+              <Nav className="mr-auto">
+                <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
+                <Button variant="light" className="outer-nav-btn" onClick={() => this.resetGame()}>Reset Game</Button>
+                <Button variant="warning" className="outer-nav-btn" onClick={() => this.showModal()}>Disclaimer</Button>
+              </Nav>
             </Navbar>
 
+            <Navbar className="inner-navbar second" >
+              <Button variant="outline-dark" className="mr-10" onClick={() => this.rollDice()}>
+                {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
+              </Button>
+              <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
+              <Navbar.Text className="ml-10 mr-10">
+                <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
+                <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
+              </Navbar.Text>
+              { this.state.lastMove &&
+                <Navbar.Text>
+                  <strong>Challenge: </strong>
+                  { Challenges.format(this.state.actions[this.state.lastMove.newPos].description, this.state, seed) }
+                </Navbar.Text>
+              }
+            </Navbar>
+          </div>
           <div className="board">
             {tiles}
           </div>
