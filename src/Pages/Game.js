@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import Tile from '../Components/Tile';
 import Player from '../Components/Player';
 import PlayerList from '../Components/PlayerList';
@@ -10,6 +10,7 @@ import PlayerList from '../Components/PlayerList';
 import Bartender from '../Helpers/Bartender.js';
 import SyncDB from '../Helpers/SyncDB.js';
 import Challenges from '../Helpers/Challenges.js'
+import Disclaimer from '../Helpers/Disclaimer.js';
 
 // Types
 import type {syncState} from '../Helpers/SyncDB.js';
@@ -33,6 +34,7 @@ type State = {
   connected: boolean,
   cols: number,
   dismissed: boolean,
+  modalShow: boolean,
 }
 
 class Game extends Component<Props, State> {
@@ -49,6 +51,7 @@ class Game extends Component<Props, State> {
       connected: false,
       dismissed: false,
       cols: this.getCols(window.innerWidth),
+      modalShow: false,
     }
 
     this.playerRefs = [];
@@ -80,6 +83,19 @@ class Game extends Component<Props, State> {
       }
     }
   }
+
+  // Controls display of Disclaimer modal
+  showModal() {
+    this.setState({
+      modalShow: true
+    });
+  };
+
+  hideModal() {
+    this.setState({
+      modalShow: false
+    });    
+  } 
 
   // Update the number of columns as the window size changes
   handleResize = () => {
@@ -292,6 +308,7 @@ class Game extends Component<Props, State> {
             <Nav className="mr-auto">
               <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
               <Nav.Link className="ml-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
+              <Button variant="warning" className="modal-btn" onClick={() => this.showModal()}>Disclaimer</Button>
             </Nav>
           </Navbar>
 
@@ -316,6 +333,8 @@ class Game extends Component<Props, State> {
           <div className="board">
             {tiles}
           </div>
+
+          <Disclaimer show={this.state.modalShow} onHide={() => this.hideModal()}/>
 
         {description}
         {startScreen}
