@@ -307,8 +307,8 @@ class Game extends Component<Props, State> {
             <a href="/" className="logo">DrinkyLand</a>
             <Nav className="mr-auto">
               <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
-              <Nav.Link className="ml-10 mr-10" onClick={() => this.resetGame()}>Reset Game</Nav.Link>
-              <Button variant="warning" className="modal-btn ml-10" onClick={() => this.showModal()}>Disclaimer</Button>
+              <Button variant="light" className="outer-nav-btn" onClick={() => this.resetGame()}>Reset Game</Button>
+              <Button variant="warning" className="outer-nav-btn" onClick={() => this.showModal()}>Disclaimer</Button>
             </Nav>
           </Navbar>
 

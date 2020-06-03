@@ -176,6 +176,12 @@ h2 {
   flex-direction: row;
 }
 
+.outer-nav-btn {
+  height: fit-content;
+  margin: auto 10px;
+}
+
+
 @media only screen and (max-width: 450px) {
   .outer-navbar {
     flex-direction: column;
@@ -246,12 +252,4 @@ h2 {
 @keyframes scalein {
     0% { transform: scale(0.0); }
     100% { transform: scale(1.0); }
-}
-
-
-// --- Modal --- //
-
-.modal-btn {
-  height: fit-content;
-  margin: auto;
 }
