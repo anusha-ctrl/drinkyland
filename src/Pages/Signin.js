@@ -47,6 +47,18 @@ const initial_state = {
     return Math.floor(Math.random() * (10000));
   }
 
+  createCustomTiles(tiles) {
+    var curr_tiles = this.state.actions;
+    {/*  Currently assumes num_new < num */ }
+    var num_tiles = curr_tiles.length;
+    var num_new_tiles = tiles.length;
+    var spacing = num_tiles/num_new_tiles;
+
+    for (var i = 0; i < tiles.length; i+=spacing) {
+
+    }
+  }
+
   handleKeyUp(event : any) {
     var roomID = event.currentTarget.formRoomID.value;
     if (roomID === null || roomID === '' || roomID === undefined) {
@@ -69,6 +81,7 @@ const initial_state = {
     var roomID = event.target.formRoomID.value;
     var name = event.target.name.value;
     var drink = event.target.drink.value;
+    var tiles = event.target.drink.tiles;
 
     // Generate a room id for them if they didn't provide one
     if (roomID === null || roomID === '' || roomID === undefined) {
@@ -145,6 +158,10 @@ const initial_state = {
                 </Form.Label>
               </Form.Group>
             </div>
+            <Form.Group controlId="tiles">
+                <Form.Label>Enter custom tile messages! Separate with commas.</Form.Label>
+                <Form.Control as="textarea" rows="3" placeholder="Custom Tile Messages"/>
+            </Form.Group>
           </Form>
         </div>
 
