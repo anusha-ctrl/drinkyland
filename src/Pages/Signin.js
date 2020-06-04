@@ -9,7 +9,7 @@ import Disclaimer from '../Helpers/Disclaimer.js';
 // Styling
 import '../css/Signin.scss';
 
-type State = { game_button : string, path : string, modalShow : boolean }
+type State = { game_button : string, modalShow : boolean }
 
 const initial_state = {
   actions: Challenges.getDefaults(),
@@ -27,7 +27,6 @@ const initial_state = {
       super(props);
       this.state = {
         game_button : CREATE,
-        path: '/room/custom',
         modalShow: false
       };
   }
@@ -56,17 +55,13 @@ const initial_state = {
 
     const gameRef = firebase.database().ref("games/"+roomID);
     gameRef.once('value', (snapshot) => {
+      var button_text = JOIN;
       if (!snapshot.exists()){
-        this.setState({
-          game_button: CREATE,
-          path: '/room/'+roomID+'/custom'
-        });
-      } else {
-        this.setState({
-          game_button: JOIN,
-          path: '/room/'+roomID
-        });
+        button_text = CREATE;
       }
+      this.setState({
+        game_button: button_text,
+      });
     });
   }
 
@@ -105,7 +100,7 @@ const initial_state = {
       }
 
       this.props.cookies.set(roomID, playerIndex, { path: '/'});
-      this.props.history.push(this.state.path);
+      this.props.history.push('/room/'+roomID);
 
     });
 
