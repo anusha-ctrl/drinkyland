@@ -10,7 +10,7 @@ import PlayerList from '../Components/PlayerList';
 import Bartender from '../Helpers/Bartender.js';
 import SyncDB from '../Helpers/SyncDB.js';
 import Challenges from '../Helpers/Challenges.js'
-import Disclaimer from '../Helpers/Disclaimer.js';
+import Donate from '../Helpers/Donate.js';
 
 // Types
 import type {syncState} from '../Helpers/SyncDB.js';
@@ -96,6 +96,11 @@ class Game extends Component<Props, State> {
       modalShow: false
     });    
   } 
+
+  // Donate Page
+  openDonationPage() {
+    window.open("https://secure.actblue.com/donate/ms_blm_homepage_2019");
+  }
 
   // Update the number of columns as the window size changes
   handleResize = () => {
@@ -309,7 +314,7 @@ class Game extends Component<Props, State> {
               <Nav className="mr-auto">
                 <Navbar.Text className="ml-10">Game Room ID: {this.props.roomID}</Navbar.Text>
                 <Button variant="light" className="outer-nav-btn" onClick={() => this.resetGame()}>Reset Game</Button>
-                <Button variant="warning" className="outer-nav-btn" onClick={() => this.showModal()}>Disclaimer</Button>
+                <Button variant="warning" className="outer-nav-btn" onClick={() => this.showModal()}>Donate!</Button>
               </Nav>
             </Navbar>
 
@@ -334,7 +339,7 @@ class Game extends Component<Props, State> {
             {tiles}
           </div>
 
-          <Disclaimer show={this.state.modalShow} onHide={() => this.hideModal()}/>
+          <Donate show={this.state.modalShow} onHide={() => this.hideModal()}/>
 
         {description}
         {startScreen}
