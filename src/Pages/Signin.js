@@ -9,7 +9,12 @@ import Disclaimer from '../Helpers/Disclaimer.js';
 // Styling
 import '../css/Signin.scss';
 
-type State = { game_button : string, modalShow : boolean, actions : string, active: bool }
+type State = { 
+  game_button : string, 
+  modalShow : boolean, 
+  actions : string, 
+  active: bool, 
+}
 
 const initial_state = {
   actions: Challenges.getDefaults(),
@@ -188,7 +193,7 @@ const initial_state = {
                 <option>straw</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="customCheck">
+            <Form.Group style={{ display : (this.state.game_button === CREATE ? 'block' : 'none')}} controlId="customCheck">
               <Form.Check 
                 type="checkbox" 
                 checked={this.state.active}
@@ -196,7 +201,7 @@ const initial_state = {
                 label="Click here if you would like to customize your game." />
             </Form.Group>
             <Form.Group controlId="tiles">
-              <div style={{ display: (this.state.active ? 'block' : 'none') }}>
+              <div style={{ display: (this.state.active && this.state.game_button === CREATE ? 'block' : 'none') }}>
                 <Form.Label id="custom-label">Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
                 <Form.Control 
                   as="textarea" 
