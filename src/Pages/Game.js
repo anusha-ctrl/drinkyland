@@ -242,7 +242,15 @@ class Game extends Component<Props, State> {
 
   rollDice() {
     // Drinkyland gameplay is a random number generator + alcohol
-    const roll = Math.floor(Math.random() * 6) + 1;
+    var roll = Math.floor(Math.random() * 6) + 1;
+
+    // Increase challenge variability
+    const { players, curr_player } = this.state;
+    const playerPositions = players.map(p => p.pos);
+    const currPos = players[curr_player].pos
+    while(playerPositions.includes(currPos + roll) && Math.random() > 0.5){
+      roll = Math.floor(Math.random() * 6) + 1;
+    }
     this.props.syncDB.makeMove(roll, this.state.curr_player);
   }
 
