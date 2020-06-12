@@ -62,10 +62,10 @@ const initial_state = {
     const end = old_tiles[old_len-1];
 
     for (var i = 0; i < new_tiles.length; i++) {
-      if (i <= old_len && old_tiles[i].title !== new_tiles[i]) {
-        old_tiles[i+1] = {title: new_tiles[i], description: ''};
+      if (i <= old_len && old_tiles[i+1].title !== new_tiles[i]) {
+        old_tiles[i+1] = {title: new_tiles[i], description: new_tiles[i]};
       } else {
-        old_tiles.push({title: new_tiles[i], description: ''});
+        old_tiles.push({title: new_tiles[i], description: new_tiles[i]});
       }
     }
 
@@ -118,7 +118,6 @@ const initial_state = {
     var drink = {glass: event.target.glass.value, liquid: '#000000', topping: event.target.topping.value};
     var tiles = event.target.tiles.value;
 
-    alert(event.target.tiles);
     this.updateTiles(tiles);
 
     // Generate a room id for them if they didn't provide one
