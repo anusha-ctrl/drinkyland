@@ -17,9 +17,9 @@ export default class Bartender {
     // Overlay all these images on top of each other
     options.className = 'drink-container ' + options.className;
     return <div {...options}>
-      <img src={glassImgPath}/>
-      <img src={liquidImgPath}/>
-      <img src={toppingImgPath}/>
+      <img src={glassImgPath} alt={glass}/>
+      <img src={liquidImgPath} alt={glass}/>
+      <img src={toppingImgPath} alt={topping}/>
     </div>
   }
 }
