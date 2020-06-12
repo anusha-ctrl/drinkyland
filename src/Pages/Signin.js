@@ -179,13 +179,50 @@ const initial_state = {
     });
   }
 
+  handleCreateSubmit(event: any) {
+    var roomID = event.target.formRoomIDCreate.value;
+
+    if (roomID === null || roomID === '' || roomID === undefined) {
+      roomID = this.generateRoomID().toString();
+    }
+
+    const gameRef = firebase.database().ref("games/"+roomID);
+    gameRef.once('value', (snapshot) => {
+      if (!snapshot.exists()){
+        gameRef.set({
+          ...initial_state,
+        });
+
+        // TODO: Redirect
+      } else {
+        // TODO: Let user know that room ID already exists
+      }
+    });
+
+    event.preventDefault();
+  }
+
+  // TODO: Make joining games safe
+  handleJoinSubmit(event: any) {
+    var roomID = event.target.formRoomIDJoin.value;
+
+    const gameRef = firebase.database().ref("games/"+roomID);
+    gameRef.once('value', (snapshot) => {
+      if (!snapshot.exists()){
+        // TODO: Let user know that game room ID does not exist       
+      } else {
+        // TODO: Redirect user to create screen
+      }
+    });
+  }
+
   render() {
     return (
       <div className="signin-parent">
         <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
 
-          <Form onSubmit={this.handleSubmit.bind(this)} onKeyUp={this.handleKeyUp.bind(this)}>
+          <Form onSubmit={this.handleCreateSubmit.bind(this)}>
             
             <div>
               <Button className="signin-btn" type="button" onClick={this.handleCreateClick.bind(this)}>
@@ -195,12 +232,14 @@ const initial_state = {
                 <Form.Group controlId="formRoomIDCreate">
                   <Form.Control type="text" placeholder="Enter Game ID to create" />
                 </Form.Group>
-                <Button type="button" className="submit-btn">
+                <Button type="submit" className="submit-btn" >
                   Submit!
                 </Button>
-              </div>
+              </div> 
             </div>
+          </Form>
 
+          <Form onSubmit={this.handleJoinSubmit.bind(this)}>
             <div>
               <Button className="signin-btn" type="button" onClick={this.handleJoinClick.bind(this)}>
                 JOIN <FontAwesomeIcon icon={(this.state.showJoinForm ? faCaretUp : faCaretDown)} />
@@ -209,7 +248,7 @@ const initial_state = {
                 <Form.Group controlId="formRoomIDJoin">
                   <Form.Control type="text" placeholder="Enter Game ID to join" />
                 </Form.Group>
-                <Button type="button" className="submit-btn">
+                <Button type="submit" className="submit-btn">
                   Submit!
                 </Button>
               </div>
