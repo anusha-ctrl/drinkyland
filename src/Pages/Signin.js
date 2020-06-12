@@ -40,7 +40,7 @@ const initial_state = {
   hideModal() {
     this.setState({
       modalShow: false
-    });    
+    });
   }
 
   generateRoomID() {
@@ -68,7 +68,7 @@ const initial_state = {
   handleSubmit(event: any) {
     var roomID = event.target.formRoomID.value;
     var name = event.target.name.value;
-    var drink = event.target.drink.value;
+    var drink = {glass: event.target.glass.value, liquid: '#000000', topping: event.target.topping.value};
 
     // Generate a room id for them if they didn't provide one
     if (roomID === null || roomID === '' || roomID === undefined) {
@@ -122,17 +122,25 @@ const initial_state = {
               <Form.Label>Name</Form.Label>
               <Form.Control required type="text" placeholder="Enter your name"/>
             </Form.Group>
-            <Form.Group controlId="drink">
-              <Form.Label>Pick your drink of choice (and make it unique!)</Form.Label>
+            <Form.Group controlId="glass">
+              <Form.Label>Pick a drink</Form.Label>
               <Form.Control required as="select">
-                <option>beer</option>
-                <option>champagne</option>
-                <option>lemonade</option>
-                <option>margarita</option>
                 <option>martini</option>
-                <option>tequila</option>
+                <option>beer</option>
+                <option>regular</option>
+                <option>fishbowl</option>
                 <option>whiskey</option>
                 <option>wine</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="topping">
+              <Form.Label>Pick a topping</Form.Label>
+              <Form.Control required as="select">
+                <option>olive</option>
+                <option>lime</option>
+                <option>gummy_worms</option>
+                <option>straw</option>
               </Form.Control>
             </Form.Group>
             <div className="game-btn-container">
@@ -140,7 +148,7 @@ const initial_state = {
                 {this.state.game_button}
               </Button>
               <Form.Group>
-                <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
+                <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our
                   <span role="button" className="modal-link" tabindex="0" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
                 </Form.Label>
               </Form.Group>

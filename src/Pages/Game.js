@@ -94,8 +94,8 @@ class Game extends Component<Props, State> {
   hideModal() {
     this.setState({
       modalShow: false
-    });    
-  } 
+    });
+  }
 
   // Donate Page
   openDonationPage() {
@@ -325,7 +325,8 @@ class Game extends Component<Props, State> {
               <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
               <Navbar.Text className="ml-10 mr-10">
                 <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
-                <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
+                  {Bartender.pourImg(player.drink, { height: '20px', width: '20px'})}
+                </div>
               </Navbar.Text>
               { this.state.lastMove &&
                 <Navbar.Text>

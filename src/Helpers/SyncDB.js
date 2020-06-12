@@ -7,9 +7,15 @@ export type action = {
   description: string,
 };
 
+export type drink = {
+  glass: string,
+  liquid: string,
+  topping: string,
+};
+
 export type player = {
   color: string,
-  drink: string,
+  drink: drink,
   name: string,
   pos: number
 }
@@ -122,6 +128,7 @@ export default class SyncDB {
       players: players,
       curr_player: 0,
       lastMove: null,
+      started: false,
      });
   }
 }

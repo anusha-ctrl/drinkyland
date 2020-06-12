@@ -1,26 +1,29 @@
 // @flow
-import beer from '../img/beer.svg';
-import champagne from '../img/champagne.svg';
-import margarita from '../img/margarita.svg';
-import lemonade from '../img/lemonade.svg';
-import martini from '../img/martini.svg';
-import tequila from '../img/tequila.svg';
-import whiskey from '../img/whiskey.svg';
-import wine from '../img/wine.svg';
-
-const drinkMap = {
-  beer: beer,
-  champagne: champagne,
-  margarita: margarita,
-  lemonade: lemonade,
-  martini: martini,
-  tequila: tequila,
-  whiskey: whiskey,
-  wine: wine,
-};
+import React from 'react';
+import '../css/bartender.scss';
+import * as Bar from './Bar';
+import type { drink } from './SyncDB';
 
 export default class Bartender {
-  static pour(drink: string) {
-    return drinkMap[drink];
+  static pourImg(drink: drink, options: any) {
+    // Fetch the raw image paths for each element
+    const glassImgPath = Bar.glasses[drink.glass];
+    const liquidImgPath = Bar.liquids[drink.glass];
+    const toppingImgPath = Bar.toppings[drink.topping];
+
+    console.log("Drink: ", drink);
+    console.log("Topping: ", drink.topping);
+    console.log("toppingPath: ", toppingImgPath);
+    console.log("toppings: ", Bar.toppings);
+
+    // TODO (devdo): Compute a style to color the liquid to match the rgb passed in
+
+    // TODO (devdo): Overlay all these images on top of each other
+    options.className = 'drink-container ' + options.className;
+    return <div {...options}>
+      <img src={glassImgPath}/>
+      <img src={liquidImgPath}/>
+      <img src={toppingImgPath}/>
+    </div>
   }
 }

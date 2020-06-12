@@ -2,6 +2,7 @@
 import React, {Component} from "react";
 import '../css/player.scss';
 import Bartender from '../Helpers/Bartender.js';
+import type { drink } from '../Helpers/SyncDB.js';
 
 // Player needs an ID. Default is 0. Set ID later.
 
@@ -24,7 +25,7 @@ type Props = {
   name: string,
   color: string,
   location: number,
-  drink: string,
+  drink: drink,
   active: boolean,
 }
 
@@ -35,7 +36,7 @@ export default class Player extends Component<Props> {
 
     return (
       <div className={"player" + (active ? ' floating' : '')}>
-        <img src={Bartender.pour(drink)} alt={drink} className="invert"/>
+        {Bartender.pourImg(drink, {className: 'invert'})}
       </div>
     );
   }
