@@ -4,16 +4,17 @@ import {Form, Button } from 'react-bootstrap';
 import firebase from '../Helpers/firebase.js';
 import Challenges from '../Helpers/Challenges.js';
 import Disclaimer from '../Helpers/Disclaimer.js';
+import DrinkCustomizer from '../Components/DrinkCustomizer';
 
 
 // Styling
 import '../css/Signin.scss';
 
-type State = { 
-  game_button : string, 
-  modalShow : boolean, 
-  actions : string, 
-  active: bool, 
+type State = {
+  game_button : string,
+  modalShow : boolean,
+  actions : string,
+  active: bool,
 }
 
 const initial_state = {
@@ -191,10 +192,11 @@ const initial_state = {
                 <option>gummy_worms</option>
                 <option>straw</option>
               </Form.Control>
+              <DrinkCustomizer />
             </Form.Group>
             <Form.Group style={{ display : (this.state.game_button === CREATE ? 'block' : 'none')}} controlId="customCheck">
-              <Form.Check 
-                type="checkbox" 
+              <Form.Check
+                type="checkbox"
                 checked={this.state.active}
                 onChange={this.handleClick.bind(this)}
                 label="Click here if you would like to customize your game." />
@@ -202,10 +204,10 @@ const initial_state = {
             <Form.Group controlId="tiles">
               <div style={{ display: (this.state.active && this.state.game_button === CREATE ? 'block' : 'none') }}>
                 <Form.Label id="custom-label">Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows="3" 
-                  placeholder="Custom Tile Messages" 
+                <Form.Control
+                  as="textarea"
+                  rows="3"
+                  placeholder="Custom Tile Messages"
                   onChange={this.handleOnChange.bind(this)}
                   value={ this.state.actions }
                 />
@@ -216,7 +218,7 @@ const initial_state = {
                 {this.state.game_button}
               </Button>
               <Form.Group>
-                <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
+                <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our
                   <span role="button" className="modal-link" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
                 </Form.Label>
               </Form.Group>
