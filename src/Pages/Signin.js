@@ -6,6 +6,8 @@ import Challenges from '../Helpers/Challenges.js';
 import Disclaimer from '../Helpers/Disclaimer.js';
 import DrinkCustomizer from '../Components/DrinkCustomizer';
 
+// Types
+import type { drink } from '../Helpers/SyncDB';
 
 // Styling
 import '../css/Signin.scss';
@@ -15,6 +17,7 @@ type State = {
   modalShow : boolean,
   actions : string,
   active: bool,
+  drink: drink,
 }
 
 const initial_state = {
@@ -53,6 +56,10 @@ const initial_state = {
 
   generateRoomID() {
     return Math.floor(Math.random() * (10000));
+  }
+
+  onDrinkChange(newDrink: drink) {
+    this.setState({drink: newDrink});
   }
 
 
@@ -116,7 +123,7 @@ const initial_state = {
   handleSubmit(event: any) {
     var roomID = event.target.formRoomID.value;
     var name = event.target.name.value;
-    var drink = {glass: event.target.glass.value, liquid: '#000000', topping: event.target.topping.value};
+    var drink = this.state.drink;
     var tiles = event.target.tiles.value;
 
     this.updateTiles(tiles);
@@ -173,26 +180,9 @@ const initial_state = {
               <Form.Label>Name</Form.Label>
               <Form.Control required type="text" placeholder="Enter your name"/>
             </Form.Group>
-            <Form.Group controlId="glass">
-              <Form.Label>Pick a drink</Form.Label>
-              <Form.Control required as="select">
-                <option>martini</option>
-                <option>beer</option>
-                <option>regular</option>
-                <option>fishbowl</option>
-                <option>whiskey</option>
-                <option>wine</option>
-              </Form.Control>
-            </Form.Group>
             <Form.Group controlId="topping">
-              <Form.Label>Pick a topping</Form.Label>
-              <Form.Control required as="select">
-                <option>olive</option>
-                <option>lime</option>
-                <option>gummy_worms</option>
-                <option>straw</option>
-              </Form.Control>
-              <DrinkCustomizer />
+              <Form.Label>Customize your drink</Form.Label>
+              <DrinkCustomizer onDrinkChange={this.onDrinkChange.bind(this)}/>
             </Form.Group>
             <Form.Group style={{ display : (this.state.game_button === CREATE ? 'block' : 'none')}} controlId="customCheck">
               <Form.Check

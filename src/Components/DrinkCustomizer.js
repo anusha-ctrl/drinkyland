@@ -1,14 +1,16 @@
 // @flow
 import React, {Component} from "react";
 import * as Bar from '../Helpers/Bar';
-import '../css/DrinkCustomizer.scss';
+import '../css/drinkcustomizer.scss';
 import type { drink } from '../Helpers/SyncDB';
 
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 
 
-type Props = {}
+type Props = {
+  onDrinkChange?: (drink) => void
+}
 type State = {
   glassPos: number,
   liquidPos: number,
@@ -16,24 +18,43 @@ type State = {
 }
 
 export default class DrinkCustomizer extends Component<Props, State> {
+  glasses: Array<string>;
+  toppings: Array<string>;
+
   constructor() {
     super()
     this.state = { glassPos: 0, liquidPos: 0, toppingPos: 0 };
+
+    this.glasses = Object.keys(Bar.glasses);
+    this.toppings = Object.keys(Bar.toppings);
   }
 
   onChange(type: string, value: number) {
+    // Update the positions in our state
+    var state = this.state;
     if (type === 'glass'){
-      this.setState({ glassPos: value, liquidPos: value });
+      state.glassPos = value;
+      state.liquidPos = value;
     } else if (type === 'topping') {
-      this.setState({ toppingPos: value });
+      state.toppingPos = value;
     }
-    console.log(value);
+    this.setState(state);
+
+    // If there's a callback, give it our new drink
+    if(this.props.onDrinkChange){
+      const { glasses, toppings } = this;
+      const { glassPos, toppingPos } = state;
+      const drink = {
+        glass: glasses[glassPos % glasses.length],
+        liquid: '',
+        topping: toppings[toppingPos % toppings.length]
+      }
+      this.props.onDrinkChange(drink);
+    }
   }
 
   render() {
-    // Fetch all the asset names in our bar
-    const glasses = Object.keys(Bar.glasses);
-    const toppings = Object.keys(Bar.toppings);
+    const { glasses, toppings } = this;
 
     // Render them all on top of each other
     // Each type gets its own carousel
