@@ -35,7 +35,6 @@ const initial_state = {
 
  export default class Join extends Component<Props, State>{
   constructor(props : Props) {
-      console.log(props.type);
       super(props);
       this.state = {
         game_button : CREATE,
@@ -43,6 +42,10 @@ const initial_state = {
         actions: initial_state.actions.slice(1,-1).map(function (tile) { return tile.title; }).join(", "),
         active: false,
       };
+
+      if (this.props.type === "join") {
+        this.state.game_button = JOIN;
+      }
   }
 
   showModal() {
@@ -99,28 +102,9 @@ const initial_state = {
     });
   }
 
-  // Handles checking if game room is new or not
-  handleKeyUp(event : any) {
-    var roomID = event.currentTarget.formRoomID.value;
-    if (roomID === null || roomID === '' || roomID === undefined) {
-      return;
-    }
-
-    const gameRef = firebase.database().ref("games/"+roomID);
-    gameRef.once('value', (snapshot) => {
-      var button_text = JOIN;
-      if (!snapshot.exists()){
-        button_text = CREATE;
-      }
-      this.setState({
-        game_button: button_text,
-      });
-    });
-  }
-
   // Submits form
   handleSubmit(event: any) {
-    var roomID = event.target.formRoomID.value;
+    var roomID = this.props.roomID;
     var name = event.target.name.value;
     var drink = {glass: event.target.glass.value, liquid: '#000000', topping: event.target.topping.value};
     var tiles = event.target.tiles.value;
@@ -143,6 +127,12 @@ const initial_state = {
             '0': {pos: 0, color: 'nah', name: name, drink: drink}
           }
         });
+      } else if (this.props.type === "create") {
+          gameRef.set({
+            players: {
+              '0': {pos: 0, color: 'nah', name: name, drink: drink}
+            }
+          });  
       } else {
         // Add the player if they don't already exist
         const players = snapshot.val()['players'];
@@ -170,11 +160,7 @@ const initial_state = {
         <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
 
-          <Form onSubmit={this.handleSubmit.bind(this)} onKeyUp={this.handleKeyUp.bind(this)}>
-            <Form.Group controlId="formRoomID">
-              <Form.Label>Room ID</Form.Label>
-              <Form.Control type="text" placeholder="Enter Game ID to create or join" />
-            </Form.Group>
+          <Form onSubmit={this.handleSubmit.bind(this)}>
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control required type="text" placeholder="Enter your name"/>
@@ -199,7 +185,7 @@ const initial_state = {
                 <option>straw</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group style={{ display : (this.state.game_button === CREATE ? 'block' : 'none')}} controlId="customCheck">
+            <Form.Group style={{ display : (this.props.type === "create" ? 'block' : 'none')}} controlId="customCheck">
               <Form.Check 
                 type="checkbox" 
                 checked={this.state.active}
@@ -207,7 +193,7 @@ const initial_state = {
                 label="Click here if you would like to customize your game." />
             </Form.Group>
             <Form.Group controlId="tiles">
-              <div style={{ display: (this.state.active && this.state.game_button === CREATE ? 'block' : 'none') }}>
+              <div style={{ display: (this.state.active && this.props.type === "create" ? 'block' : 'none') }}>
                 <Form.Label id="custom-label">Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
                 <Form.Control 
                   as="textarea" 

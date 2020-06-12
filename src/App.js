@@ -20,11 +20,11 @@ class App extends Component<any> {
         <Route exact path="/" render={(props) =>
           <Signin {...props} cookies = {this.props.cookies}/> }/>
         <Route path="/room/:roomID/join" render={(props) =>
-          <Join
+          <Join {...props}
             roomID = {props.match.params.roomID}
             type = {this.props.cookies.get(props.match.params.roomID)}
-            syncDB = {new SyncDB('games/'+props.match.params.roomID)}
-          />} />
+            cookies = {this.props.cookies}
+          /> }/>        
         <Route path="/room/:roomID" render={(props) =>
           <Game
             roomID = {props.match.params.roomID}
