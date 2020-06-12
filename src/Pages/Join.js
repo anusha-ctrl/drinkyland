@@ -129,6 +129,7 @@ const initial_state = {
         });
       } else if (this.props.type === "create") {
           gameRef.set({
+            ...initial_state,
             players: {
               '0': {pos: 0, color: 'nah', name: name, drink: drink}
             }
