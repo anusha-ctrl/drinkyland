@@ -14,8 +14,6 @@ import '../css/Signin.scss';
 type State = { 
   game_button : string, 
   modalShow : boolean, 
-  actions : string, 
-  active: bool, 
   showCreateForm: bool,
   showJoinForm: bool, 
 }
@@ -37,8 +35,6 @@ const initial_state = {
       this.state = {
         game_button : CREATE,
         modalShow: false,
-        actions: initial_state.actions.slice(1,-1).map(function (tile) { return tile.title; }).join(", "),
-        active: false,
         showCreateForm: false,
         showJoinForm: false,
       };
@@ -60,44 +56,6 @@ const initial_state = {
     return Math.floor(Math.random() * (10000));
   }
 
-
-  updateTiles(tiles_str : string) {
-    var old_tiles = initial_state.actions;
-    const new_tiles = tiles_str.split(", ");
-    const old_len = old_tiles.length;
-    const end = old_tiles[old_len-1];
-
-    for (var i = 0; i < new_tiles.length; i++) {
-      if (i <= old_len && old_tiles[i+1].title !== new_tiles[i]) {
-        old_tiles[i+1] = {title: new_tiles[i], description: new_tiles[i]};
-      } else {
-        old_tiles.push({title: new_tiles[i], description: new_tiles[i]});
-      }
-    }
-
-    if (old_len < old_tiles.length) {
-      old_tiles.push(end);
-    }
-
-    initial_state.actions = old_tiles;
-  }
-
-  handleClick(event : any) {
-    const status = this.state.active;
-    this.setState({
-      active: !status
-    });
-  }
-
-  // Handles onChange function for Custom Tiles input
-  handleOnChange(event : any) {
-    event.preventDefault();
-    const new_tiles = event.target.value;
-    this.setState({
-      actions: new_tiles,
-    });
-  }
-
   // Handles checking if game room is new or not
   handleKeyUp(event : any) {
     var roomID = event.currentTarget.formRoomID.value;
@@ -115,52 +73,6 @@ const initial_state = {
         game_button: button_text,
       });
     });
-  }
-
-  // Submits form
-  handleSubmit(event: any) {
-    var roomID = event.target.formRoomID.value;
-    var name = event.target.name.value;
-    var drink = {glass: event.target.glass.value, liquid: '#000000', topping: event.target.topping.value};
-    var tiles = event.target.tiles.value;
-
-    this.updateTiles(tiles);
-
-    // Generate a room id for them if they didn't provide one
-    if (roomID === null || roomID === '' || roomID === undefined) {
-      roomID = this.generateRoomID().toString();
-    }
-
-    // If this room doesn't exist yet, initialize it
-    const gameRef = firebase.database().ref("games/"+roomID);
-    gameRef.once('value', (snapshot) => {
-      var playerIndex = 0;
-      if (!snapshot.exists()){
-        gameRef.set({
-          ...initial_state,
-          players: {
-            '0': {pos: 0, color: 'nah', name: name, drink: drink}
-          }
-        });
-      } else {
-        // Add the player if they don't already exist
-        const players = snapshot.val()['players'];
-        playerIndex = players.findIndex((p) => p.name === name);
-        if (playerIndex === -1) {
-          var playerLen = players.length;
-          let playerObj = {}
-          playerObj[playerLen] = {pos: 0, color: 'nah', name: name, drink: drink}
-          gameRef.child('players').update(playerObj);
-          playerIndex = playerLen;
-        }
-      }
-
-      this.props.cookies.set(roomID, playerIndex, { path: '/'});
-      this.props.history.push('/room/'+roomID);
-
-    });
-
-    event.preventDefault();
   }
 
   handleCreateClick(event : any) {
@@ -193,6 +105,8 @@ const initial_state = {
           ...initial_state,
         });
 
+        this.props.cookies.set(roomID, "create", { path: '/'});
+        this.props.history.push('/room/'+ roomID + '/join');
         // TODO: Redirect
       } else {
         // TODO: Let user know that room ID already exists
@@ -211,9 +125,12 @@ const initial_state = {
       if (!snapshot.exists()){
         // TODO: Let user know that game room ID does not exist       
       } else {
-        // TODO: Redirect user to create screen
+        this.props.cookies.set(roomID, "join", { path: '/'});
+        this.props.history.push('/room/'+ roomID + '/join');
       }
     });
+
+    event.preventDefault();
   }
 
   render() {

@@ -1,0 +1,66 @@
+body {
+  background:none !important;
+  color: white;
+}
+
+.signin-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signin-container {
+  width:80%;
+  margin-top: 10%;
+}
+
+.game-btn-container {
+  margin-top: 30px;
+  margin-bottom: 100px;
+  text-align: -webkit-center;
+
+  .game-btn {
+    width: 50%;
+  }
+}
+
+.signin-container .logo {
+  font-size:6vw;
+}
+
+.signin-container form {
+  color:white
+}
+
+.disclaimer-text {
+	margin-top: 10px;
+	font-size: 10pt;
+	font-color: white;
+  width: 50%;
+}
+
+.modal-link {
+	color: #007bff;
+}
+
+.modal-link:hover {
+	text-decoration: underline;
+}
+
+#custom-label {
+  font-size: 10pt;
+}
+
+
+// -- Responsive Media Queries -- //
+
+@media only screen and (max-width: 1024px) {
+  .game-btn-container > .game-btn {
+    width: 100%;
+  }
+
+  .disclaimer-text {
+    width:100%;
+    font-size: 10pt;
+  }
+}
