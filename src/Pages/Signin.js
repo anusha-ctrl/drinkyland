@@ -42,7 +42,7 @@ const initial_state = {
   hideModal() {
     this.setState({
       modalShow: false
-    });    
+    });
   }
 
   generateRoomID() {
@@ -51,7 +51,6 @@ const initial_state = {
 
 
   updateTiles(tiles_str : string) {
-    console.log("tiles_str", tiles_str);
     var old_tiles = initial_state.actions;
     const new_tiles = tiles_str.split(", ");
     const old_len = old_tiles.length;
@@ -83,7 +82,6 @@ const initial_state = {
   handleOnChange(event : any) {
     event.preventDefault();
     const new_tiles = event.target.value;
-    console.log("neq_tiles", new_tiles);
     this.setState({
       actions: new_tiles,
     });
@@ -112,7 +110,7 @@ const initial_state = {
   handleSubmit(event: any) {
     var roomID = event.target.formRoomID.value;
     var name = event.target.name.value;
-    var drink = event.target.drink.value;
+    var drink = {glass: event.target.glass.value, liquid: '#000000', topping: event.target.topping.value};
     var tiles = event.target.tiles.value;
 
     alert(event.target.tiles);
@@ -170,17 +168,24 @@ const initial_state = {
               <Form.Label>Name</Form.Label>
               <Form.Control required type="text" placeholder="Enter your name"/>
             </Form.Group>
-            <Form.Group controlId="drink">
-              <Form.Label>Pick your drink of choice (and make it unique!)</Form.Label>
+            <Form.Group controlId="glass">
+              <Form.Label>Pick a drink</Form.Label>
               <Form.Control required as="select">
-                <option>beer</option>
-                <option>champagne</option>
-                <option>lemonade</option>
-                <option>margarita</option>
                 <option>martini</option>
-                <option>tequila</option>
+                <option>beer</option>
+                <option>regular</option>
+                <option>fishbowl</option>
                 <option>whiskey</option>
                 <option>wine</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="topping">
+              <Form.Label>Pick a topping</Form.Label>
+              <Form.Control required as="select">
+                <option>olive</option>
+                <option>lime</option>
+                <option>gummy_worms</option>
+                <option>straw</option>
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="customCheck">
@@ -192,14 +197,14 @@ const initial_state = {
             </Form.Group>
             <Form.Group controlId="tiles">
               <div style={{ display: (this.state.active ? 'block' : 'none') }}>
-              <Form.Label id="custom-label">Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
-              <Form.Control 
-                as="textarea" 
-                rows="3" 
-                placeholder="Custom Tile Messages" 
-                onChange={this.handleOnChange.bind(this)}
-                value={ this.state.actions }
-              />
+                <Form.Label id="custom-label">Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
+                <Form.Control 
+                  as="textarea" 
+                  rows="3" 
+                  placeholder="Custom Tile Messages" 
+                  onChange={this.handleOnChange.bind(this)}
+                  value={ this.state.actions }
+                />
               </div>
             </Form.Group>
             <div className="game-btn-container">

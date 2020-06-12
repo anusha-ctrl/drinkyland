@@ -35,7 +35,7 @@ export default class PlayerList extends Component<Props>{
             return (
             <div className="player-row" key={'prow-'+i}>
               <p className="rank">{i+1}.</p>
-              <img className="floating" src={Bartender.pour(p['drink'])} alt={p['drink']} height="20px" width="20px"/>
+              {Bartender.pourImg(p.drink, {className: 'floating', height: '20px', width: '20px'})}
               <p>{p.name}</p>
             </div>)
           })}

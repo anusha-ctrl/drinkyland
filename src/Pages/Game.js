@@ -94,8 +94,8 @@ class Game extends Component<Props, State> {
   hideModal() {
     this.setState({
       modalShow: false
-    });    
-  } 
+    });
+  }
 
   // Donate Page
   openDonationPage() {
@@ -242,7 +242,15 @@ class Game extends Component<Props, State> {
 
   rollDice() {
     // Drinkyland gameplay is a random number generator + alcohol
-    const roll = Math.floor(Math.random() * 6) + 1;
+    var roll = Math.floor(Math.random() * 6) + 1;
+
+    // Increase challenge variability
+    const { players, curr_player } = this.state;
+    const playerPositions = players.map(p => p.pos);
+    const currPos = players[curr_player].pos
+    while(playerPositions.includes(currPos + roll) && Math.random() > 0.5){
+      roll = Math.floor(Math.random() * 6) + 1;
+    }
     this.props.syncDB.makeMove(roll, this.state.curr_player);
   }
 
@@ -325,7 +333,8 @@ class Game extends Component<Props, State> {
               <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
               <Navbar.Text className="ml-10 mr-10">
                 <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
-                <img src={Bartender.pour(player['drink'])} alt={player['drink']} height="20px" width="20px"/></div>
+                  {Bartender.pourImg(player.drink, { height: '20px', width: '20px'})}
+                </div>
               </Navbar.Text>
               { this.state.lastMove &&
                 <Navbar.Text>
