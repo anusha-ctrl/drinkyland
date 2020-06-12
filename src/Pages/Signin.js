@@ -4,6 +4,8 @@ import {Form, Button } from 'react-bootstrap';
 import firebase from '../Helpers/firebase.js';
 import Challenges from '../Helpers/Challenges.js';
 import Disclaimer from '../Helpers/Disclaimer.js';
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 // Styling
@@ -14,6 +16,8 @@ type State = {
   modalShow : boolean, 
   actions : string, 
   active: bool, 
+  showCreateForm: bool,
+  showJoinForm: bool, 
 }
 
 const initial_state = {
@@ -35,6 +39,8 @@ const initial_state = {
         modalShow: false,
         actions: initial_state.actions.slice(1,-1).map(function (tile) { return tile.title; }).join(", "),
         active: false,
+        showCreateForm: false,
+        showJoinForm: false,
       };
   }
 
@@ -157,6 +163,22 @@ const initial_state = {
     event.preventDefault();
   }
 
+  handleCreateClick(event : any) {
+    event.preventDefault();
+    const showCreateForm = this.state.showCreateForm;
+    this.setState({
+      showCreateForm : !showCreateForm
+    });
+  }
+
+  handleJoinClick(event : any) {
+    event.preventDefault();
+    const showJoinForm = this.state.showJoinForm;
+    this.setState({
+      showJoinForm : !showJoinForm
+    });
+  }
+
   render() {
     return (
       <div className="signin-parent">
@@ -164,63 +186,44 @@ const initial_state = {
           <h1 className="logo">DrinkyLand</h1>
 
           <Form onSubmit={this.handleSubmit.bind(this)} onKeyUp={this.handleKeyUp.bind(this)}>
-            <Form.Group controlId="formRoomID">
-              <Form.Label>Room ID</Form.Label>
-              <Form.Control type="text" placeholder="Enter Game ID to create or join" />
-            </Form.Group>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control required type="text" placeholder="Enter your name"/>
-            </Form.Group>
-            <Form.Group controlId="glass">
-              <Form.Label>Pick a drink</Form.Label>
-              <Form.Control required as="select">
-                <option>martini</option>
-                <option>beer</option>
-                <option>regular</option>
-                <option>fishbowl</option>
-                <option>whiskey</option>
-                <option>wine</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="topping">
-              <Form.Label>Pick a topping</Form.Label>
-              <Form.Control required as="select">
-                <option>olive</option>
-                <option>lime</option>
-                <option>gummy_worms</option>
-                <option>straw</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group style={{ display : (this.state.game_button === CREATE ? 'block' : 'none')}} controlId="customCheck">
-              <Form.Check 
-                type="checkbox" 
-                checked={this.state.active}
-                onChange={this.handleClick.bind(this)}
-                label="Click here if you would like to customize your game." />
-            </Form.Group>
-            <Form.Group controlId="tiles">
-              <div style={{ display: (this.state.active && this.state.game_button === CREATE ? 'block' : 'none') }}>
-                <Form.Label id="custom-label">Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows="3" 
-                  placeholder="Custom Tile Messages" 
-                  onChange={this.handleOnChange.bind(this)}
-                  value={ this.state.actions }
-                />
-              </div>
-            </Form.Group>
-            <div className="game-btn-container">
-              <Button className="game-btn" type="submit" >
-                {this.state.game_button}
+            
+            <div>
+              <Button className="signin-btn" type="button" onClick={this.handleCreateClick.bind(this)}>
+                CREATE <FontAwesomeIcon icon={(this.state.showCreateForm ? faCaretUp : faCaretDown)} />
               </Button>
-              <Form.Group>
-                <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
-                  <span role="button" className="modal-link" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
-                </Form.Label>
-              </Form.Group>
+              <div style={{ display: (this.state.showCreateForm ? "block" : "none")}}>
+                <Form.Group controlId="formRoomIDCreate">
+                  <Form.Control type="text" placeholder="Enter Game ID to create" />
+                </Form.Group>
+                <Button type="button" className="submit-btn">
+                  Submit!
+                </Button>
+              </div>
             </div>
+
+            <div>
+              <Button className="signin-btn" type="button" onClick={this.handleJoinClick.bind(this)}>
+                JOIN <FontAwesomeIcon icon={(this.state.showJoinForm ? faCaretUp : faCaretDown)} />
+              </Button>
+              <div style={{ display: (this.state.showJoinForm ? "block" : "none")}}>
+                <Form.Group controlId="formRoomIDJoin">
+                  <Form.Control type="text" placeholder="Enter Game ID to join" />
+                </Form.Group>
+                <Button type="button" className="submit-btn">
+                  Submit!
+                </Button>
+              </div>
+            </div>
+
+            <Button className="help-btn" type="button">
+              HOW TO PLAY
+            </Button>
+            <div>
+              <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
+                    <span role="button" className="modal-link" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
+              </Form.Label>
+            </div>
+
           </Form>
         </div>
 
