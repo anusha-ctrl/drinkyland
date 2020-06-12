@@ -16,6 +16,7 @@ body {
 
 .game-btn-container {
   margin-top: 30px;
+  margin-bottom: 100px;
   text-align: -webkit-center;
 
   .game-btn {
@@ -44,6 +45,10 @@ body {
 
 .modal-link:hover {
 	text-decoration: underline;
+}
+
+#custom-label {
+  font-size: 10pt;
 }
 
 

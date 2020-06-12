@@ -9,7 +9,7 @@ import Disclaimer from '../Helpers/Disclaimer.js';
 // Styling
 import '../css/Signin.scss';
 
-type State = { game_button : string, modalShow : boolean }
+type State = { game_button : string, modalShow : boolean, actions : string, active: bool }
 
 const initial_state = {
   actions: Challenges.getDefaults(),
@@ -29,6 +29,7 @@ const initial_state = {
         game_button : CREATE,
         modalShow: false,
         actions: initial_state.actions.slice(1,-1).map(function (tile) { return tile.title; }).join(", "),
+        active: false,
       };
   }
 
@@ -49,7 +50,8 @@ const initial_state = {
   }
 
 
-  updateTiles(tiles_str) {
+  updateTiles(tiles_str : string) {
+    console.log("tiles_str", tiles_str);
     var old_tiles = initial_state.actions;
     const new_tiles = tiles_str.split(", ");
     const old_len = old_tiles.length;
@@ -57,7 +59,7 @@ const initial_state = {
 
     for (var i = 0; i < new_tiles.length; i++) {
       if (i <= old_len && old_tiles[i].title !== new_tiles[i]) {
-        old_tiles[i] = {title: new_tiles[i], description: ''};
+        old_tiles[i+1] = {title: new_tiles[i], description: ''};
       } else {
         old_tiles.push({title: new_tiles[i], description: ''});
       }
@@ -70,11 +72,18 @@ const initial_state = {
     initial_state.actions = old_tiles;
   }
 
+  handleClick(event : any) {
+    const status = this.state.active;
+    this.setState({
+      active: !status
+    });
+  }
 
   // Handles onChange function for Custom Tiles input
   handleOnChange(event : any) {
     event.preventDefault();
-    var new_tiles = event.target.value;
+    const new_tiles = event.target.value;
+    console.log("neq_tiles", new_tiles);
     this.setState({
       actions: new_tiles,
     });
@@ -106,6 +115,7 @@ const initial_state = {
     var drink = event.target.drink.value;
     var tiles = event.target.tiles.value;
 
+    alert(event.target.tiles);
     this.updateTiles(tiles);
 
     // Generate a room id for them if they didn't provide one
@@ -173,6 +183,25 @@ const initial_state = {
                 <option>wine</option>
               </Form.Control>
             </Form.Group>
+            <Form.Group controlId="customCheck">
+              <Form.Check 
+                type="checkbox" 
+                checked={this.state.active}
+                onChange={this.handleClick.bind(this)}
+                label="Click here if you would like to customize your game." />
+            </Form.Group>
+            <Form.Group controlId="tiles">
+              <div style={{ display: (this.state.active ? 'block' : 'none') }}>
+              <Form.Label id="custom-label">Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
+              <Form.Control 
+                as="textarea" 
+                rows="3" 
+                placeholder="Custom Tile Messages" 
+                onChange={this.handleOnChange.bind(this)}
+                value={ this.state.actions }
+              />
+              </div>
+            </Form.Group>
             <div className="game-btn-container">
               <Button className="game-btn" type="submit" >
                 {this.state.game_button}
@@ -183,16 +212,6 @@ const initial_state = {
                 </Form.Label>
               </Form.Group>
             </div>
-            <Form.Group controlId="tiles">
-                <Form.Label>Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows="3" 
-                  placeholder="Custom Tile Messages" 
-                  onChange={this.handleOnChange.bind(this)}
-                  value={ this.state.actions }
-                />
-            </Form.Group>
           </Form>
         </div>
 
