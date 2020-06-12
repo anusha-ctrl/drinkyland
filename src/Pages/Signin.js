@@ -147,7 +147,7 @@ const initial_state = {
               </Button>
               <div style={{ display: (this.state.showCreateForm ? "block" : "none")}}>
                 <Form.Group controlId="formRoomIDCreate">
-                  <Form.Control type="text" placeholder="Enter Game ID to create" />
+                  <Form.Control className="form-input" type="text" placeholder="Enter Game ID to create" />
                 </Form.Group>
                 <Button type="submit" className="submit-btn" >
                   Submit!
@@ -163,7 +163,7 @@ const initial_state = {
               </Button>
               <div style={{ display: (this.state.showJoinForm ? "block" : "none")}}>
                 <Form.Group controlId="formRoomIDJoin">
-                  <Form.Control type="text" placeholder="Enter Game ID to join" />
+                  <Form.Control className="form-input" type="text" placeholder="Enter Game ID to join" />
                 </Form.Group>
                 <Button type="submit" className="submit-btn">
                   Submit!

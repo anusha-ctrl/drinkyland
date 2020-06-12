@@ -67,8 +67,8 @@ body {
   background: rgba(149, 17, 112, .69);
   border: solid 1px white;
   border-radius: 10px;
-  width: 45%;
   margin-bottom: 20px;
+  width: 45%;
 }
 
 .submit-btn:hover,
@@ -82,6 +82,11 @@ body {
 .submit-btn:not(:disabled):not(.disabled).active, .submit-btn:not(:disabled):not(.disabled):active, .show>.submit-btn.dropdown-toggle {
     background-color:rgba(100, 15, 76, .69);
     border-color: white;
+}
+
+.form-input {
+  width: 45%;
+  margin: 10px auto;
 }
 
 
