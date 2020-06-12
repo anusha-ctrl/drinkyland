@@ -27,7 +27,8 @@ const initial_state = {
       super(props);
       this.state = {
         game_button : CREATE,
-        modalShow: false
+        modalShow: false,
+        actions: initial_state.actions.slice(1,-1).map(function (tile) { return tile.title; }).join(", "),
       };
   }
 
@@ -47,18 +48,39 @@ const initial_state = {
     return Math.floor(Math.random() * (10000));
   }
 
-  createCustomTiles(tiles) {
-    var curr_tiles = this.state.actions;
-    {/*  Currently assumes num_new < num */ }
-    var num_tiles = curr_tiles.length;
-    var num_new_tiles = tiles.length;
-    var spacing = num_tiles/num_new_tiles;
 
-    for (var i = 0; i < tiles.length; i+=spacing) {
+  updateTiles(tiles_str) {
+    var old_tiles = initial_state.actions;
+    const new_tiles = tiles_str.split(", ");
+    const old_len = old_tiles.length;
+    const end = old_tiles[old_len-1];
 
+    for (var i = 0; i < new_tiles.length; i++) {
+      if (i <= old_len && old_tiles[i].title !== new_tiles[i]) {
+        old_tiles[i] = {title: new_tiles[i], description: ''};
+      } else {
+        old_tiles.push({title: new_tiles[i], description: ''});
+      }
     }
+
+    if (old_len < old_tiles.length) {
+      old_tiles.push(end);
+    }
+
+    initial_state.actions = old_tiles;
   }
 
+
+  // Handles onChange function for Custom Tiles input
+  handleOnChange(event : any) {
+    event.preventDefault();
+    var new_tiles = event.target.value;
+    this.setState({
+      actions: new_tiles,
+    });
+  }
+
+  // Handles checking if game room is new or not
   handleKeyUp(event : any) {
     var roomID = event.currentTarget.formRoomID.value;
     if (roomID === null || roomID === '' || roomID === undefined) {
@@ -77,11 +99,14 @@ const initial_state = {
     });
   }
 
+  // Submits form
   handleSubmit(event: any) {
     var roomID = event.target.formRoomID.value;
     var name = event.target.name.value;
     var drink = event.target.drink.value;
-    var tiles = event.target.drink.tiles;
+    var tiles = event.target.tiles.value;
+
+    this.updateTiles(tiles);
 
     // Generate a room id for them if they didn't provide one
     if (roomID === null || roomID === '' || roomID === undefined) {
@@ -154,13 +179,19 @@ const initial_state = {
               </Button>
               <Form.Group>
                 <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
-                  <span role="button" className="modal-link" tabindex="0" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
+                  <span role="button" className="modal-link" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
                 </Form.Label>
               </Form.Group>
             </div>
             <Form.Group controlId="tiles">
-                <Form.Label>Enter custom tile messages! Separate with commas.</Form.Label>
-                <Form.Control as="textarea" rows="3" placeholder="Custom Tile Messages"/>
+                <Form.Label>Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
+                <Form.Control 
+                  as="textarea" 
+                  rows="3" 
+                  placeholder="Custom Tile Messages" 
+                  onChange={this.handleOnChange.bind(this)}
+                  value={ this.state.actions }
+                />
             </Form.Group>
           </Form>
         </div>
