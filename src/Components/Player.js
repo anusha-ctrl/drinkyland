@@ -32,7 +32,7 @@ type Props = {
 export default class Player extends Component<Props> {
 
   render() {
-    let { active, drink } = this.props;
+    let { active, drink, style } = this.props;
 
     return (
       <div className={"player" + (active ? ' floating' : '')}>
