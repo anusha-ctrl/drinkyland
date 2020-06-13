@@ -31,6 +31,20 @@ export default class DrinkCustomizer extends Component<Props, State> {
     this.state = { glassPos: glassPos, liquidPos: glassPos, toppingPos: toppingPos };
   }
 
+  componentDidMount() {
+    // TODO (Devdo): Make this more DRY
+    if(this.props.onDrinkChange){
+      const { glasses, toppings } = this;
+      const { glassPos, toppingPos } = this.state;
+      const drink = {
+        glass: glasses[glassPos % glasses.length],
+        liquid: '',
+        topping: toppings[toppingPos % toppings.length]
+      }
+      this.props.onDrinkChange(drink);
+    }
+  }
+
   onChange(type: string, value: number) {
     // Update the positions in our state
     var state = this.state;
