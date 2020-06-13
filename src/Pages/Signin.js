@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../css/Signin.scss';
 
 type State = {
-  game_button : string,
   modalShow : boolean,
   showCreateForm: bool,
   showJoinForm: bool,
@@ -26,15 +25,10 @@ const initial_state = {
   started: false,
  }
 
- const CREATE = "Create Game!";
- const JOIN = "Join Game!";
-
-
  export default class Signin extends Component<any, State>{
   constructor(props : any) {
       super(props);
       this.state = {
-        game_button : CREATE,
         modalShow: false,
         showCreateForm: false,
         showJoinForm: false,
@@ -42,6 +36,11 @@ const initial_state = {
         validJoinRoom: true,
       };
   }
+
+  openLink() {
+    window.open("https://www.youtube.com/watch?v=r5zqCr5bpjU",'_blank','resizable=yes');
+  }
+
 
   showModal() {
     this.setState({
@@ -183,8 +182,9 @@ const initial_state = {
                 </Button>
               </div>
             </div>
+          </Form>
 
-            <Button className="help-btn" type="button" href="https://www.youtube.com/watch?v=r5zqCr5bpjU">
+          <Button className="help-btn" type="button" onClick={this.openLink.bind(this)}>
               HOW TO PLAY
             </Button>
             <div>
@@ -192,8 +192,6 @@ const initial_state = {
                     <span role="button" className="modal-link" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
               </Form.Label>
             </div>
-
-          </Form>
         </div>
 
         <Disclaimer show={this.state.modalShow} onHide={() => this.hideModal()}/>

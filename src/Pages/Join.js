@@ -18,13 +18,14 @@ type State = {
   modalShow : boolean,
   actions : string,
   active: bool,
-  drink: drink,
+  drink: ?drink,
 }
 
 type Props = {
   roomID: string,
   type: string,
-  syncDB: SyncDB,
+  cookies: any,
+  history: any,
 }
 
 const initial_state = {
@@ -46,6 +47,7 @@ const initial_state = {
         modalShow: false,
         actions: initial_state.actions.slice(1,-1).map(function (tile) { return tile.title; }).join(", "),
         active: false,
+        drink: null,
       };
 
       if (this.props.type === "join") {

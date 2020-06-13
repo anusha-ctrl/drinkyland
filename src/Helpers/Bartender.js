@@ -5,10 +5,10 @@ import * as Bar from './Bar';
 import type { drink } from './SyncDB';
 
 export default class Bartender {
-  static pourImg(drink: drink, options: any) {
+  static pourImg(drinkObj: drink, options: any) {
     options = options ?? {}
     // Fetch the raw image paths for each element
-    const { glass, topping } = drink;
+    const { glass, topping } = drinkObj;
     const glassImgPath = Bar.glasses[glass];
     const liquidImgPath = Bar.liquids[glass];
     const toppingImgPath = Bar.toppings[topping];
