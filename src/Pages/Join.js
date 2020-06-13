@@ -197,7 +197,7 @@ const initial_state = {
           </Form>
           {/* Drink Customization */}
           <Form.Group controlId="topping">
-             <Form.Label>Customize your drink</Form.Label>
+             <Form.Label>Customize your drink below!</Form.Label>
              <DrinkCustomizer onDrinkChange={this.onDrinkChange.bind(this)}/>
            </Form.Group>
 
