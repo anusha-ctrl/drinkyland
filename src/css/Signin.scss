@@ -5,6 +5,10 @@ body {
   color: white;
 }
 
+#one-and-only-form {
+  margin-top: 30px;
+}
+
 .signin-parent {
   display: flex;
   flex-direction: column;
@@ -13,7 +17,8 @@ body {
 
 .signin-container {
   width:80%;
-  margin: 10% auto;
+  margin: 3% auto;
+  background: rgba(255, 255, 255, .01);
 }
 
 .signin-container .logo {

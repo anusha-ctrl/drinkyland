@@ -173,8 +173,7 @@ const initial_state = {
 
           <Form onSubmit={this.handleSubmit.bind(this)} id="one-and-only-form">
             <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control required type="text" placeholder="Enter your name"/>
+              <Form.Control style={{ width: "45%", margin: "auto" }}required type="text" placeholder="Enter your nickname!"/>
             </Form.Group>
             <Form.Group style={{ display : (this.props.type === "create" ? 'block' : 'none')}} controlId="customCheck">
               <Form.Check
@@ -204,7 +203,7 @@ const initial_state = {
 
            {/* Submit Button */}
            <div className="game-btn-container">
-             <Button className="game-btn" type="submit" form="one-and-only-form">
+             <Button className="submit-btn" type="submit" form="one-and-only-form">
                {this.state.game_button}
              </Button>
              <Form.Group>
