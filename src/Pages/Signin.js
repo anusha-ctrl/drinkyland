@@ -14,7 +14,7 @@ type State = {
   game_button : string,
   modalShow : boolean,
   showCreateForm: bool,
-  showJoinForm: bool, 
+  showJoinForm: bool,
   validCreateRoom: bool,
   validJoinRoom: bool,
 }
@@ -137,17 +137,17 @@ const initial_state = {
       <div className="signin-parent">
         <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
-          <Form onSubmit={this.handleCreateSubmit.bind(this)} onKeyUp={this.handleKeyUpCreate.bind(this)}>            
+          <Form onSubmit={this.handleCreateSubmit.bind(this)} onKeyUp={this.handleKeyUpCreate.bind(this)}>
             <div>
               <Button className="signin-btn" type="button" onClick={this.handleCreateClick.bind(this)}>
                 CREATE <FontAwesomeIcon icon={(this.state.showCreateForm ? faCaretUp : faCaretDown)} />
               </Button>
               <div style={{ display: (this.state.showCreateForm ? "block" : "none")}}>
                 <Form.Group controlId="formRoomIDCreate">
-                  <Form.Control 
-                    className="form-input" 
+                  <Form.Control
+                    className="form-input"
                     type="text"
-                    placeholder="Enter Game ID to create" 
+                    placeholder="Enter Game ID to create"
                     isInvalid={!this.state.validCreateRoom}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -168,10 +168,10 @@ const initial_state = {
               </Button>
               <div style={{ display: (this.state.showJoinForm ? "block" : "none")}}>
                 <Form.Group controlId="formRoomIDJoin">
-                  <Form.Control 
-                    className="form-input" 
-                    type="text" 
-                    placeholder="Enter Game ID to join" 
+                  <Form.Control
+                    className="form-input"
+                    type="text"
+                    placeholder="Enter Game ID to join"
                     isInvalid={!this.state.validJoinRoom}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -184,7 +184,7 @@ const initial_state = {
               </div>
             </div>
 
-            <Button className="help-btn" type="button">
+            <Button className="help-btn" type="button" href="https://www.youtube.com/watch?v=r5zqCr5bpjU">
               HOW TO PLAY
             </Button>
             <div>
