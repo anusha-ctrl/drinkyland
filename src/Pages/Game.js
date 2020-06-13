@@ -329,12 +329,12 @@ class Game extends Component<Props, State> {
 
             <Navbar className="inner-navbar second" >
               <Button variant="outline-dark" className="mr-10" onClick={() => this.rollDice()}>
-                {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for them'}
+                {this.props.playerID === this.state.curr_player ? 'Click me!' : 'Roll for Them!'}
               </Button>
               <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
-              <Navbar.Text className="ml-10 mr-10">
+              <Navbar.Text className="ml-10 mr-5">
                 <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
-                  {Bartender.pourImg(player.drink, { style: {height: '25px', width: '25px'}})}
+                  {Bartender.pourImg(player.drink, { style: {height: '22px', width: '20px'}})}
                 </div>
               </Navbar.Text>
               { this.state.lastMove &&
