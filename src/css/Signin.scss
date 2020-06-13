@@ -17,8 +17,22 @@ body {
 
 .signin-container {
   width:80%;
+  margin: 150px auto;
+}
+
+.join-container {
+  width:80%;
   margin: 3% auto;
   background: rgba(255, 255, 255, .01);
+  height: 2000%;
+
+  .logo {
+    font-size:6vw;
+  }
+
+  form {
+    color:white;
+  }
 }
 
 .signin-container .logo {

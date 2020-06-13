@@ -168,7 +168,7 @@ const initial_state = {
   render() {
     return (
       <div className="signin-parent">
-        <div className="signin-container">
+        <div className="join-container">
           <h1 className="logo">DrinkyLand</h1>
 
           <Form onSubmit={this.handleSubmit.bind(this)} id="one-and-only-form">

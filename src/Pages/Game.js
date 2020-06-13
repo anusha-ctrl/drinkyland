@@ -61,6 +61,7 @@ class Game extends Component<Props, State> {
   componentDidMount() {
     // Use the state from the remoteDB and keep it in sync on this component
     this.props.syncDB.syncState(this);
+    // window.scrollTo(0,0);
     window.addEventListener('resize', this.handleResize);
   }
 
