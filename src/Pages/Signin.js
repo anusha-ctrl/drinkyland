@@ -10,11 +10,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Styling
 import '../css/Signin.scss';
 
-type State = { 
-  game_button : string, 
-  modalShow : boolean, 
+type State = {
+  game_button : string,
+  modalShow : boolean,
   showCreateForm: bool,
-  showJoinForm: bool, 
+  showJoinForm: bool,
 }
 
 const initial_state = {
@@ -123,7 +123,7 @@ const initial_state = {
     const gameRef = firebase.database().ref("games/"+roomID);
     gameRef.once('value', (snapshot) => {
       if (!snapshot.exists()){
-        // TODO: Let user know that game room ID does not exist       
+        // TODO: Let user know that game room ID does not exist
       } else {
         this.props.cookies.set(roomID, "join", { path: '/'});
         this.props.history.push('/room/'+ roomID + '/join');
@@ -138,8 +138,7 @@ const initial_state = {
       <div className="signin-parent">
         <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
-
-          <Form onSubmit={this.handleCreateSubmit.bind(this)}>            
+          <Form onSubmit={this.handleCreateSubmit.bind(this)}>
             <div>
               <Button className="signin-btn" type="button" onClick={this.handleCreateClick.bind(this)}>
                 CREATE <FontAwesomeIcon icon={(this.state.showCreateForm ? faCaretUp : faCaretDown)} />
@@ -151,7 +150,7 @@ const initial_state = {
                 <Button type="submit" className="submit-btn" >
                   Submit!
                 </Button>
-              </div> 
+              </div>
             </div>
           </Form>
 
@@ -174,7 +173,7 @@ const initial_state = {
               HOW TO PLAY
             </Button>
             <div>
-              <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
+              <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our
                     <span role="button" className="modal-link" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
               </Form.Label>
             </div>

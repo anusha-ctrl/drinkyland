@@ -13,11 +13,11 @@ import type { drink } from '../Helpers/SyncDB';
 // Styling
 import '../css/Signin.scss';
 
-type State = { 
-  game_button : string, 
-  modalShow : boolean, 
-  actions : string, 
-  active: bool, 
+type State = {
+  game_button : string,
+  modalShow : boolean,
+  actions : string,
+  active: bool,
   drink: drink,
 }
 
@@ -70,9 +70,7 @@ const initial_state = {
   }
 
   onDrinkChange(newDrink: drink) {
-    console.log("onDrinkChange calling");
     this.setState({drink: newDrink});
-    console.log("onDrinkChange called");
   }
 
   updateTiles(tiles_str : string) {
@@ -122,9 +120,6 @@ const initial_state = {
     var drink = this.state.drink;
     var tiles = event.target.tiles.value;
 
-    console.log("Drink is..", drink);
-    alert("pause");
-
     this.updateTiles(tiles);
 
     // Generate a room id for them if they didn't provide one
@@ -149,7 +144,7 @@ const initial_state = {
             players: {
               '0': {pos: 0, color: 'nah', name: name, drink: drink}
             }
-          });  
+          });
       } else {
         // Add the player if they don't already exist
         console.log("Drink is..", drink);
@@ -176,18 +171,14 @@ const initial_state = {
         <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
 
-          <Form onSubmit={this.handleSubmit.bind(this)}>
+          <Form onSubmit={this.handleSubmit.bind(this)} id="one-and-only-form">
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control required type="text" placeholder="Enter your name"/>
             </Form.Group>
-           <Form.Group controlId="topping">
-              <Form.Label>Customize your drink</Form.Label>
-              <DrinkCustomizer onDrinkChange={this.onDrinkChange.bind(this)}/>
-            </Form.Group>
             <Form.Group style={{ display : (this.props.type === "create" ? 'block' : 'none')}} controlId="customCheck">
-              <Form.Check 
-                type="checkbox" 
+              <Form.Check
+                type="checkbox"
                 checked={this.state.active}
                 onChange={this.handleClick.bind(this)}
                 label="Click here if you would like to customize your game." />
@@ -195,26 +186,33 @@ const initial_state = {
             <Form.Group controlId="tiles">
               <div style={{ display: (this.state.active && this.props.type === "create" ? 'block' : 'none') }}>
                 <Form.Label id="custom-label">Customize tile messages by switching ours with your own! Separate with commas.</Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows="3" 
-                  placeholder="Custom Tile Messages" 
+                <Form.Control
+                  as="textarea"
+                  rows="3"
+                  placeholder="Custom Tile Messages"
                   onChange={this.handleOnChange.bind(this)}
                   value={ this.state.actions }
                 />
               </div>
             </Form.Group>
-            <div className="game-btn-container">
-              <Button className="game-btn" type="submit" >
-                {this.state.game_button}
-              </Button>
-              <Form.Group>
-                <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our 
-                  <span role="button" className="modal-link" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
-                </Form.Label>
-              </Form.Group>
-            </div>
           </Form>
+          {/* Drink Customization */}
+          <Form.Group controlId="topping">
+             <Form.Label>Customize your drink</Form.Label>
+             <DrinkCustomizer onDrinkChange={this.onDrinkChange.bind(this)}/>
+           </Form.Group>
+
+           {/* Submit Button */}
+           <div className="game-btn-container">
+             <Button className="game-btn" type="submit" form="one-and-only-form">
+               {this.state.game_button}
+             </Button>
+             <Form.Group>
+               <Form.Label className="disclaimer-text">Drinkyland is a safe-space for all beverages - alcoholic or not!  We are not responsible for underaged drinking. Please read our
+                 <span role="button" className="modal-link" onClick={() => this.showModal()}> disclaimer </span> before playing this game.
+               </Form.Label>
+             </Form.Group>
+           </div>
         </div>
 
         <Disclaimer show={this.state.modalShow} onHide={() => this.hideModal()}/>

@@ -31,8 +31,7 @@ export default class DrinkCustomizer extends Component<Props, State> {
     this.state = { glassPos: glassPos, liquidPos: glassPos, toppingPos: toppingPos };
   }
 
-  onChange(event : any, type: string, value: number) {
-    console.log("DrinkCustomizer.onChange calling...");
+  onChange(type: string, value: number) {
     // Update the positions in our state
     var state = this.state;
     if (type === 'glass'){
