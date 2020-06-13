@@ -6,22 +6,12 @@ body {
 .signin-parent {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
 .signin-container {
   width:80%;
-  margin-top: 10%;
-}
-
-.game-btn-container {
-  margin-top: 30px;
-  margin-bottom: 100px;
-  text-align: -webkit-center;
-
-  .game-btn {
-    width: 50%;
-  }
+  margin: 10% auto;
 }
 
 .signin-container .logo {
@@ -29,7 +19,8 @@ body {
 }
 
 .signin-container form {
-  color:white
+  color:white;
+  margin-top: 20px;
 }
 
 .disclaimer-text {
@@ -51,6 +42,74 @@ body {
   font-size: 10pt;
 }
 
+.signin-btn {
+  background: #E353BB;
+  border: solid 1px white;
+  border-radius: 10px;
+  width: 50%;
+  margin: 10px auto;
+}
+
+.signin-btn:hover,
+.signin-btn:active,
+.signin-btn:visited,
+.signin-btn:focus {
+    background-color: #951170;
+    border-color: white;
+};
+
+.signin-btn:not(:disabled):not(.disabled).active, .signin-btn:not(:disabled):not(.disabled):active, .show>.signin-btn.dropdown-toggle {
+    background-color: #951170;
+    border-color: white;
+}
+
+.submit-btn {
+  background: rgba(149, 17, 112, .69);
+  border: solid 1px white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 45%;
+}
+
+.submit-btn:hover,
+.submit-btn:active,
+.submit-btn:visited,
+.submit-btn:focus {
+    background-color: rgba(100, 15, 76, .69);
+    border-color: white;
+};
+
+.submit-btn:not(:disabled):not(.disabled).active, .submit-btn:not(:disabled):not(.disabled):active, .show>.submit-btn.dropdown-toggle {
+    background-color:rgba(100, 15, 76, .69);
+    border-color: white;
+}
+
+.form-input {
+  width: 45%;
+  margin: 10px auto;
+}
+
+
+.help-btn {
+  background: #B29BAC;
+  border: solid 1px white;
+  border-radius: 10px;
+  width: 50%;
+  margin: 10px auto;
+}
+
+.help-btn:hover,
+.help-btn:active,
+.help-btn:visited,
+.help-btn:focus {
+    background-color: #7A6775;
+    border-color: white;
+};
+
+.help-btn:not(:disabled):not(.disabled).active, .help-btn:not(:disabled):not(.disabled):active, .show>.help-btn.dropdown-toggle {
+    background-color: #7A6775;
+    border-color: white;
+}
 
 // -- Responsive Media Queries -- //
 

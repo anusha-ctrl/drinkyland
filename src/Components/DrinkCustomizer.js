@@ -31,7 +31,8 @@ export default class DrinkCustomizer extends Component<Props, State> {
     this.state = { glassPos: glassPos, liquidPos: glassPos, toppingPos: toppingPos };
   }
 
-  onChange(type: string, value: number) {
+  onChange(event : any, type: string, value: number) {
+    console.log("DrinkCustomizer.onChange calling...");
     // Update the positions in our state
     var state = this.state;
     if (type === 'glass'){
@@ -83,7 +84,7 @@ export default class DrinkCustomizer extends Component<Props, State> {
           arrows
           infinite
           value = {this.state.toppingPos}
-          onChange={this.onChange.bind(this, 'topping')}
+          onChange={this.onChange.bind(this,  'topping')}
           className = 'topping-carousel'
         >
           {toppings.map(topping => {

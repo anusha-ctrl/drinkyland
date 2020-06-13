@@ -9,6 +9,8 @@ import SyncDB from './Helpers/SyncDB';
 // Pages
 import Signin from './Pages/Signin';
 import Game from './Pages/Game';
+import Join from './Pages/Join';
+
 
 class App extends Component<any> {
 
@@ -17,6 +19,12 @@ class App extends Component<any> {
       <Switch>
         <Route exact path="/" render={(props) =>
           <Signin {...props} cookies = {this.props.cookies}/> }/>
+        <Route path="/room/:roomID/join" render={(props) =>
+          <Join {...props}
+            roomID = {props.match.params.roomID}
+            type = {this.props.cookies.get(props.match.params.roomID)}
+            cookies = {this.props.cookies}
+          /> }/>        
         <Route path="/room/:roomID" render={(props) =>
           <Game
             roomID = {props.match.params.roomID}
