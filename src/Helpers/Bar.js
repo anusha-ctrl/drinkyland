@@ -7,6 +7,7 @@ import wine_glass from '../img/bar/wine_glass.svg'
 import whiskey_glass from '../img/bar/whiskey_glass.svg'
 import fishbowl_glass from '../img/bar/fishbowl_glass.svg'
 import regular_glass from '../img/bar/regular_glass.svg'
+import soda_glass from '../img/bar/soda_glass.svg'
 
 // Liquids
 import martini_liquid from '../img/bar/martini_liquid.svg'
@@ -15,6 +16,7 @@ import wine_liquid from '../img/bar/wine_liquid.svg'
 import whiskey_liquid from '../img/bar/whiskey_liquid.svg'
 import fishbowl_liquid from '../img/bar/fishbowl_liquid.svg'
 import regular_liquid from '../img/bar/regular_liquid.svg'
+import soda_liquid from '../img/bar/soda_liquid.svg'
 
 // Full Glasses - Currently unused
 // import martini_glass_full from '../img/bar/martini_glass_full.svg'
@@ -23,13 +25,14 @@ import regular_liquid from '../img/bar/regular_liquid.svg'
 // import whiskey_glass_full from '../img/bar/whiskey_glass_full.svg'
 // import fishbowl_glass_full from '../img/bar/fishbowl_glass_full.svg'
 // import regular_glass_full from '../img/bar/regular_glass_full.svg'
+// import soda_glass_full from '../img/bar/soda_glass_full.svg'
 
 // Toppings
 import olive from '../img/bar/olive.svg'
-// import cherry from '../img/bar/cherry.svg'
-// import rubber_ducky from '../img/bar/rubber_ducky.svg'
+import umbrella from '../img/bar/umbrella.svg'
+import candycane from '../img/bar/candycane.svg'
 import lime from '../img/bar/lime.svg'
-// import salt from '../img/bar/salt.svg'
+import flower from '../img/bar/flower.svg'
 import gummy_worms from '../img/bar/gummy_worms.svg'
 import straw from '../img/bar/straw.svg'
 
@@ -39,7 +42,8 @@ export const glasses = {
   wine: wine_glass,
   whiskey: whiskey_glass,
   fishbowl: fishbowl_glass,
-  regular: regular_glass
+  regular: regular_glass,
+  soda: soda_glass,
 };
 
 export const liquids = {
@@ -48,15 +52,16 @@ export const liquids = {
   wine: wine_liquid,
   whiskey: whiskey_liquid,
   fishbowl: fishbowl_liquid,
-  regular: regular_liquid
+  regular: regular_liquid,
+  soda: soda_liquid,
 };
 
 export const toppings = {
   olive: olive,
-  // cherry: cherry,
-  // rubber_ducky: rubber_ducky,
+  umbrella: umbrella,
+  candycane: candycane,
   lime: lime,
-  // salt: salt,
+  flower: flower,
   gummy_worms: gummy_worms,
   straw: straw,
 }

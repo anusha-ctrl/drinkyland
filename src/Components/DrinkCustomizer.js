@@ -23,10 +23,12 @@ export default class DrinkCustomizer extends Component<Props, State> {
 
   constructor() {
     super()
-    this.state = { glassPos: 0, liquidPos: 0, toppingPos: 0 };
-
     this.glasses = Object.keys(Bar.glasses);
     this.toppings = Object.keys(Bar.toppings);
+
+    const glassPos = Math.round(Math.random()*this.glasses.length);
+    const toppingPos = Math.round(Math.random()*this.toppings.length);
+    this.state = { glassPos: glassPos, liquidPos: glassPos, toppingPos: toppingPos };
   }
 
   onChange(type: string, value: number) {
