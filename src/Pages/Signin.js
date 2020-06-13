@@ -37,10 +37,6 @@ const initial_state = {
       };
   }
 
-  openLink() {
-    window.open("https://www.youtube.com/watch?v=r5zqCr5bpjU",'_blank','resizable=yes');
-  }
-
 
   showModal() {
     this.setState({
@@ -184,7 +180,7 @@ const initial_state = {
             </div>
           </Form>
 
-          <Button className="help-btn" type="button" onClick={this.openLink.bind(this)}>
+          <Button className="help-btn" type="button" href="https://www.youtube.com/watch?v=r5zqCr5bpjU" target="_blank">
               HOW TO PLAY
             </Button>
             <div>
