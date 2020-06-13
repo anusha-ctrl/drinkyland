@@ -1,0 +1,31 @@
+.drink-customizer{
+  position:relative;
+  background: white;
+  height:200px;
+  margin: 30px auto;
+  width:300px;
+
+  > * {
+    position:absolute;
+    top:0;
+    left:0;
+  }
+
+  // Allow touch events to pass through the carousel,
+  // but not through the carousel arrows
+  .BrainhubCarousel__container {
+    pointer-events: none;
+    padding:20px;
+  }
+  .BrainhubCarousel__arrows {
+    pointer-events: all;
+  }
+
+  // Separate the carousel arrows from each other
+  .glass-carousel .BrainhubCarousel__arrows {
+    margin-top:50px;
+  }
+  .topping-carousel .BrainhubCarousel__arrows {
+    margin-top:-50px;
+  }
+}

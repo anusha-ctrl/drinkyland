@@ -16,6 +16,14 @@ import whiskey_liquid from '../img/bar/whiskey_liquid.svg'
 import fishbowl_liquid from '../img/bar/fishbowl_liquid.svg'
 import regular_liquid from '../img/bar/regular_liquid.svg'
 
+// Full Glasses - Currently unused
+// import martini_glass_full from '../img/bar/martini_glass_full.svg'
+// import beer_glass_full from '../img/bar/beer_glass_full.svg'
+// import wine_glass_full from '../img/bar/wine_glass_full.svg'
+// import whiskey_glass_full from '../img/bar/whiskey_glass_full.svg'
+// import fishbowl_glass_full from '../img/bar/fishbowl_glass_full.svg'
+// import regular_glass_full from '../img/bar/regular_glass_full.svg'
+
 // Toppings
 import olive from '../img/bar/olive.svg'
 // import cherry from '../img/bar/cherry.svg'
@@ -52,3 +60,13 @@ export const toppings = {
   gummy_worms: gummy_worms,
   straw: straw,
 }
+
+// Currently Unused
+// export const full_glasses = {
+//   martini: martini_glass_full,
+//   beer: beer_glass_full,
+//   wine: wine_glass_full,
+//   whiskey: whiskey_glass_full,
+//   fishbowl: fishbowl_glass_full,
+//   regular: regular_glass_full
+// }

@@ -7,7 +7,6 @@ import Disclaimer from '../Helpers/Disclaimer.js';
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 // Styling
 import '../css/Signin.scss';
 
@@ -55,6 +54,7 @@ const initial_state = {
   generateRoomID() {
     return Math.floor(Math.random() * (10000));
   }
+
 
   // Handles checking if game room is new or not
   handleKeyUp(event : any) {
@@ -139,8 +139,7 @@ const initial_state = {
         <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
 
-          <Form onSubmit={this.handleCreateSubmit.bind(this)}>
-            
+          <Form onSubmit={this.handleCreateSubmit.bind(this)}>            
             <div>
               <Button className="signin-btn" type="button" onClick={this.handleCreateClick.bind(this)}>
                 CREATE <FontAwesomeIcon icon={(this.state.showCreateForm ? faCaretUp : faCaretDown)} />

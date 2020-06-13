@@ -2,9 +2,10 @@
   position:relative;
   width:30px;
   height:30px;
-}
-.drink-container img{
-  position:absolute;
-  top:0;
-  left:0;
+
+  > * {
+    position:absolute;
+    top:0;
+    left:0;
+  }
 }
