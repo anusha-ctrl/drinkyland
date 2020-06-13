@@ -119,7 +119,7 @@ class Game extends Component<Props, State> {
     else if(width < 1400){
       return 7;
     }
-    return 10;
+    return 9;
   }
 
   genTiles(){
@@ -333,7 +333,7 @@ class Game extends Component<Props, State> {
               <Navbar.Text className="ml-10 mr-10"><strong>Roll:</strong> {this.state.lastMove?.roll} </Navbar.Text>
               <Navbar.Text className="ml-10 mr-10">
                 <div className="curr_player_label"><strong>Current Player:</strong><p>{ player['name'] }</p>
-                  {Bartender.pourImg(player.drink, { height: '20px', width: '20px'})}
+                  {Bartender.pourImg(player.drink, { style: {height: '25px', width: '25px'}})}
                 </div>
               </Navbar.Text>
               { this.state.lastMove &&
