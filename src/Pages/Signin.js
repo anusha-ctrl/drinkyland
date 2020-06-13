@@ -14,7 +14,9 @@ type State = {
   game_button : string,
   modalShow : boolean,
   showCreateForm: bool,
-  showJoinForm: bool,
+  showJoinForm: bool, 
+  validCreateRoom: bool,
+  validJoinRoom: bool,
 }
 
 const initial_state = {
@@ -36,6 +38,8 @@ const initial_state = {
         modalShow: false,
         showCreateForm: false,
         showJoinForm: false,
+        validCreateRoom: true,
+        validJoinRoom: true,
       };
   }
 
@@ -56,22 +60,15 @@ const initial_state = {
   }
 
 
-  // Handles checking if game room is new or not
-  handleKeyUp(event : any) {
-    var roomID = event.currentTarget.formRoomID.value;
-    if (roomID === null || roomID === '' || roomID === undefined) {
-      return;
-    }
+  handleKeyUpCreate() {
+    this.setState({
+      validCreateRoom: true,
+    });
+  }
 
-    const gameRef = firebase.database().ref("games/"+roomID);
-    gameRef.once('value', (snapshot) => {
-      var button_text = JOIN;
-      if (!snapshot.exists()){
-        button_text = CREATE;
-      }
-      this.setState({
-        game_button: button_text,
-      });
+  handleKeyUpJoin() {
+    this.setState({
+      validJoinRoom: true,
     });
   }
 
@@ -107,23 +104,25 @@ const initial_state = {
 
         this.props.cookies.set(roomID, "create", { path: '/'});
         this.props.history.push('/room/'+ roomID + '/join');
-        // TODO: Redirect
       } else {
-        // TODO: Let user know that room ID already exists
+        this.setState({
+          validCreateRoom: false
+        });
       }
     });
 
     event.preventDefault();
   }
 
-  // TODO: Make joining games safe
   handleJoinSubmit(event: any) {
     var roomID = event.target.formRoomIDJoin.value;
 
     const gameRef = firebase.database().ref("games/"+roomID);
     gameRef.once('value', (snapshot) => {
       if (!snapshot.exists()){
-        // TODO: Let user know that game room ID does not exist
+        this.setState({
+          validJoinRoom: false
+        });
       } else {
         this.props.cookies.set(roomID, "join", { path: '/'});
         this.props.history.push('/room/'+ roomID + '/join');
@@ -138,14 +137,22 @@ const initial_state = {
       <div className="signin-parent">
         <div className="signin-container">
           <h1 className="logo">DrinkyLand</h1>
-          <Form onSubmit={this.handleCreateSubmit.bind(this)}>
+          <Form onSubmit={this.handleCreateSubmit.bind(this)} onKeyUp={this.handleKeyUpCreate.bind(this)}>            
             <div>
               <Button className="signin-btn" type="button" onClick={this.handleCreateClick.bind(this)}>
                 CREATE <FontAwesomeIcon icon={(this.state.showCreateForm ? faCaretUp : faCaretDown)} />
               </Button>
               <div style={{ display: (this.state.showCreateForm ? "block" : "none")}}>
                 <Form.Group controlId="formRoomIDCreate">
-                  <Form.Control className="form-input" type="text" placeholder="Enter Game ID to create" />
+                  <Form.Control 
+                    className="form-input" 
+                    type="text"
+                    placeholder="Enter Game ID to create" 
+                    isInvalid={!this.state.validCreateRoom}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    This room ID has already been taken.
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Button type="submit" className="submit-btn" >
                   Submit!
@@ -154,14 +161,22 @@ const initial_state = {
             </div>
           </Form>
 
-          <Form onSubmit={this.handleJoinSubmit.bind(this)}>
+          <Form onSubmit={this.handleJoinSubmit.bind(this)} onKeyUp={this.handleKeyUpJoin.bind(this)}>
             <div>
               <Button className="signin-btn" type="button" onClick={this.handleJoinClick.bind(this)}>
                 JOIN <FontAwesomeIcon icon={(this.state.showJoinForm ? faCaretUp : faCaretDown)} />
               </Button>
               <div style={{ display: (this.state.showJoinForm ? "block" : "none")}}>
                 <Form.Group controlId="formRoomIDJoin">
-                  <Form.Control className="form-input" type="text" placeholder="Enter Game ID to join" />
+                  <Form.Control 
+                    className="form-input" 
+                    type="text" 
+                    placeholder="Enter Game ID to join" 
+                    isInvalid={!this.state.validJoinRoom}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    This room ID does not exist.
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Button type="submit" className="submit-btn">
                   Submit!

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 body {
   background:none !important;
   color: white;
@@ -20,7 +22,6 @@ body {
 
 .signin-container form {
   color:white;
-  margin-top: 20px;
 }
 
 .disclaimer-text {
@@ -48,6 +49,8 @@ body {
   border-radius: 10px;
   width: 50%;
   margin: 10px auto;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 20px;
 }
 
 .signin-btn:hover,
@@ -69,6 +72,8 @@ body {
   border-radius: 10px;
   margin-bottom: 20px;
   width: 45%;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 18px;
 }
 
 .submit-btn:hover,
@@ -86,7 +91,8 @@ body {
 
 .form-input {
   width: 45%;
-  margin: 10px auto;
+  margin: auto auto;
+  margin-top: 10px;
 }
 
 
@@ -96,6 +102,8 @@ body {
   border-radius: 10px;
   width: 50%;
   margin: 10px auto;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 20px;
 }
 
 .help-btn:hover,
